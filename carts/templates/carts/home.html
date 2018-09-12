@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="container" style="padding-top: 40px;">
+
+
+<h1>Panier</h1>
+
+
+{% if cart.products.exists %}
+<table class="table cart-table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom du prduit</th>
+      <th scope="col">Prix du produit</th>
+    </tr>
+  </thead>
+  <tbody class="cart-body">
+    	{% for product in cart.products.all %}
+      <tr class="cart-product">
+        <th scope="row">{{ forloop.counter }}</th>
+        <td><a href="{{ product.get_absolute_url }}">{{ product.title }} </a>
+
+        	{% include "carts/snippets/remove_product.html" with product_id=product.id %}
+        </td>
+        <td>{{ product.price }}</td>
+      </tr>
+
+      {% endfor %}
+    <tr>
+  		 <th colspan="2"></th>
+     		 <td><b>Sous total: </b> $<span class="cart-subtotal"> {{ cart.subtotal }}</span></td>
+    </tr>
+    <tr>
+     	 <th colspan="2"></th>
+
+     		 <td><b>Total: </b> $<span class="cart-total">{{ cart.total }}</span></td>
+    </tr>
+
+  </tbody>
+</table>
+<h3 class="text-center">Mode de payement</h3>
+<div class="row">
+  <div class="col col-xs-12 col-sm-4 col-md-4 col-lg-4">
+
+      <a class="btn btn-lg btn-success" href="{% url 'carts:checkout' %}">Carte bancaire</a>
+  </div>
+  <div class="col col-xs-12 col-sm-4 col-md-4 col-lg-4">
+
+      <a class="btn btn-lg btn-success" href="{% url 'carts:checkout_livraison' %}">Payement à la livraison</a>
+  </div>
+  <div class="col col-xs-12 col-sm-4 col-md-4 col-lg-4">
+
+      <a class="btn btn-lg btn-success" href="#">Payement Orange Money</a>
+  </div>
+</div>
+
+  <div class="cart-item-remove-form" style="display: none;">
+    {% include "carts/snippets/remove_product.html" %}
+  </div>
+{% else %}
+
+<p class="lead"> Le panier est vide encore</p>
+
+{% endif %}
+
+
+
+</div>
+{% endblock content %}

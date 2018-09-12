@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+
+  {% comment %}
+  <div class="row">
+  		
+  	{% for object in object_list %}
+  			{{ object.types_product }}
+  			<div class="col">
+  				{% include "products/snippets/card.html" with instance=object %}
+
+  				{% if forloop.counter|divisibleby:3 %}
+
+  			</div>
+  			</div>
+
+  				<div class="row"><div class="col-12"><hr/></div>
+
+  			
+  			{% elif forloop.counter|divisibleby:2 %}
+
+  				<div class="row"><div class="col-12"><hr/></div>
+
+
+
+  		{% else %}
+
+  			</div>
+  		{% endif %}
+
+
+
+
+  		{% endfor %}
+  </div>
+
+  {% endcomment %}
+
+
+  <div class="row">
+  	
+  {% for object in object_list %}
+
+   <div class="col col-xs-12 col-sm-6 col-md-3 col-lg-2">
+    
+      <div class="cart__container">
+          <div class="cart__container__inner">
+            <div class="cart__container__image">
+              <div class="cart__container__image__inner">
+                <a href="{{ object.get_absolute_url }}">
+              	<img src="{{ object.image.url }}" class="cart__container__image__inner__container">
+          	  </a>
+              </div>
+            </div>
+            <div class="cart__container__body">
+              <div class="cart__container__body__title">
+                 {{ object.title }}
+                 <h6 style="color: green">$ {{ object.price }} </h6>
+              </div>
+  					{% include "products/snippets/update_cart.html" with product=object cart=cart %}
+            
+
+              <div class="cart__container__body__title__description">
+                {{ object.description }}
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    {% endfor %}
+
+   </div>
+
+
+</div>
+{% endblock content %}

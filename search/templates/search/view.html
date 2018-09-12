@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+
+{% block content %}
+<div class="container" style="padding-top: 40px;">
+	
+	<div class="row mb-3">
+
+		{% if request.GET.q %}
+
+		<div class="col-12 mb-3 ">
+			Resultat for <b> 	{{ query }}
+			</b>
+			<hr/>
+		</div>
+
+		{% else %}
+			<div class="col-12 col-md-8 mx-auto py-5">
+        		{% include "search/snippets/search_form.html" %}
+
+			</div>
+			<div class="col-12">
+				<hr>
+			</div>
+
+		{% endif %}
+	</div>
+
+	{% comment %}
+	<section class="row">	
+		{% for object in object_list %}
+				 <div class="col-xs-4 col-sm-3 col-md-2">
+					{% include "products/snippets/card.html" with instance=object %}
+				</div>
+
+		{% endfor %}
+
+
+	</section>
+		<hr>
+		{% endcomment %}
+
+
+	{% comment %}
+
+	<div class="row">
+		
+	{% for object in object_list %}
+
+		{% include "products/snippets/card.html" with instance=object %}
+	{% endfor %}
+
+	</div>
+
+
+	{% endcomment %}
+
+
+	<div class="row">
+		
+	{% for object in object_list %}
+
+	 <div class="col col-xs-12 col-sm-6 col-md-3 col-lg-2">
+	  
+	    <div class="cart__container">
+	        <div class="cart__container__inner">
+	          <div class="cart__container__image">
+	            <div class="cart__container__image__inner">
+	              <a href="{{ object.get_absolute_url }}">
+	            	<img src="{{ object.image.url }}" class="cart__container__image__inner__container">
+	        	  </a>
+	            </div>
+	          </div>
+	          <div class="cart__container__body">
+	            <div class="cart__container__body__title">
+	               {{ object.title }}
+	               <h6 style="color: green">$ {{ object.price }} </h6>
+	            </div>
+						{% include "products/snippets/update_cart.html" with product=object cart=cart %}
+	          
+
+	            <div class="cart__container__body__title__description">
+	              {{ object.description }}
+	            </div>
+	          </div>
+	        </div>
+	    </div>
+	  </div>
+
+	  {% endfor %}
+
+	 </div>
+
+
+
+</div>
+{% endblock content %}

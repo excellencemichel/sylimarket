@@ -1,0 +1,49 @@
+{% load static %}
+
+<!doctype html>
+	<html lang="en">
+		<head>
+		    <!-- Required meta tags -->
+		    <meta charset="utf-8">
+		    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		     <link rel="icon" href="{% static 'img/logo/png/001-elephant.png' %}">
+
+		    <title>SyliMarket</title>
+
+		    {% include "base/css.html" %}
+
+		    {% block base_head %} {% endblock base_head %}
+	    </head>
+	  	<body>
+
+	  		{% include "base/navh.html" with brand_name="SyliMarket"  %}
+
+	  			{% if messages %}
+	  		<div class="container" style="padding-top: 30px;">
+	  				<div class=" alert alert-success messages">
+	  					{% for message in messages %}
+	  						<span{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+	  							{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important : {% endif %}
+	  							{{ message }} <br>
+	  					    </span>
+	  					{% endfor %}
+	  				</div>
+
+	  		</div>
+	  			{% endif %}
+
+	  		{% block carousel %}{% endblock carousel %}
+	  		{% block content %}{% endblock content %}
+
+	  		{% block footer %}
+	  			{% include "base/footer.html" %}
+	  		{% endblock footer %}
+
+		    {% include "base/js.html"  %}
+
+		    {% block javascript %}
+		    {% endblock javascript %}
+
+		 	
+		</body>
+	</html>

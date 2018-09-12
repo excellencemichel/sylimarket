@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="container" style="padding-top: 50px;">
+
+	{% if not payement_livraison %}
+
+	<div class="row text-center">
+
+		<div class="col-12 col-md-6">			
+
+			{% include "accounts/snippets/form.html" with form=login_form next_url=request.build_absolute_uri  %}
+
+
+		<br>
+		<h3 class="lead text-center"> Ou </h3>
+		</div>
+		<div class="col-12 col-md-6">
+			<h3>
+				Continuer en tant qu'invité
+			</h3>
+
+			{% url "accounts:guest_register" as guest_register_url %}
+
+			{% include "accounts/snippets/form.html" with login_label="Continuer" head_form=" " form=guest_form next_url=request.build_absolute_uri action_url=guest_register_url %}
+
+		</div>
+	</div>
+
+
+
+	{% else %}
+		{% if not object.livraison_address %}
+			<div class="row text-center">
+				<div class="col-12">
+					<p class="lead">Adresse de livraison</p>
+					<hr>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 mx-auto col-10">
+					
+
+					{% url "addresses:checkout_address_livraison_create" as checkout_address_livraison_create %}
+					{% include "addresses/form_payement_livraison.html" with form=address_payement_livraison_form next_url=request.build_absolute_uri action_url=checkout_address_livraison_create address_payement_livraison_type="livraison" %}
+
+
+				</div>
+				<div class="col-md-6">
+					{% url "addresses:checkout_address_livraison_reuse" as checkout_address_livraison_reuse %}
+
+					{% include "addresses/prev_addresses_livraison.html" with address_qs=address_payement_livraison_qs next_url=request.build_absolute_uri address_payement_livraison_type="livraison" action_url=checkout_address_livraison_reuse %}
+					
+
+
+				</div>
+			</div>
+
+
+		{% elif not object.facturation_address %}
+
+				<div class="row text-center">
+					<div class="col-12">
+						<p class="lead">  Adresse de facturation </p>
+						<hr>
+					</div>
+				</div>
+			<div class="row">
+				<div class="col-6">
+					{% url "addresses:checkout_address_livraison_create" as checkout_address_livraison_create %}
+					{% include "addresses/form_payement_livraison.html" with form=address_payement_livraison_form next_url=request.build_absolute_uri action_url=checkout_address_livraison_create address_payement_livraison_type="facturation" %}
+				</div>
+				<div class="col-md-6">
+
+					{% url "addresses:checkout_address_livraison_reuse" as checkout_address_livraison_reuse %}
+					{% include "addresses/prev_addresses_livraison.html" with address_qs=address_payement_livraison_qs next_url=request.build_absolute_uri address_payement_livraison_type="facturation" action_url=checkout_address_livraison_reuse %}
+
+				</div>
+			</div>
+
+
+
+		{% else %}
+
+				<h1>Finalisez la caisse</h1>
+				<p>Cart Items : {% for product in  object.cart.products.all %} {{ product }} {% if not forloop.last %}, {% endif %} {% endfor %}</p>
+
+				<p>Shipping address : {{ object.livraison_address.get_address }}</p>
+				<p>Billing address : {{ object.facturation_address.get_address }}</p>
+
+				<p>Mode de paiement: <strong>Payement à la livraison</strong> (<a href="{% url 'carts:home' %}?next={{ request.build_absolute_uri }}">Changer</a>) </p>
+
+
+				<p>Panier Total : {{ object.cart.total }}</p>
+				<p>Total d'expédition: {{ object.shipping_total }}</p>
+
+				<p>Total de la commande: {{ object.total }}</p>
+
+				<form class="form" method="POST" action="">
+					{% csrf_token %}
+					<button type="submit" class="btn btn-success">Terminez la caisse</button>
+				</form>
+		{% endif %}
+
+{% endif %}
+
+
+</div>
+{% endblock content %}
