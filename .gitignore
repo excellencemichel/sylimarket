@@ -4,3 +4,7 @@ env/
 
 ecommerce.sublime-workspace
 staticfiles
+
+__pycache__
+
+ecommerce/settings/
