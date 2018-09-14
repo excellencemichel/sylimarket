@@ -86,9 +86,9 @@ MALCHIMP_EMAIL_LIST_ID = config("MALCHIMP_EMAIL_LIST_ID", None)
 
 
 
-STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")
+STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY", None)
 
-STRIPE_PUB_KEY = config("STRIPE_PUB_KEY")
+STRIPE_PUB_KEY = config("STRIPE_PUB_KEY", None)
 
 
 MIDDLEWARE = [
@@ -144,13 +144,25 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+# 'default': {
+# 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+# 'NAME': config("DB_NAME"),
+# 'USER': config("DB_USER"),
+# 'PASSWORD': config("DB_PASSWORD"),
+# 'HOST': config("DB_HOST"),
+# 'PORT': '',
+# }
+# }
+
+
 DATABASES = {
 'default': {
 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-'NAME': config("DB_NAME"),
-'USER': config("DB_USER"),
-'PASSWORD': config("DB_PASSWORD"),
-'HOST': config("DB_HOST"),
+'NAME': "sylimarket",
+'USER': "sylimarket_user",
+'PASSWORD': "Pass",
+'HOST': "localhost",
 'PORT': '',
 }
 }
