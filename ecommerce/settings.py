@@ -186,10 +186,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'fr-fr'
 
-if os.environ.get("ENV") =="PRODUCTION": 
-    TIME_ZONE = 'UTC'
-else:
-    TIME_ZONE = "Africa/Casablanca"
+TIME_ZONE = "Africa/Casablanca"
 
 
 USE_I18N = True
