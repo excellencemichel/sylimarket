@@ -36,6 +36,7 @@ SECRET_KEY = """4g[5VAJ}v9~`=Zxn}B}{!DE.xT(M1YNpGTq   V"Q1    EaHf_EQbM;A>jcj%
 
 DEBUG = True
 ALLOWED_HOSTS = []
+BASE_URL ="www.sylimarket.com"
 
 
 
