@@ -6,3 +6,6 @@ ecommerce.sublime-workspace
 staticfiles
 
 __pycache__
+
+
+ecommerce/production

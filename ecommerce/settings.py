@@ -196,15 +196,14 @@ STATIC_URL = '/static/'
 
 
 STATICFILES_DIRS = [
-         os.path.join(BASE_DIR, "static_my_proj"),
+         os.path.join(BASE_DIR, "static"),
                 
                 ]
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "static_root")
+STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 
 MEDIA_URL = "/media/"
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
-PROTECTED_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "protected_root")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media_root")
 
 
 
@@ -225,17 +224,6 @@ ADMINS = [
 
 
 MANAGERS = ADMINS
-
-
-CORS_REPLACE_HTTPS_REFERER      = False
-HOST_SCHEME                     = "http://"
-SECURE_PROXY_SSL_HEADER         = None
-SECURE_SSL_REDIRECT             = False
-SESSION_COOKIE_SECURE           = False
-CSRF_COOKIE_SECURE              = False
-SECURE_HSTS_INCLUDE_SUBDOMAINS  = False
-SECURE_HSTS_SECONDS             = None
-SECURE_FRAME_DENY               = False
 
 
 
