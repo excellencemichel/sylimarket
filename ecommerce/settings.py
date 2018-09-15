@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = """4g[5VAJ}v9~`=Zxn}B}{!DE.xT(M1YNpGTq   V"Q1    EaHf_EQbM;A>jcj%}|ayrgr;"=:?O9H?"""
+SECRET_KEY = config("SECRET_KEY", None)
 
 
 
@@ -199,11 +199,12 @@ STATICFILES_DIRS = [
          os.path.join(BASE_DIR, "static"),
                 
                 ]
-STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 MEDIA_URL = "/media/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media_root")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+PROTECTED_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "protected_root")
 
 
 
@@ -211,8 +212,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media_root")
 EMAIL_HOST = config("EMAIL_HOST", None)
 EMAIL_HOST_USER =config("EMAIL_HOST_USER", None)
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", None)
-EMAIL_PORT = config("EMAIL_PORT", cast=int)
-EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool)
+EMAIL_PORT = "587"
+EMAIL_USE_TLS = True
 
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", None)
 
