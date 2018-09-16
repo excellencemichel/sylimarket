@@ -220,7 +220,8 @@ MANAGERS = ADMINS
 
 from .production import *
 
-from ecommerce.aws.conf import *
+if os.environ.get("ENV") =="PRODUCTION":
+    from ecommerce.aws.conf import *
 
 
 
