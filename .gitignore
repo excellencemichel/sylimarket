@@ -9,3 +9,6 @@ __pycache__
 
 
 ecommerce/production.py
+
+logs
+logs/
