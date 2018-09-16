@@ -8,4 +8,4 @@ staticfiles
 __pycache__
 
 
-ecommerce/production
+ecommerce/production.py

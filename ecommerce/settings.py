@@ -137,14 +137,9 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 
 DATABASES = {
-'default': {
-'ENGINE': 'django.db.backends.postgresql_psycopg2',
-'NAME': "sylimarket",
-'USER': "sylimarket_user",
-'PASSWORD': "Pass",
-'HOST': "localhost",
-'PORT': '',
-}
+    'default': {
+    'ENGINE': 'django.db.backends.postgresql_psycopg2'
+    }
 }
 
 
@@ -226,6 +221,8 @@ ADMINS = [
 
 MANAGERS = ADMINS
 
+
+from .production import *
 
 
 
