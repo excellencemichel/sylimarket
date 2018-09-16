@@ -19,13 +19,35 @@ def get_filename_ext(filepath):
 	return name, ext
 
 
-def upload_image_path(instance, filename):
+def upload_image_path_old(instance, filename):
 	new_filename = random.randint(1, 11337712127)
 
 	name, ext =get_filename_ext(filename)
 	final_filename = "{new_filename}{ext}".format(new_filename=new_filename, ext=ext)
 
+
 	return "products/{new_filename}/{final_filename}".format(new_filename=new_filename, final_filename=final_filename)
+
+
+
+def upload_image_path(instance, filename):
+	slug = instance.slug
+	id_ = 0
+	id_ = instance.id
+	if id_ is None:
+		Klass = instance.__class__
+		qs = Klass.objects.all().order_by("-pk")
+		if qs.exists():
+			id_ = qs.first().id + 1
+		else:
+			id_ = 0
+
+	if not slug:
+		slug = unique_slug_generator(instance)
+	location = "products/{slug}/{id}/".format(slug=slug, id=id_)
+
+
+	return location + filename #path/to/file/filename.mp4
 
 
 
