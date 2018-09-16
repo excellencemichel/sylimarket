@@ -224,6 +224,7 @@ MANAGERS = ADMINS
 
 from .production import *
 
+from ecommerce.aws.conf import *
 
 
 
