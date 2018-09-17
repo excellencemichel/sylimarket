@@ -238,7 +238,7 @@ class Product(models.Model):
 	types_product  		= models.CharField(max_length=250, choices=TYPES_PRODUCT)
 	description			= models.TextField()
 	price 				= models.DecimalField(decimal_places=2, max_digits=20, default=39.99)
-	image 				= models.ImageField(upload_to=upload_image_path, null=True, blank=False)
+	image 				= models.ImageField(max_length=250, upload_to=upload_image_path, null=True, blank=False)
 
 	featured			= models.BooleanField(default=False)
 
@@ -303,8 +303,8 @@ stockage = FileSystemStorage(location=settings.PROTECTED_ROOT)
 class ProductFile(models.Model):
 	product 		= models.ForeignKey(Product, on_delete=models.CASCADE)
 	name 			= models.CharField(max_length=120, null=True, blank=True)
-	image 			= models.ImageField(
-					upload_to=upload_product_file_loc,
+	image 			= models.ImageField(max_length=250,
+					upload_to=upload_product_file_loc
 					)
 
 
