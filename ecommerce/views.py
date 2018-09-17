@@ -32,19 +32,37 @@ def home(request):
 	electroniques 	 = products.filter(types_product="electronique")
 	cloths			 = products.filter(types_product="cloths")
 	shoes 			 = products.filter(types_product="shoe")
+	luxes 			 = products.filter(types_product="luxe")
+	tablettes 		 = products.filter(types_product="tablette")
+	computers 		 = products.filter(types_product="computer")
+	foods 			 = products.filter(types_product="food")
+	fournitures 	 = products.filter(types_product="fourniture")
+	materiels 		 = products.filter(types_product="materiel")
+	pants 			 = products.filter(types_product="pants")
+
+
 
 
 
 
 
 	context = {
-		"cart": cart_obj,
-		"products": products,
-		"phones": phones,
-		"electromenagers": electromenagers,
-		"electroniques": electroniques,
-		"cloths": cloths,
-		"shoes": shoes,
+		"cart": 			cart_obj,
+		"products": 		products,
+		"phones": 			phones,
+		"electromenagers":  electromenagers,
+		"electroniques": 	electroniques,
+		"cloths": 			cloths,
+		"shoes": 			shoes,
+		"luxes": 			luxes,
+		"tablettes": 		tablettes,
+		"computers": 		computers,
+		"foods": 			foods,
+		"fournitures": 		fournitures,
+		"materiels": 		materiels,
+		"pants": 			pants,
+
+
 
 
 		}
@@ -100,41 +118,6 @@ def contact_page(request):
 
 	return render(request, "contact/views.html", context)
 
-
-
-
-def home_page_old(request):
-	html_ = """
-			<!doctype html>
-			<html lang="en">
-			  <head>
-			    <!-- Required meta tags -->
-			    <meta charset="utf-8">
-			    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-			    <!-- Bootstrap CSS -->
-			    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-			    <title>Hello, world!</title>
-			  </head>
-			  <body>
-			  	<div class="text-center">
-			    <h1>Hello, world!</h1>
-
-			    </div>
-
-			    <!-- Optional JavaScript -->
-			    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-			    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-			    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-			    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-			  </body>
-			</html>
-
-
-	"""
-
-	return HttpResponse(html_)
 
 
 

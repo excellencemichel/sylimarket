@@ -457,7 +457,10 @@ class Carousel {
 
 
 let onReady = function(){
-		new Carousel(document.querySelector("#carousel__ui__2"),
+	try {
+
+	
+		new Carousel(document.querySelector("#carousel__ui__phone"),
 
 		{	
 			slidesVisible: 6,
@@ -466,49 +469,181 @@ let onReady = function(){
 			pagination:true,
 	}
 		)
+	} catch (err) {
+		console.log(err)
 
-
-	new Carousel(document.querySelector("#carousel__ui__3"),
-
-		{	
-			slidesVisible: 4,
-			slidesToScroll:1,
-			infinite: true,
-			pagination:true,
 	}
-		)
 
+	try {
 
-	new Carousel(document.querySelector("#carousel__ui__electronique"),
+		new Carousel(document.querySelector("#carousel__ui__pc"),
 
-		{	
-			slidesVisible: 5,
-			slidesToScroll:1,
-			// infinite: true,
-			// pagination:true,
+			{	
+				slidesVisible: 4,
+				slidesToScroll:1,
+				infinite: true,
+				pagination:true,
+		}
+				)
+	}catch(err){
+		console.log(err)
 	}
-		)
 
-	new Carousel(document.querySelector("#carousel__ui__cloths"),
 
-		{	
-			slidesVisible: 3,
-			slidesToScroll:1,
-			// infinite: true,
-			// pagination:true,
+	try{
+
+		new Carousel(document.querySelector("#carousel__ui__electromenager"),
+
+			{	
+				slidesVisible: 4,
+				slidesToScroll:1,
+				infinite: true,
+				pagination:true,
+		}
+			)
+
+	}catch(err){
+		console.log(err)
 	}
-		)
+		
+	try{
 
 
-	new Carousel(document.querySelector("#carousel__ui__shoes"),
+		new Carousel(document.querySelector("#carousel__ui__electronique"),
 
-		{	
-			slidesVisible: 3,
-			slidesToScroll:1,
-			// infinite: true,
-			// pagination:true,
-	}
-		)
+			{	
+				slidesVisible: 5,
+				slidesToScroll:1,
+				// infinite: true,
+				// pagination:true,
+		}
+			)
+
+
+	}catch(err){
+			console.log(err)
+		}
+
+
+	try{
+
+		new Carousel(document.querySelector("#carousel__ui__tablette"),
+
+			{	
+				slidesVisible: 5,
+				slidesToScroll:1,
+				// infinite: true,
+				// pagination:true,
+		}
+			)
+	}catch(err){
+			console.log(err)
+		}
+
+
+	try{
+
+
+		new Carousel(document.querySelector("#carousel__ui__cloths"),
+
+			{	
+				slidesVisible: 3,
+				slidesToScroll:1,
+				// infinite: true,
+				// pagination:true,
+		}
+			)
+	}catch(err){
+			console.log(err)
+		}
+
+	try{
+
+
+
+		new Carousel(document.querySelector("#carousel__ui__shoes"),
+
+			{	
+				slidesVisible: 3,
+				slidesToScroll:1,
+				// infinite: true,
+				// pagination:true,
+		}
+			)
+
+	}catch(err){
+			console.log(err)
+		}
+
+	try{
+
+
+		new Carousel(document.querySelector("#carousel__ui__food"),
+
+			{	
+				slidesVisible: 3,
+				slidesToScroll:1,
+				// infinite: true,
+				// pagination:true,
+		}
+			)
+
+	}catch(err){
+			console.log(err)
+		}
+
+
+	try{
+
+		new Carousel(document.querySelector("#carousel__ui__luxe"),
+
+			{	
+				slidesVisible: 3,
+				slidesToScroll:1,
+				// infinite: true,
+				// pagination:true,
+		}
+			)
+
+	}catch(err){
+			console.log(err)
+		}
+
+
+	try{
+
+
+		new Carousel(document.querySelector("#carousel__ui__materiel"),
+
+			{	
+				slidesVisible: 3,
+				slidesToScroll:1,
+				// infinite: true,
+				// pagination:true,
+		}
+			)
+
+	}catch(err){
+			console.log(err)
+		}
+
+
+	try{
+
+
+		new Carousel(document.querySelector("#carousel__ui__fourniture"),
+
+			{	
+				slidesVisible: 3,
+				slidesToScroll:1,
+				// infinite: true,
+				// pagination:true,
+		}
+			)
+
+	}catch(err){
+			console.log(err)
+		}
 
 
 	

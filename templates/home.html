@@ -48,13 +48,14 @@
 
 
 
+{% if phones %}
 
 <div class="row">
 	<div class="col">
 		
 		<h3 class="lead text-center">Dernères dépêches de smartphones </h3>
 
-			<div id="carousel__ui__2">
+			<div id="carousel__ui__phone">
 			{% for phone in phones %}
 				<div class="item">
 					<div class="item__container">
@@ -82,6 +83,7 @@
 			</div>
 		</div>
 </div>
+{% endif %}
 
 
 	<div class="marques">
@@ -90,11 +92,48 @@
 
 
 
+{% if computers %}
+<div class="row">
+	<div class="col">
+		<h3 class="lead text-center carousel_lead">Les ordinateurs à capacité demontrée</h3>
+		<div id="carousel__ui__pc">
+			{% for computer in computers %}
+				<div class="item">
+					<div class="item__container">
+						<div class="item__container__image">
+							<div class="item__container__image__inner">
+								<a href="{{ computer.get_absolute_url }}">
+									<img src="{{ computer.image.url }}" class="item__container__image__inner__container">
+								</a>
+							</div>
+						</div>
+						<div class="item__body">
+							<div class="item__title">
+								 {{ computer.title }}
+								 <h6 style="color: green">$ {{ computer.price }}</h6>
+							</div>
+								{% include "products/snippets/update_cart.html" with product=computer cart=cart %}
+							<div class="item__description">
+								{{ computer.description }}
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+<hr>
+{% endif %}
+
+
+{% if electromenagers %}
 
 <div class="row">
 	<div class="col">
 		<h3 class="lead text-center carousel_lead">L'électroménagers pour le bien être</h3>
-		<div id="carousel__ui__3">
+		<div id="carousel__ui__electromenager">
 			{% for electromenager in electromenagers %}
 				<div class="item">
 					<div class="item__container">
@@ -121,6 +160,11 @@
 		</div>
 	</div>
 </div>
+<hr>
+{% endif %}
+
+
+{% if electroniques %}
 
 <hr>
 <div class="row">
@@ -153,8 +197,47 @@
 		</div>
 	</div>
 </div>
+<hr>
+{% endif %}
 
 
+{% if tablettes %}
+
+<hr>
+<div class="row">
+	<div class="col">
+		<h3 class="lead text-center carousel_lead">Les tablette pour une vision large</h3>
+		<div id="carousel__ui__tablette">
+		{% for tablette in tablettes %}
+			<div class="item">
+				<div class="item__container">
+					<div class="item__container__image">
+						<div class="item__container__image__inner">
+							<a href="{{ tablette.get_absolute_url }}">
+								<img src="{{ tablette.image.url }}" class="item__container__image__inner__container">
+							</a>
+						</div>
+					</div>
+					<div class="item__body">
+						<div class="item__title">
+							 {{ tablette.title }}
+							 <h6 style="color: green">$ {{ tablette.price }}</h6>
+						</div>
+							{% include "products/snippets/update_cart.html" with product=tablette cart=cart %}
+						<div class="item__description">
+							{{ tablette.description }}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+</div>
+<hr>
+{% endif %}
+
+{% if cloths %}
 <hr>
 <div class="row">
 	<div class="col">
@@ -186,8 +269,11 @@
 		</div>
 	</div>
 </div>
+<hr>
+{% endif %}
 
 
+{% if shoes %}
 
 <hr>
 <div class="row">
@@ -220,6 +306,166 @@
 		</div>
 	</div>
 </div>
+<hr>
+{% endif %}
+
+
+
+{% if luxes %}
+
+<hr>
+<div class="row">
+	<div class="col">
+		<h3 class="lead text-center carousel_lead">Le high level</h3>
+		<div id="carousel__ui__luxe">
+		{% for luxe in luxes %}
+			<div class="item">
+				<div class="item__container">
+					<div class="item__container__image">
+						<div class="item__container__image__inner">
+							<a href="{{ luxe.get_absolute_url }}">
+								<img src="{{ luxe.image.url }}" class="item__container__image__inner__container">
+							</a>
+						</div>
+					</div>
+					<div class="item__body">
+						<div class="item__title">
+							 {{ luxe.title }}
+							 <h6 style="color: green">$ {{ luxe.price }}</h6>
+						</div>
+							{% include "products/snippets/update_cart.html" with product=luxe cart=cart %}
+						<div class="item__description">
+							{{ luxe.description }}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+</div>
+<hr>
+{% endif %}
+
+
+
+
+{% if pants %}
+
+<hr>
+<div class="row">
+	<div class="col">
+		<h3 class="lead text-center carousel_lead">Pantalons et culottes</h3>
+		<div id="carousel__ui__pant">
+		{% for pant in pants %}
+			<div class="item">
+				<div class="item__container">
+					<div class="item__container__image">
+						<div class="item__container__image__inner">
+							<a href="{{ pant.get_absolute_url }}">
+								<img src="{{ pant.image.url }}" class="item__container__image__inner__container">
+							</a>
+						</div>
+					</div>
+					<div class="item__body">
+						<div class="item__title">
+							 {{ pant.title }}
+							 <h6 style="color: green">$ {{ pant.price }}</h6>
+						</div>
+							{% include "products/snippets/update_cart.html" with product=pant cart=cart %}
+						<div class="item__description">
+							{{ pant.description }}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+</div>
+<hr>
+{% endif %}
+
+
+
+{% if materiels %}
+
+<hr>
+<div class="row">
+	<div class="col">
+		<h3 class="lead text-center carousel_lead">Les matériaux divers</h3>
+		<div id="carousel__ui__materiel">
+		{% for materiel in materiel %}
+			<div class="item">
+				<div class="item__container">
+					<div class="item__container__image">
+						<div class="item__container__image__inner">
+							<a href="{{ materiel.get_absolute_url }}">
+								<img src="{{ materiel.image.url }}" class="item__container__image__inner__container">
+							</a>
+						</div>
+					</div>
+					<div class="item__body">
+						<div class="item__title">
+							 {{ materiel.title }}
+							 <h6 style="color: green">$ {{ materiel.price }}</h6>
+						</div>
+							{% include "products/snippets/update_cart.html" with product=materiel cart=cart %}
+						<div class="item__description">
+							{{ materiel.description }}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+</div>
+<hr>
+{% endif %}
+
+
+
+{% if fournitures %}
+
+<hr>
+<div class="row">
+	<div class="col">
+		<h3 class="lead text-center carousel_lead">Les fournitures et accessoirs</h3>
+		<div id="carousel__ui__fourniture">
+		{% for fourniture in fournitures %}
+			<div class="item">
+				<div class="item__container">
+					<div class="item__container__image">
+						<div class="item__container__image__inner">
+							<a href="{{ fourniture.get_absolute_url }}">
+								<img src="{{ fourniture.image.url }}" class="item__container__image__inner__container">
+							</a>
+						</div>
+					</div>
+					<div class="item__body">
+						<div class="item__title">
+							 {{ fourniture.title }}
+							 <h6 style="color: green">$ {{ fourniture.price }}</h6>
+						</div>
+							{% include "products/snippets/update_cart.html" with product=fourniture cart=cart %}
+						<div class="item__description">
+							{{ fourniture.description }}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+</div>
+<hr>
+{% endif %}
+
+
+
+
+
 
 
 </div>
