@@ -207,14 +207,6 @@ PROTECTED_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "protecte
 
 
 
-EMAIL_HOST = config("EMAIL_HOST", None)
-EMAIL_HOST_USER =config("EMAIL_HOST_USER", None)
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", None)
-EMAIL_PORT = "587"
-EMAIL_USE_TLS = True
-
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", None)
-
 
 ADMINS = [ 
 

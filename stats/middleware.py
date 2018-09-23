@@ -38,7 +38,7 @@ def stats_middleware(get_response):
 		#Appel de la vu Django
 		response = get_response(request)
 		# Une fois la vue exécutée, on ajoute à la fin le nombre de vues de la page
-		response.content += bytes("Cette page a été vue {0} fois.".format(page_view.nb_visites), "utf8")
+		# response.content += bytes("Cette page a été vue {0} fois.".format(page_view.nb_visites), "utf8")
 
 		# Et on retourne le résultat
 		return response
