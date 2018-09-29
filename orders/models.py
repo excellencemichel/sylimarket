@@ -348,8 +348,8 @@ class ProductPurshase(models.Model): #Purshase veut dire achat
 
 	class Meta:
 		ordering = ["-timestamp", "-updated"]
-		verbose_name = "Produit payé avec payement à la livraison"
-		verbose_name_plural = "Produits payés avec payements à la livraison"
+		verbose_name = "Produit payé avec payement par carte bancaire"
+		verbose_name_plural = "Produits payés avec payements par carte bancaire"
 
 	def __str__(self):
 		return self.product.title

@@ -4,10 +4,14 @@ from django.db import models
 
 
 class Statistique(models.Model):
-	url 			= models.URLField()
-	nb_visites  	= models.IntegerField(default=1)
-	request_user 	= models.CharField(max_length=250, blank=True, null=True)
-	request_user_ip = models.CharField(max_length=250, blank=True, null=True)
+	url 				= models.URLField()
+	nb_visites  		= models.IntegerField(default=1)
+	request_user 		= models.CharField(max_length=250, blank=True, null=True)
+	request_user_ip	 	= models.CharField(max_length=250, blank=True, null=True)
+	timestamp			= models.DateTimeField(auto_now_add=True)
+	updated 			= models.DateTimeField(auto_now=True)
+
+
 
 	def __str__(self):
 		return self.url

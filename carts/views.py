@@ -273,6 +273,8 @@ def checkout_livraison(request):
 			elif guest_form.is_valid():
 				guest_address_data = guest_form.cleaned_data
 				guest_address_email = guest_address_data.get("email")
+				print("Address guest",guest_address_email)
+
 
 				to_email.append(guest_address_email)
 

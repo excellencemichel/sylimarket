@@ -5,7 +5,7 @@ from .models import Statistique
 
 
 class StatistiqueAdmin(admin.ModelAdmin):
-	list_display = ["__str__", "nb_visites", "request_user", "request_user_ip"]
+	list_display = ["__str__", "nb_visites", "request_user", "request_user_ip", "timestamp"]
 	list_filter = ('nb_visites', "request_user_ip",)
 
 
