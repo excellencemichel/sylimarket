@@ -1,4 +1,4 @@
 Bonjour Monsieur Madame !
 Tout en espérant que vous allez bien...
 Nous vous remercions pour votre confiance
-Voici le lien pour faire un tour sur notre marché http://127.0.0.1:8000
+Voici le lien pour faire un tour sur notre marché http://www.sylimarket.com

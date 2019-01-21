@@ -283,13 +283,14 @@ ul {
 	display: none;
 }
 
-@media screen and (max-width: 1292px) {
+@media screen and (max-width: 1179px) {
 	.ui{
 		.ui__1{
 			min-height: 70px;
 		}
 		.ui__2{
 			height: 120px;
+			margin-bottom:12px;
 
 		}
 	}

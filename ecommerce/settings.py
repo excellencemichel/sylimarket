@@ -39,6 +39,10 @@ ALLOWED_HOSTS = []
 BASE_URL ="www.sylimarket.com"
 
 
+USE_GA = os.environ.get('DJANGO_USE_GA', False)
+USE_GA = {'True': True, 'False': False}.get(USE_GA, False)
+
+
 
 
 
@@ -129,6 +133,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 "django.template.context_processors.i18n",
+
+                #Pour Google analytics
+                "analytics.context_processors.ga_tracking_id",
+                "analytics.context_processors.use_ga"
             ],
         },
     },
@@ -224,4 +232,4 @@ if os.environ.get("ENV") =="PRODUCTION":
 
 
 
-
+GA_TRACKING_ID = 'UA-132886357-1'

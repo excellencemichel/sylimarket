@@ -238,7 +238,7 @@ def checkout_livraison(request):
 		return redirect("carts:home")
 
 	login_form 										= LoginForm(request=request)
-	guest_form 										= GuestForm(request=request)
+	guest_form 										= GuestForm(request)
 	address_payement_livraison_form 				= AddressPayementLivraisonForm()
 	facturation_address_id							= request.session.get("facturation_address_id", None)
 	livraison_address_id							= request.session.get("livraison_address_id", None)
@@ -262,6 +262,8 @@ def checkout_livraison(request):
 
 	if request.method == "POST":
 		is_prepared = order_obj.check_done()
+		import pdb
+		pdb.set_trace
 		if is_prepared:
 			order_obj.mark_paid()
 
@@ -270,10 +272,10 @@ def checkout_livraison(request):
 
 				to_email.append(request.user.email)
 
-			elif guest_form.is_valid():
+			if guest_form.is_valid():
 				guest_address_data = guest_form.cleaned_data
 				guest_address_email = guest_address_data.get("email")
-				print("Address guest",guest_address_email)
+				print("Address guest qui entré",guest_address_email)
 
 
 				to_email.append(guest_address_email)
@@ -314,6 +316,7 @@ def checkout_livraison(request):
 
 			request.session["cart_items"] = 0
 			del request.session["cart_id"]
+			del request.session["guest_email_id"]
 			return redirect ("carts:success")
 
 		else:

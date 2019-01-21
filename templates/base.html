@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load settings %}
 <!doctype html>
 	<html lang="en">
 		<head>
@@ -40,6 +40,14 @@
 	  		{% endblock footer %}
 
 		    {% include "base/js.html"  %}
+		
+		{% block ga %}
+  			{% get_from_settings 'USE_GA' as use_ga %}
+
+  			{% if use_ga %}
+    		{% include "base/ga.html" with ga_tracking_id=ga_tracking_id%}
+  			{% endif %}
+			{% endblock ga %}
 
 		    {% block javascript %}
 		    {% endblock javascript %}

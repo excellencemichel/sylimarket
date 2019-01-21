@@ -108,6 +108,25 @@ class GuestForm(forms.ModelForm):
         return obj
 
 
+
+class GuestFormLivraison(forms.ModelForm):
+    email = forms.EmailField(label = _("Email address"), widget=forms.TextInput(attrs = {"class": "form-control input-xs",}))
+    class Meta:
+        model = GuestEmail
+        fields = ["email"]
+
+    def save(self, commit=True):
+        obj = super(GuestForm, self).save(commit=False)
+        if commit:
+            obj.save()
+            request = self.request
+            request.session["guest_email_id"] = obj.id 
+
+        return obj
+
+
+
+
 class LoginForm(forms.Form):
     email = forms.EmailField(label = _("Email address"), widget=forms.TextInput(attrs = {"class": "form-control input-xs",}))
     password = forms.CharField(label = _("Password"), widget=forms.PasswordInput(attrs = {"class": "form-control input-xs",}))
