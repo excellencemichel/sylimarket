@@ -50,7 +50,7 @@ class UserManager(BaseUserManager):
 				mobile = mobile
 			)
 		user_obj.set_password(password)
-		user_obj.is_staff = is_staff
+		user_obj.staff = is_staff
 		user_obj.admin = is_admin
 		user_obj.is_active = is_active
 		user_obj.save(using=self._db)
