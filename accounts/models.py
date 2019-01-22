@@ -225,7 +225,9 @@ class EmailActivation(models.Model):
 				print("Key")
 				base_url = getattr(settings, "BASE_URL", "https://www.sylimarket.com")
 				key_path = reverse("accounts:email_activate", kwargs ={"key":self.key })#use reverse
+				print("Voici le key key_path",key_path)
 				path = "{base}{path}".format(base=base_url, path=key_path)
+				print("Voici le key path",path)
 				context = {
 				"path": path,
 				"email": self.email
