@@ -74,7 +74,6 @@ INSTALLED_APPS = [
     'marketing',
     'products',
     'search',
-    'stats',
     'tags',
 
 ]
@@ -109,7 +108,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'stats.middleware.stats_middleware',
 
 
 ]
