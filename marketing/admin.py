@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import MarketingPreference
+from .models import MarketingPreference, MarketingSliders
 
 # Register your models here.
 
@@ -23,3 +23,6 @@ class MarketingPreferenceAdmin(admin.ModelAdmin):
 
 
 admin.site.register(MarketingPreference, MarketingPreferenceAdmin)
+
+
+admin.site.register(MarketingSliders)

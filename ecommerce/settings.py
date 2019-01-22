@@ -39,6 +39,9 @@ ALLOWED_HOSTS = []
 BASE_URL ="www.sylimarket.com"
 
 
+GA_TRACKING_ID = 'UA-132886357-1'
+
+
 USE_GA = os.environ.get('DJANGO_USE_GA', False)
 USE_GA = {'True': True, 'False': False}.get(USE_GA, False)
 
@@ -232,4 +235,3 @@ if os.environ.get("ENV") =="PRODUCTION":
 
 
 
-GA_TRACKING_ID = 'UA-132886357-1'

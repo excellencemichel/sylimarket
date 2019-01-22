@@ -17,7 +17,7 @@ from django.shortcuts import render
 
 
 
-from .models import MarketingPreference
+from .models import MarketingPreference, MarketingSliders
 
 from .forms import MarketingPreferenceForm
 
@@ -137,3 +137,17 @@ class MailchimpWebhookView(CsrfExemptMixin, View):
 
 
 		return HttpResponse("Thank you", status=200)
+
+
+
+
+
+def treeDSlider(request):
+
+	sliders = MarketingSliders.objects.all()
+
+	context = {
+		"sliders": sliders
+	}
+
+	return render(request, "marketing/slider.html", context)

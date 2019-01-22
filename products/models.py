@@ -281,7 +281,6 @@ pre_save.connect(product_pre_save_receiver, sender=Product)
 
 def upload_product_file_loc(instance, filename):
 	slug = instance.product.slug
-	id_ = 0
 	id_ = instance.id
 	if id_ is None:
 		Klass = instance.__class__

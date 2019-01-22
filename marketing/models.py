@@ -74,3 +74,28 @@ def marketing_pref_create_receiver(sender, instance, created, *args, **kwargs):
 		# import pdb; pdb.set_trace()
 
 post_save.connect(marketing_pref_create_receiver, sender=MarketingPreference)
+
+
+
+def upload_product_file_loc(instance, filename):
+	id_ = instance.id
+	if id_ is None:
+		Klass = instance.__class__
+		qs = Klass.objects.all().order_by("-pk")
+		if qs.exists():
+			id_ = qs.first().id + 1
+		else:
+			id_ = 0
+	location = "sliders_media/{id}/".format(id=id_)
+
+
+	return location + filename #path/to/file/filename.mp4
+
+
+class MarketingSliders(models.Model):
+	name 			= models.CharField(max_length=250)
+	slider 			= models.ImageField(max_length=250,
+						upload_to=upload_product_file_loc
+						)
+	timestamp 	  	= models.DateTimeField(auto_now_add=True)
+	updated 	  	= models.DateTimeField(auto_now = True)

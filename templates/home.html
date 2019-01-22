@@ -2,7 +2,6 @@
 
 {% load static %}
 
-<title>Home title</title>
 
 {% block base_head %}
 	<link rel="stylesheet" type="text/css" href="{% static 'css/home/main.css' %}">
@@ -41,6 +40,7 @@
 	</div>
 	<div></div>
 {% endblock carousel %}
+
 
 {% block content %}
 <div class="container">
@@ -88,6 +88,9 @@
 
 	<div class="marques">
 	  		{% include "base/marques.html" %}
+	</div>
+	<div>
+		{% include "marketing/slider.html" with sliders=sliders %}
 	</div>
 
 
