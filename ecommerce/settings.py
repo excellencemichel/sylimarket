@@ -49,7 +49,6 @@ USE_GA = {'True': True, 'False': False}.get(USE_GA, False)
 
 
 
-
 # Application definition
 
 INSTALLED_APPS = [

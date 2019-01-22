@@ -1,6 +1,7 @@
 .env
 *.pyc
 env/
+env
 
 ecommerce.sublime-workspace
 staticfiles

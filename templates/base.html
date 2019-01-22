@@ -1,7 +1,16 @@
 {% load static settings_context %}
+
 <!doctype html>
 	<html lang="en">
 		<head>
+			{% block ga %}
+	  			{% get_from_settings 'USE_GA' as use_ga %}
+
+	  				{% if use_ga %}
+	    		{% include "base/ga.html" with ga_tracking_id=ga_tracking_id %}
+	  				{% endif %}
+			{% endblock ga %}
+
 		    <!-- Required meta tags -->
 		    <meta charset="utf-8">
 		    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,13 +22,7 @@
 
 		    {% block base_head %} {% endblock base_head %}
 
-		    {% block ga %}
-	  			{% get_from_settings 'USE_GA' as use_ga %}
 
-	  			<!-- {% if use_ga %} -->
-	    		{% include "base/ga.html" with ga_tracking_id=ga_tracking_id %}
-	  			<!-- {% endif %} -->
-			{% endblock ga %}
 	    </head>
 	  	<body>
 
