@@ -293,17 +293,6 @@ def checkout_livraison(request):
 
 				to_email.append(request.user.email)
 
-<<<<<<< HEAD
-			if guest_form.is_valid():
-				guest_address_email = guest_form.cleaned_data.get("email")
-				print("Address guest qui entré",guest_address_email)
-				to_email.append(guest_address_email)
-				import pdb; pdb.set_trace()
-			else:
-				print("l'Adresse guest_email n'est pas valide")
-
-=======
->>>>>>> dev
 			from_email = settings.EMAIL_HOST_USER
 
 			context_dict = {"models_instance": order_obj}
@@ -340,7 +329,6 @@ def checkout_livraison(request):
 
 			request.session["cart_items"] = 0
 			del request.session["cart_id"]
-			del request.session["guest_email_id"]
 			return redirect ("carts:success")
 
 		else:

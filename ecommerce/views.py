@@ -40,7 +40,6 @@ from .forms import (
 
 def home(request):
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-<<<<<<< HEAD
 	products = Product.objects.all()
 	phones  = products.filter(types_product="phone")
 	electromenagers  = products.filter(types_product="electromenager")
@@ -56,7 +55,7 @@ def home(request):
 	pants 			 = products.filter(types_product="pants")
 
 
-=======
+
 	products =  Product.objects.all()[:5]
 	news_products = Product.objects.featured()[:4]
 
@@ -66,7 +65,7 @@ def home(request):
 
 	men_shoes = MenShoes.objects.all()
 	women_shoes = WomenShoes.objects.all()
->>>>>>> dev
+
 
 	phones 	= Phone.objects.all()
 	tablettes = Tablette.objects.all()
@@ -88,7 +87,7 @@ def home(request):
 
 
 	context = {
-<<<<<<< HEAD
+
 		"cart": 			cart_obj,
 		"products": 		products,
 		"phones": 			phones,
@@ -105,7 +104,7 @@ def home(request):
 		"pants": 			pants,
 
 
-=======
+
 		"cart": cart_obj,
 		"products": products,
 		"news_products": news_products,
@@ -130,7 +129,7 @@ def home(request):
 		"men_shoes": men_shoes,
 		"women_shoes": women_shoes,
 
->>>>>>> dev
+
 
 
 		}
