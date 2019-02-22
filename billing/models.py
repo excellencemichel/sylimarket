@@ -35,13 +35,6 @@ class BillingProfileManager(models.Manager):
 			obj, created = self.model.objects.get_or_create(
 								user = user, email=user.email)
 
-		elif guest_email_id is not None:
-			"Guest user checkout; auto reloads payment stuff"
-			guest_email_obj	= GuestEmail.objects.get(id = guest_email_id)
-			obj, created = self.model.objects.get_or_create(email=guest_email_obj.email)
-		else:
-			pass
-
 		return obj, created
 
 
@@ -104,14 +97,10 @@ pre_save.connect(billing_profile_created_receiver, sender=BillingProfile)
 
 
 
-def user_created_receiver(sender, instance, created, *args, **kwargs):
-	if created and instance.email:
-		BillingProfile.objects.get_or_create(user=instance, email=instance.email)
 
 
 
 
-post_save.connect(user_created_receiver, sender=User)
 
 
 
@@ -238,18 +227,12 @@ class PayementLivraisonManager(models.Manager):
 
 	def new_or_get(self, request):
 		user = request.user
-		guest_email_id 	= request.session.get("guest_email_id")
 		created  = False
 		obj = None
 		if user.is_authenticated:
 			"logged in user checkout; remember payment stuff"
 			obj, created = self.model.objects.get_or_create(
-								user = user, email=user.email)
-
-		elif guest_email_id is not None:
-			"Guest user checkout; auto reloads payment stuff"
-			guest_email_obj	= GuestEmail.objects.get(id = guest_email_id)
-			obj, created = self.model.objects.get_or_create(email=guest_email_obj.email)
+								user = user, email=user.email, mobile=user.mobile)
 		else:
 			pass
 
@@ -261,6 +244,7 @@ class PayementLivraisonManager(models.Manager):
 class PayementLivraison(models.Model):
 	user 				= models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
 	email 				= models.EmailField()
+	mobile				= models.CharField(max_length=250)
 	updated 			= models.DateTimeField(auto_now=True)
 	timestamp 			= models.DateTimeField(auto_now_add=True)
 
@@ -268,3 +252,31 @@ class PayementLivraison(models.Model):
 
 	def __str__(self):
 		return self.email
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+####################### Signaux ###############################
+
+
+
+
+def user_created_receiver(sender, instance, created, *args, **kwargs):
+	if created and instance.email:
+		BillingProfile.objects.get_or_create(user=instance, email=instance.email)
+	if created and instance.email and instance.mobile:
+		PayementLivraison.objects.get_or_create(user=instance, email=instance.email, mobile=instance.mobile)
+
+
+
+post_save.connect(user_created_receiver, sender=User)

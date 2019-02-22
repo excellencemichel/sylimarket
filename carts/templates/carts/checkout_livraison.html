@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="breadcrumb">
+	<div class="container">
+		<div class="breadcrumb-inner">
+			<ul class="list-inline list-unstyled">
+				<li><a href="#">Home</a></li>
+				<li class='active'>Payement</li>
+			</ul>
+		</div><!-- /.breadcrumb-inner -->
+	</div><!-- /.container -->
+</div><!-- /.breadcrumb -->
+
+<div class="body-content">
+	<div class="container">
+		<div class="checkout-box ">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="panel-group checkout-steps" id="accordion">
+
+
+						{% if not payement_livraison %}
+							<div class="panel panel-default checkout-step-01">
+
+								<!-- panel-heading -->
+								<div class="panel-heading">
+							    	<h4 class="unicase-checkout-title">
+								          <span style="background-color: #0f6cb2; color: #fff;">1 </span>CONNECTEZ-VOUS D'ABORD
+								        
+								     </h4>
+							    </div>
+							    <!-- panel-heading -->
+							    	<div id="collapseOne" class="panel-collapse collapse in">
+
+										<!-- panel-body  -->
+									    <div class="panel-body">
+											<div class="row">		
+
+												<!-- guest-login -->			
+												<div class="col-md-12 col-sm-12 guest-login">
+
+													{% include "accounts/snippets/form.html" with form=login_form next_url=request.build_absolute_uri  %}
+												</div>
+											</div>
+										</div>
+									</div>
+
+							</div>
+
+
+
+
+
+
+						{% else %}
+							{% if not object.livraison_address %}
+								<div class="panel panel-default checkout-step-02">
+						    		<div class="panel-heading">
+						    			<h4 class="unicase-checkout-title">
+
+						          			<span style="background-color: #0f6cb2; color: #fff;">2 </span>Adresse de livraison
+						      			</h4>
+					
+									</div>
+									<div class="panel-collapse collapse in">
+								    	<div class="panel-body">
+											<div class="col-md-6 col-sm-6">
+
+								    			{% url "addresses:checkout_address_livraison_create" as checkout_address_livraison_create %}
+												{% include "addresses/snippets/form_payement_livraison.html" with form=address_payement_livraison_form next_url=request.build_absolute_uri action_url=checkout_address_livraison_create address_payement_livraison_type="livraison" %}
+											</div>
+
+
+											<div class="col-md-6 col-sm-6">
+
+												{% url "addresses:checkout_address_livraison_reuse" as checkout_address_livraison_reuse %}
+
+												{% include "addresses/prev_addresses_livraison.html" with address_qs=address_payement_livraison_qs next_url=request.build_absolute_uri address_payement_livraison_type="livraison" action_url=checkout_address_livraison_reuse %}
+											</div>
+
+								    	</div>
+						    		</div>
+					
+
+
+								</div>
+					
+
+
+
+
+							{% elif not object.facturation_address %}
+								<div class="panel panel-default checkout-step-03">
+
+								    <div class="panel-heading">
+						      			<h4 class="unicase-checkout-title">
+
+						       				<span style="background-color: #0f6cb2; color: #fff;">3 </span>Adresse de facturation
+
+						      			</h4>
+						    		</div>
+						    		<div id="collapseThree" class="panel-collapse collapse in">
+						      			<div class="panel-body">
+											<div class="col-md-6 col-sm-6">
+
+
+												{% url "addresses:checkout_address_livraison_create" as checkout_address_livraison_create %}
+												{% include "addresses/snippets/form_payement_livraison.html" with form=address_payement_livraison_form next_url=request.build_absolute_uri action_url=checkout_address_livraison_create address_payement_livraison_type="facturation" %}
+											</div>
+											<div class="col-md-6 col-sm-6">
+												{% url "addresses:checkout_address_livraison_reuse" as checkout_address_livraison_reuse %}
+												{% include "addresses/prev_addresses_livraison.html" with address_qs=address_payement_livraison_qs next_url=request.build_absolute_uri address_payement_livraison_type="facturation" action_url=checkout_address_livraison_reuse %}
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+
+
+						{% else %}
+							<div class="panel-group">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+							    		<h4 class="unicase-checkout-title">
+							    			<span style="background-color: #0f6cb2; color: #fff;">4 </span>Finalisez la caisse
+							    		</h4>
+							    	</div>
+
+									<h5 class="unicase-checkout-title">Les articles sont :</h5> <p>{% for product in  object.cart.items.all %} {{ product }} {% if not forloop.last %}, {% endif %} {% endfor %}</p>
+
+									<h5 class="unicase-checkout-title">Adresse de livraison :</h5> <p> {{ object.livraison_address.get_address }}</p>
+
+									<h5 class="unicase-checkout-title">Adresse de facturation:</h5> <p>{{ object.facturation_address.get_address }}</p>
+
+									<p>Mode de paiement: <strong>Payement à la livraison</strong> (<a href="{% url 'carts:home' %}?next={{ request.build_absolute_uri }}">Changer</a>) </p>
+
+
+									<p>Panier Total : {{ object.cart.total }}</p>
+									<p>Total d'expédition: {{ object.shipping_total }}</p>
+
+									<p>Total de la commande: {{ object.total }}</p>
+
+									<form class="form" method="POST" action="">
+										{% csrf_token %}
+										<h3>Si vous ne constatez pas d'ereurs quelques part ? Alors ...</h3>
+										<button type="submit" class="btn btn-success">Terminez la caisse</button>
+									</form>
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		{% endif %}
+
+{% endif %}
+
+
+	</div><!-- /.container -->
+</div><!-- /.body-content -->
+
+{% endblock content %}
+
+

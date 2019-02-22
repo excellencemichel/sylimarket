@@ -1,12 +1,10 @@
-import os
-from wsgiref.util import FileWrapper
-from mimetypes import guess_type 
 
 from django.conf import settings
-from django.views.generic import ListView, View, DetailView
-
 
 from django.http import Http404, HttpResponse, HttpResponseRedirect
+
+from django.views.generic import ListView, View, DetailView
+
 from django.shortcuts import render, get_object_or_404, redirect
 
 from django.utils.decorators import method_decorator
@@ -24,9 +22,32 @@ from analytics.mixins import ObjectViewedMixin
 from analytics.signals import object_viewed_signal
 from carts.models import Cart
 from orders.models import ProductPurshase
-from .models import Product, ProductFile
+
+
+
+
+#import from models
+from .models import (  Product,
+
+					#clothings
+					MenClothing, WomenClothing, Pantalon,
+					Culotte, Jupe, MenShoes,
+					WomenShoes, AccessoireClothng,
+
+					#computers
+					Computer, AccessoireComputer,
+
+					#phones
+					Phone, Tablette, AccessoirePhone
+
+					)
+
+
+
 
 # Create your views here.
+
+
 
 
 class ProductFeaturedListView(ListView):
@@ -47,8 +68,11 @@ class ProductFeaturedDetailView(ObjectViewedMixin, DetailView):
 		return Product.objects.all()
 
 
+
+
+
+
 class ProductListView(ListView):
-	# queryset = Product.objects.all()
 	template_name = "products/list.html"
 
 	def get_context_data(self, *args, **kwargs):
@@ -62,6 +86,27 @@ class ProductListView(ListView):
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
 		return Product.objects.all()
+
+
+
+
+def product_detail(request, slug=None):
+	product = get_object_or_404(Product, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	product_in_cart = cart_obj.cart_item_exists(product)
+
+	context = {
+		"product": product,
+		"cart": cart_obj,
+		"product_in_cart": product_in_cart,
+	}
+
+
+	return render(request, "products/detail.html", context)
+
+
+
+
 
 
 
@@ -89,162 +134,264 @@ class UserProductHistoryView(ListView):
 
 
 
-def product_list_view(request):
-
-
-	queryset = Product.objects.all()
-
-	context = {
-	"qs" :queryset,
-	}
-
-
-	return render(request, "products/product_list_view.html", context)
-
-
-
-
-
-class ProductDetailView(ObjectViewedMixin, DetailView):
-	queryset = Product.objects.all()
-	template_name = "products/detail.html"
-
-	def get_context_data(self, *args, **kwargs):
-		context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
-		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
-		context["cart"] = cart_obj
-
-		return context
-
-
-
-
-	def get_object(self, *args, **kwargs):
-		request = self.request
-		pk = self.kwargs.get("pk")
-		slug = self.kwargs.get("slug")
-		instance = Product.objects.get_by_slug_id(slug, pk)
-		if instance is None:
-			raise Http404("Product doesn't exist")
-
-		# instance_image = ProductFile.objects.filter(product_id=instance.id)
-		return instance
-
-
-	def get_queryset(self, *args, **kwargs):
-		request = self.request
-		pk = self.kwargs.get("pk")
-		slug = self.kwargs.get("slug")
-		# return Product.objects.filter(pk=pk)
-		return Product.objects.filter(slug=slug, pk=pk)
 
 
 
 
 
 
-def product_detail_view(request, slug=None, pk=None, *args, **kwargs):
-
-	instance = Product.objects.get_by_slug_id(slug, pk)
-	instance_image = ProductFile.objects.filter(product_id = instance.id)
-	
+def men_clothing_detail(request, slug=None):
+	men_clothing = get_object_or_404(MenClothing, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-
-	if instance:
-		object_viewed_signal.send(instance.__class__, instance=instance, request=request)
-		
-
+	product_in_cart = cart_obj.cart_item_exists(men_clothing)
 
 	context = {
-	"object" : instance,
-	"instance_image": instance_image,
-	"cart": cart_obj,
+		"cart": cart_obj,
+		"product_in_cart": product_in_cart,
+		"product": men_clothing,
 	}
 
 
-	return render(request, "products/detail.html", context)
+	return render(request, "products/men_clothing_detail.html", context)
 
 
 
 
 
-# class ProductDetailSlugView(ObjectViewedMixin, DetailView):
-# 	# queryset = Product.objects.all()
-# 	template_name = "products/detail.html"
+def women_clothing_detail(request, slug=None):
+	women_clothing = get_object_or_404(WomenClothing, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	product_in_cart = cart_obj.cart_item_exists(women_clothing)
+
+	context = {
+		"cart": cart_obj,
+		"product_in_cart": product_in_cart,
+		"product": women_clothing
+	}
 
 
-# 	def get_object(self, *args, **kwargs):
-
-# 		request = self.request
-# 		slug = self.kwargs.get("slug")
+	return render(request, "products/women_clothing_detail.html", context)
 
 
-# 		# instance = get_object_or_404(Product, slug=slug, active=True)
-# 		try:
-
-# 			instance = Product.objects.get(slug=slug, active=True)
-# 		except Product.DoesNotExist:
-# 			raise Http404("Product doesn't exist")
-
-# 		except Product.MultipleObjectsReturned:
-# 			qs = Product.objects.filter(slug=slug, active=True)
-# 			instance = qs.first()
-
-# 		except:
-# 			raise Http404("Uhhhhh")
-
-# 		# object_viewed_signal.send(instance.__class__, instance=instance, request=request)
-# 		return instance
 
 
-class ProductDownloadView(View):
-	def get(self,request, *args, **kwargs):
-		slug = kwargs.get("slug")
-		pk = kwargs.get("pk")
-		downloads_qs = ProductFile.objects.filter(pk=pk, product__slug=slug)
-		if downloads_qs.count() != 1:
-			raise Http404(_("Download not found"))
-		download_obj = downloads_qs.first()
-		#Permission checks
-		can_download = False
-		user_ready = True
+def accessoire_clothing_detail(request, slug=None):
+	accessoire_clothing = get_object_or_404(AccessoireClothng, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	product_in_cart = cart_obj.cart_item_exists(accessoire_clothing)
 
-		if download_obj.user_required:
-			if not request.user.is_authenticated:
-				user_ready = False
-			
-
-		purshase_products = Product.objects.none()
-		if download_obj.free:
-			can_download = True
-			user_ready = True
-		else:
-			purshase_products = ProductPurshase.objects.products_by_request(request)
-			if download_obj.product in purshase_products:
-				can_download = True
-
-		if not can_download or not user_ready:
-			messages.error( request,_("You do not have access to download this item"))
-			return redirect(download_obj.get_default_url())
-
-		# aws_filepath = download_obj.generate_download_url()
-		# print(aws_filepath)
-		# return HttpResponseRedirect(aws_filepath)
-
-		file_root = settings.PROTECTED_ROOT
-		filepath  = download_obj.image.path # .url /media/..
-		final_filepath = os.path.join(file_root, filepath) #Where the is stored
-		with open(final_filepath, "rb") as f:
-			wrapper = FileWrapper(f)
-			mimetype = "application/force-download"
-			guess_mimetype = guess_type(filepath)[0] #filene.mp4
-			if guess_mimetype:
-				mimetype = guess_mimetype
+	context = {
+		"cart": cart_obj,
+		"product_in_cart": product_in_cart,
+		"product": accessoire_clothing
+	}
 
 
-			response = HttpResponse(wrapper, content_type=mimetype)
-			response["Content-Disposition"] = "attachment;filename=%s"%(download_obj.name)
-			response["X-SendFile"] = str(download_obj.name)
-			return response
+	return render(request, "products/accessoire_clothing_detail.html", context)
 
-		return redirect(download_obj.ge_default_url())
+
+
+def men_shoe_detail(request, slug=None):
+	men_shoe = get_object_or_404(MenShoes, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	product_in_cart = cart_obj.cart_item_exists(men_shoe)
+
+	context = {
+		"cart": cart_obj,
+		"product_in_cart": product_in_cart,
+		"product": men_shoe
+	}
+
+
+	return render(request, "products/men_shoe_detail.html", context)
+
+
+
+
+
+
+def women_shoe_detail(request, slug=None):
+	women_sheo = get_object_or_404(WomenShoes, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	product_in_cart = cart_obj.cart_item_exists(women_sheo)
+
+	context = {
+		"cart": cart_obj,
+		"product_in_cart": product_in_cart,
+		"product": women_sheo
+	}
+
+
+	return render(request, "products/women_shoe_detail.html", context)
+
+
+
+
+
+
+
+
+
+def patalon_detail(request, slug=None):
+	pantalon = get_object_or_404(Pantalon, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	product_in_cart = cart_obj.cart_item_exists(pantalon)
+
+	context = {
+		"cart": cart_obj,
+		"product_in_cart": product_in_cart,
+		"product": pantalon
+	}
+
+
+	return render(request, "products/pantalon_detail.html", context)
+
+
+
+
+
+
+
+
+
+def culotte_detail(request, slug=None):
+	culotte = get_object_or_404(Culotte, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	product_in_cart = cart_obj.cart_item_exists(culotte)
+
+	context = {
+		"cart": cart_obj,
+		"product_in_cart": product_in_cart,
+		"product": culotte
+	}
+
+
+	return render(request, "products/culotte_detail.html", context)
+
+
+
+
+
+
+
+
+
+def jupe_detail(request, slug=None):
+	jupe = get_object_or_404(Jupe, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	product_in_cart = cart_obj.cart_item_exists(jupe)
+
+	context = {
+		"cart": cart_obj,
+		"product_in_cart": product_in_cart,
+		"product": jupe
+	}
+
+
+	return render(request, "products/jupe_detail.html", context)
+
+
+
+
+def phone_detail(request, slug=None):
+	phone = get_object_or_404(Phone, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	product_in_cart = cart_obj.cart_item_exists(phone)
+
+	context = {
+		"cart": cart_obj,
+		"product_in_cart": product_in_cart,
+		"product": phone
+	}
+
+
+	return render(request, "products/phone_detail.html", context)
+
+
+
+
+
+def tablette_detail(request, slug=None):
+	tablette = get_object_or_404(Tablette, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	product_in_cart = cart_obj.cart_item_exists(tablette)
+
+	context = {
+		"cart": cart_obj,
+		"product_in_cart": product_in_cart,
+		"product": tablette
+	}
+
+
+	return render(request, "products/tablette_detail.html", context)
+
+
+
+
+
+
+
+
+
+def accessoire_phone_detail(request, slug=None):
+	accessoire_phone = get_object_or_404(AccessoirePhone, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	product_in_cart = cart_obj.cart_item_exists(accessoire_phone)
+
+	context = {
+		"cart": cart_obj,
+		"product_in_cart": product_in_cart,
+		"product": accessoire_phone
+	}
+
+
+	return render(request, "products/accessoire_phone_detail.html", context)
+
+
+
+
+
+
+
+
+
+def computer_detail(request, slug=None):
+	computer = get_object_or_404(Computer, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	product_in_cart = cart_obj.cart_item_exists(computer)
+
+	context = {
+		"cart": cart_obj,
+		"product_in_cart": product_in_cart,
+		"product": computer
+	}
+
+
+	return render(request, "products/computer_detail.html", context)
+
+
+
+
+
+
+
+
+
+def accessoire_computer_detail(request, slug=None):
+	accessoire_computer = get_object_or_404(AccessoireComputer, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	product_in_cart = cart_obj.cart_item_exists(accessoire_computer)
+
+	context = {
+		"cart": cart_obj,
+		"product_in_cart": product_in_cart,
+		"product": accessoire_computer
+	}
+
+
+	return render(request, "products/accessoire_computer_detail.html", context)
+
+
+
+
+

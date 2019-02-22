@@ -11,7 +11,7 @@
      			<h3>Information sur votre achat que vous venez d'effectuer sur SyliMarket</h3>
 
      				<p>
-     					Cart Items : {% for product in  models_instance.cart.products.all %} {{ product }} {% if not forloop.last %}, {% endif %} {% endfor %}
+     					Cart Items : {% for item in  models_instance.cart.items.all %} {{ item.product }} {% if not forloop.last %}, {% endif %} {% endfor %}
      				</p>
 
 

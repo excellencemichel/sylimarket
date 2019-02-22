@@ -46,21 +46,139 @@ class Address(models.Model):
 
 
 
-ADDRESS_TYPES_LIVRAISON = (
-	("facturation", "Facturation"),
-	("livraison", "Livraison"),
-	)
+
 
 
 class AddressPayementLivraison(models.Model):
+
+	FACTURATION = "facturation"
+	LIVRAISON = "livraison"
+
+	ADDRESS_TYPES_LIVRAISON = (
+	(FACTURATION, "Facturation"),
+	("LIVRAISON", "Livraison"),
+	)
+
+	VILLE_CONAKRY = "conakry"
+
+	VILLE_BOKE = "boke"
+	VILLE_BOFFA = "boffa"
+	VILLE_FRIA = "fria"
+	VILLE_DUBREKA = "dubreka"
+	VILLE_KAMSAR = "kamsar"
+	VILLE_GAOUAL = "gaoual"
+	VILLE_KOUNDARA = "koundara"
+
+
+
+	VILLE_KINDIA = "kindia"
+	VILLE_COYAH = "coyah"
+	VILLE_FORECARIAH = "forecariah"
+	VILLE_TELIMELE = "telimele"
+
+	VILLE_MAMOU = "mamou"
+	VILLE_PITA = "pita"
+	VILLE_DALABA = "dalaba"
+
+
+	VILLE_LABE = "labe"
+	VILLE_LELOUMA = "Lelouma"
+	VILLE_KOUBIA = "koubia"
+	VILLE_TOUGUE = "tougue"
+	VILLE_MALI = "mali"
+
+
+	VILLE_FARANAH = "faranah"
+	VILLE_DABOLA = "dabola"
+	VILLE_KISSIDOUGOU = "kissidougou"
+	VILLE_DINGUIRAYE = "dinguiraye"
+
+
+	VILLE_KANKAN = "kankan"
+	VILLE_MADIANAH = "madianah"
+	VILLE_KOUROUSSA = "kouroussa"
+	VILLE_SIGUIRI = "siguiri"
+
+	VILLE_NZEREKORE = "nzerekore"
+	VILLE_MACENTA = "macenta"
+	VILLE_LOLA = "lola"
+	VILLE_YOMOU = "yomou"
+	VILLE_BEYLA = "beyla"
+	VILLE_GUEKEDOU = "guekedou"
+
+	VILLE_CHOICES = (
+
+		(VILLE_CONAKRY, "Conakry"),
+		(VILLE_BOKE, "Boké"),
+		(VILLE_BOFFA, "Boffa"),
+		(VILLE_FRIA, "Fria"),
+		(VILLE_GAOUAL, "Gaoual"),
+		(VILLE_KOUNDARA, "Koundara"),
+		(VILLE_DUBREKA, "Dubreka"),
+		(VILLE_KAMSAR, "Kamsar"),
+
+
+
+
+		(VILLE_KINDIA, "Kindia"),
+		(VILLE_FORECARIAH, "Forécariah"),
+		(VILLE_COYAH, "Coyah"),
+		(VILLE_TELIMELE, "Télimélé"),
+
+
+
+
+		(VILLE_MAMOU, "Mamou"),
+		(VILLE_PITA, "Pita"),
+		(VILLE_DALABA, "Dalaba"),
+
+
+
+
+		(VILLE_LABE, "Labé"),
+		(VILLE_LELOUMA, "Lélouma"),
+		(VILLE_MALI, "Mali yimbèrè"),
+		(VILLE_KOUBIA, "Koubia"),
+		(VILLE_TOUGUE, "Tougué"),
+
+
+
+
+
+		(VILLE_FARANAH, "Faranah"),
+		(VILLE_DINGUIRAYE, "Dinguiraye"),
+		(VILLE_KISSIDOUGOU, "Kissidougou"),
+		(VILLE_DABOLA, "Dabola"),
+
+
+
+
+		(VILLE_KANKAN, "Kankan"),
+		(VILLE_SIGUIRI, "Siguiri"),
+		(VILLE_MADIANAH, "Madianah"),
+		(VILLE_KOUROUSSA, "Kouroussa"),
+
+
+		(VILLE_NZEREKORE, "N'Zérékoré"),
+		(VILLE_MACENTA, "Macenta"),
+		(VILLE_LOLA, "Lola"),
+		(VILLE_BEYLA, "Beyla"),
+		(VILLE_YOMOU, "Yomou"),
+
+
+
+
+
+		)
+
 	payement_livraison						= models.ForeignKey(PayementLivraison, on_delete=models.CASCADE)
 	address_payement_livraison_type 		= models.CharField(max_length=120, choices=ADDRESS_TYPES_LIVRAISON)
-	address									= models.CharField(max_length=250)
-	description								= models.CharField(max_length=250, null=True, blank=True)
-	pays									= models.CharField(max_length=250)
-	etat									= models.CharField(max_length=250)
-	ville									= models.CharField(max_length=250)
-	postal_code								= models.CharField(max_length=250)
+	pays									= models.CharField(max_length=250, default="Guinée")
+	ville									= models.CharField(max_length=250, choices=VILLE_CHOICES, default=VILLE_CONAKRY)
+	quartier								= models.CharField(max_length=250)
+	description								= models.TextField(null=True, blank=True)
+	mobile									= models.CharField(max_length=250)
+	postal_code								= models.CharField(max_length=250, null=True, blank=True)
 
 
 
@@ -71,13 +189,11 @@ class AddressPayementLivraison(models.Model):
 
 
 	def get_address(self):
-		print("Avant exécution de get_address")
-		return "{address_}\n{description_}\n{pays_}\n{etat_}\n{ville_}\n{postal_code_}".format(
-						address_=self.address,
-						description_=self.description or "",
+		return "Pays: {pays_}\n ; Ville : {ville_}; \n Quartier:{quartier_};\n Description :{description_};\n Numéro de téléphone :{mobile_}; \nCode postal :{postal_code_}".format(
 						pays_=self.pays,
-						etat_=self.etat,
-						ville_=self.ville, 
-						postal_code_=self.postal_code,
-
+						ville_=self.ville,
+						quartier_= self.quartier,
+						description_=self.description or "",
+						mobile_=self.mobile,
+						postal_code_=self.postal_code or "",
 						)

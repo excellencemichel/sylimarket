@@ -44,8 +44,6 @@ urlpatterns = [
 
     path('about', about_page, name="about"),
     path('contact', contact_page, name="contact"),
-    path('bootstrap', TemplateView.as_view(template_name="bootstrap/example.html")),
-    path('retour', TemplateView.as_view(template_name="bootstrap/retour.html")),
 
     path('library', LibraryView.as_view(), name="library"),
 
@@ -89,7 +87,3 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-
-# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-# urlpatterns += static(settings.MEDIA_URL, document_root=settings.PROTECTED_ROOT)

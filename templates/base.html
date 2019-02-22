@@ -1,49 +1,65 @@
 {% load static %}
 
-<!doctype html>
-	<html lang="en">
-		<head>
-		    <!-- Required meta tags -->
-		    <meta charset="utf-8">
-		    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		     <link rel="icon" href="{% static 'img/logo/png/001-elephant.png' %}">
+<!DOCTYPE html>
+<html lang="en">
 
-		    <title>SyliMarket</title>
+<!-- Mirrored from www.themesground.com/flipmart-demo/HTML/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Feb 2019 17:57:46 GMT -->
+<head>
+<!-- Meta -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="keywords" content="MediaCenter, Template, eCommerce">
+<meta name="robots" content="all">
+<link rel="icon" href="{% static 'images/logo/png/logo.png' %}">
 
-		    {% include "base/css.html" %}
 
-		    {% block base_head %} {% endblock base_head %}
-	    </head>
-	  	<body>
+<title>SyliMarket</title>
 
-	  		{% include "base/navh.html" with brand_name="SyliMarket"  %}
+        {% include "base/css.html" %}
+</head>
+<body class="cnt-home">
+<!-- ============================================== HEADER ============================================== -->
+<header class="header-style-1"> 
+    {% include "base/nav.html" with brand_name="SyliMarket"  %} 
+  
+</header>
 
-	  			{% if messages %}
-	  		<div class="container" style="padding-top: 30px;">
-	  				<div class=" alert alert-success messages">
-	  					{% for message in messages %}
-	  						<span{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-	  							{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important : {% endif %}
-	  							{{ message }} <br>
-	  					    </span>
-	  					{% endfor %}
-	  				</div>
+<!-- ============================================== HEADER : END ============================================== -->
 
-	  		</div>
-	  			{% endif %}
 
-	  		{% block carousel %}{% endblock carousel %}
-	  		{% block content %}{% endblock content %}
+<div class="body-content outer-top-xs" id="top-banner-and-menu">
+  <div class="container">
+      {% if messages %}
+            <div class=" alert alert-success messages">
+              {% for message in messages %}
+                <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                  {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important : {% endif %}
+                  {{ message }} <br>
+                  </span>
+              {% endfor %}
+            </div>
 
-	  		{% block footer %}
-	  			{% include "base/footer.html" %}
-	  		{% endblock footer %}
+          {% endif %}
+        {% block content %}{% endblock content %}
 
-		    {% include "base/js.html"  %}
 
-		    {% block javascript %}
-		    {% endblock javascript %}
+  </div>
+  <!-- /.container --> 
+</div>
+<!-- /#top-banner-and-menu --> 
 
-		 	
-		</body>
-	</html>
+
+        {% block footer %}
+          {% include "base/footer.html" %}
+        {% endblock footer %}
+
+
+        {% include "base/js.html"  %}
+
+
+
+</body>
+
+</html>

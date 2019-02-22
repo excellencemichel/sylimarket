@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-import dj_database_url
 from decouple import config
 
 
@@ -63,6 +62,7 @@ INSTALLED_APPS = [
     'analytics',
     'billing',
     'carts',
+    'comments',
     'orders',
     'marketing',
     'products',
@@ -190,7 +190,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+STATICFILES_DIRS = [
+         os.path.join(BASE_DIR, "static"),
+                
+                ]
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "static_root")
 
 MEDIA_URL = "/media/"
 

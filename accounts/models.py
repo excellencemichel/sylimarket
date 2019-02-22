@@ -24,7 +24,8 @@ from django.template.loader import get_template
 
 
 #Local import
-from ecommerce.utils import random_string_generator, unique_key_generator
+
+from utils.generator_utils import random_string_generator, unique_key_generator
 
 
 

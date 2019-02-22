@@ -1,59 +1,126 @@
-{% load i18n %}
+{% load static i18n %}
 
-
-<style type="text/css">
-  #footer {
-    margin: 0 ;
-    margin-top: 25px ;
-    margin-bottom: 0;
-    /*background-color: #e9ecef ;*/
-    background-color: #46acb8;
-  }
-
-  .footer__inner {
-    padding: 35px 10% 0;
-  }
-  .footer__items__title {
-    margin-bottom: 10px ;
-    font-size: 1.12rem ;
-    color: #333 ;
-    font-weight: 600 ;
-  }
-  .footer__bottom___item__inner {
-    margin-top: 25px ;
-    padding: 15px ;
-    border-top: 1px solid #ced4da ;
-  }
-  .clearfix::after {
-    content: "" ;
-    display: block ;
-    clear: both ;
-  }
-</style>
-      <!-- FOOTER -->
-      <footer id="footer">
-        <div class="footer__inner ">
-          <div class="footer__informations">
-            <div class="col-12">
-              <div class="footer__iner__items footer__items__title">Nous contacter</div>
-              <div class="footer__iner__items">Facebook</div>
-              <div class="footer__iner__items">Twitter</div>
-              <div class="footer__iner__items">Instagrame</div>
-              <div class="footer__iner__items">Snapchat</div>
-              <div class="footer__iner__items">Appeler</div>
-            </div>
+<!-- ============================================================= FOOTER ============================================================= -->
+<footer id="footer" class="footer color-bg">
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <div class="module-heading">
+            <h4 class="module-title">Contact Us</h4>
           </div>
-          <div class="footer__bottom___item__inner">
-            <div class="clearfix">
-              <div class="float-left">&copy;  Company, Inc. &middot; <a href="#">SyliMarket</a> &middot; 
-                {% now "Y" as current_year %}
-                {% blocktrans %}Copyright 2018-{{ current_year }}{% endblocktrans %}
-                <a href="#">Terms</a></div>
-              <a href="#" class="btn btn-secondary btn-sm active float-right" role="button" aria-pressed="true">
-                {% blocktrans %} Back to top {% endblocktrans %}
-              </a>
-              <!-- <p class="float-right"></p> -->
-            </div>
+          <!-- /.module-heading -->
+          
+          <div class="module-body">
+            <ul class="toggle-footer" style="">
+              <li class="media">
+                <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-map-marker fa-stack-1x fa-inverse"></i> </span> </div>
+                <div class="media-body">
+                  &copy;  Company, Inc. &middot; <a href="#">SyliMarket</a> &middot; 
+                    {% now "Y" as current_year %}
+                    {% blocktrans %}Copyright 2018-{{ current_year }}{% endblocktrans %}
+                </div>
+              </li>
+              <li class="media">
+                <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-mobile fa-stack-1x fa-inverse"></i> </span> </div>
+                <div class="media-body">
+                  <p>+(00212) 674-091-302<br>
+                    +(00224) 669-443-344</p>
+                </div>
+              </li>
+              <li class="media">
+                <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-envelope fa-stack-1x fa-inverse"></i> </span> </div>
+                <div class="media-body"> <span><a href="#">sylimarket@gmail.com</a></span> </div>
+              </li>
+            </ul>
           </div>
+          <!-- /.module-body --> 
         </div>
-      </footer>
+        <!-- /.col -->
+        
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <div class="module-heading">
+            <h4 class="module-title">Personnalisation de son service</h4>
+          </div>
+          <!-- /.module-heading -->
+          
+          <div class="module-body">
+            <ul class='list-unstyled'>
+              <li class="first"><a href="#" title="Contact us">Mon compte</a></li>
+              <li><a href="#" title="About us">Historiques de vos commandes</a></li>
+              <li><a href="#" title="faq">FAQ</a></li>
+              <li><a href="#" title="Popular Searches">Specials</a></li>
+              <li class="last"><a href="#" title="Where is my order?">Centre d'aide</a></li>
+            </ul>
+          </div>
+          <!-- /.module-body --> 
+        </div>
+        <!-- /.col -->
+        
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <div class="module-heading">
+            <h4 class="module-title">Coopérations</h4>
+          </div>
+          <!-- /.module-heading -->
+          
+          <div class="module-body">
+            <ul class='list-unstyled'>
+              <li class="first"><a title="Your Account" href="#">A propos de nous</a></li>
+              <li><a title="Information" href="#">Nos services</a></li>
+              <li><a title="Addresses" href="#">Company</a></li>
+              <li><a title="Addresses" href="#">Relations investisseurs</a></li>
+              <li class="last"><a title="Orders History" href="#">Recherches avancées</a></li>
+            </ul>
+          </div>
+          <!-- /.module-body --> 
+        </div>
+        <!-- /.col -->
+        
+        <div class="col-xs-12 col-sm-6 col-md-3">
+          <div class="module-heading">
+            <h4 class="module-title">Pourquoi il faut nous choisir ?</h4>
+          </div>
+          <!-- /.module-heading -->
+          
+          <div class="module-body">
+            <ul class='list-unstyled'>
+              <li class="first"><a href="#" title="About us">Guide d'achat</a></li>
+              <li><a href="#" title="Blog">Blog</a></li>
+              <li><a href="#" title="Company">Notre société</a></li>
+              <li><a href="#" title="Investor Relations">Nos valeurs</a></li>
+              <li class=" last"><a href="contact-us.html" title="Suppliers">Objects</a></li>
+            </ul>
+          </div>
+          <!-- /.module-body --> 
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="copyright-bar">
+    <div class="container">
+      <div class="col-xs-12 col-sm-6 no-padding social">
+        <ul class="link">
+          <li class="fb pull-left"><a target="_blank" rel="nofollow" href="https://www.facebook.com/sylimarket/" title="Facebook"></a></li>
+          <li class="tw pull-left"><a target="_blank" rel="nofollow" href="https://twitter.com/MarketSyli" title="Twitter"></a></li>
+          <li class="rss pull-left"><a target="_blank" rel="nofollow" href="#" title="RSS"></a></li>
+          <li class="pintrest pull-left"><a target="_blank" rel="nofollow" href="https://www.pinterest.fr/sylimarket/" title="PInterest"></a></li>
+          <li class="linkedin pull-left"><a target="_blank" rel="nofollow" href="https://www.linkedin.com/in/sylimarket-sylimarket-92557b180/" title="Linkedin"></a></li>
+          <li class="youtube pull-left"><a target="_blank" rel="nofollow" href="https://www.youtube.com/channel/UCGzj2AP5PcHtXkDjEpnH5bA" title="Youtube"></a></li>
+        </ul>
+      </div>
+      <div class="col-xs-12 col-sm-6 no-padding">
+        <div class="clearfix payment-methods">
+          <ul>
+            <li><img src="{% static 'images/payments/1.png' %}" alt=""></li>
+            <li><img src="{% static 'images/payments/2.png' %}" alt=""></li>
+            <li><img src="{% static 'images/payments/3.png' %}" alt=""></li>
+            <li><img src="{% static 'images/payments/4.png' %}" alt=""></li>
+            <li><img src="{% static 'images/payments/5.png' %}" alt=""></li>
+          </ul>
+        </div>
+        <!-- /.payment-methods --> 
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- ============================================================= FOOTER : END============================================================= --> 
