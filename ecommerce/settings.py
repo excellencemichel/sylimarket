@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-import dj_database_url
 from decouple import config
 
 
@@ -69,6 +68,7 @@ INSTALLED_APPS = [
     'analytics',
     'billing',
     'carts',
+    'comments',
     'orders',
     'marketing',
     'products',
@@ -202,7 +202,11 @@ STATIC_URL = '/static/'
 
 
 STATICFILES_DIRS = [
+<<<<<<< HEAD
          os.path.join(BASE_DIR, "static_my_proj"),
+=======
+         os.path.join(BASE_DIR, "static"),
+>>>>>>> dev
                 
                 ]
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "static_root")

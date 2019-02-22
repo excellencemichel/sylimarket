@@ -12,11 +12,11 @@
 							<label for="address-{{ address.id }}">
 								<input type="radio"
 								id="address-{{ address.id }}" name="livraison_address" value="{{ address.id }}">
-								{{ address.address }}
+								{{ address.get_address }}
 							</label>
 
 
 						{% endfor %}
-						<button type="submit" class="btn btn-success">Utiliser cette addresse</button>
+						<button type="submit" class="btn btn-success">Utiliser une d'entre elles</button>
 					</form>
 				{% endif  %}

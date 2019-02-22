@@ -1,0 +1,17 @@
+<form method="POST" action="{% url 'carts:update' %}" class="form-product-ajax" data-endpoint="{% url 'carts:update' %}" >
+	{% csrf_token %}
+
+	<input type="hidden" name="product_id" value="{{ product.id }}" {% if product.is_digital %}data-is-digital="true" {% endif %}>
+
+	<span class="submit-span">
+	 	{% if product_in_cart %}
+	 		<a href="{% url 'carts:home' %}" class="btn btn-primary"  style="margin: 7px;"><i class="fa fa-shopping-cart inner-right-vs">VOIR DANS LE PANIER</i></a>|
+
+			<button type="submit" class="btn btn-primary" style="margin: 7px;"><i class="fa fa-shopping-cart inner-right-vs" ></i>ENLEVER DU PANIER</a>
+		{% else %}
+			
+
+			<button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i>PAYER MAINTENANT</button>
+		</span>
+	{% endif %}
+</form>

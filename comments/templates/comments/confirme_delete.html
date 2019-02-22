@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+{{ instance.title }}
+{% endblock head_title %}
+
+
+{% block content %}
+
+<h1> Confirmation de la suppression </h1>
+
+<form method="POST" action="."> {% csrf_token %}
+	<p>Vous êtes sûrs de vouloir supprimer : "{{ instance.content }}" ?</p>
+
+	<input type="submit" value="Confirmer" style="color: red">
+	<a href="{{ instance.content_object.get_absolute_url }}" style="color: blue;"> Annuler</a>
+
+</form>
+
+{% endblock content %}

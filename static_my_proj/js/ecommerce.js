@@ -1,70 +1,162 @@
-$(document).ready(function(){
+ $(document).ready(function(){
+
+
+        function refreshHome(){
+          console.log("In home")
+          var productHome = $(".product-home")
+          var productHomeItem = productHome.find(".product-home-item")
+        var productUpdateform = productHomeItem.find(".product-update-form")
+
+        var refreshProductUrl = "/api/product/"
+        var refreshProductMethod = "GET"
+        var data = {}
+
+        $.ajax({
+          url: refreshProductUrl,
+          method: refreshProductMethod,
+          data: data,
+          success: function(data){
+            var hiddenProductAddForm = $(".product-item-add-form")
+            var hiddenProductRemoveForm = $(".product-item-remove-form")
+            if(data.products.length > 0){
+              productUpdateform.html(" ")
+
+              $.each(data.products, function(index, value){
+                console.log("Dans le cart: ", value.in_cart)
+                if(value.in_cart==false){
+                var newProductAddForm = hiddenProductAddForm.clone()
+                newProductAddForm.css("display", "inline-block")
+                newProductAddForm.find(".cart-item-product-id").val(value.id)
+
+                productUpdateform.prepend(newProductAddForm.html())
+
+
+                }
+
+                else if (value.in_cart==true){
+                  var newProductRemoveForm = hiddenProductRemoveForm.clone()
+                  newProductRemoveForm.css("display", "inline-block")
+                  newProductRemoveForm.find(".cart-item-product-id").val(value.id)
+
+                  productUpdateform.prepend(newProductRemoveForm.html())
+                }
+
+
+              })
+            }
+
+          },
+
+          error: function(){
+            $.alert({
+                title: "oops !",
+                content: "Une erreur s'est occasionée",
+                theme: "modern",
+              })
+          }
+
+        })
+        }
+
+      var productForm = $(".form-product-ajax")
+      productForm.submit(function(event){
+          event.preventDefault()
+          var thisForm = $(this)
+          // var actionEndpoint = thisForm.attr("action")
+          var actionEndpoint = thisForm.attr("data-endpoint")
+          var httpMethod = thisForm.attr("method")
+          var formData = thisForm.serialize();
+          $.ajax({
+            url: actionEndpoint,
+            method: httpMethod,
+            data: formData,
+            success: function(data){
+              var submitSapn = thisForm.find(".submit-span")
+              if (data.added){
+                submitSapn.html("<a href='{% url 'carts:checkout' %}' class='btn btn-primary' style='margin: 7px;'><i class='fa fa-shopping-cart inner-right-vs'>VOIR DANS LE PANIER</i></a>|<button type='submit' class='btn btn-primary' style='margin: 7px;'><i class='fa fa-shopping-cart inner-right-vs'></i>ENLEVER DU PANIER</a>")
+              }
+              else{
+                submitSapn.html("<button type='submit' class='btn btn-primary'><i class='fa fa-shopping-cart inner-right-vs'></i>PAYER MAINTENANT</button>")
+              }
+
+              var navBarCount = $(".navbar-cart-count")
+              navBarCount.text(data.cartItemsCount)
+              var currentPath = window.location.href
+              // if(currentPath.indexOf("") != -1){
+              //   refreshHome()
+              // }
+              if(currentPath.indexOf("cart") != -1){
+                refreshCart()
+              }
+            },
+
+            error: function(errorData){
+              $.alert({
+                title: "oops !",
+                content: "Une erreur s'est occasionée",
+                theme: "modern",
+              })
+            }
+          })
+      })
+
+      function refreshCart(){
+        console.log("In current cart")
+        var cartTableHomeSomme = $(".cart-table-home-somme")
+        var cartTableHome = $(".cart-table-home")
+        var cartBodyHome = cartTableHome.find(".cart-body-home")
+        var productRows = cartBodyHome.find(".cart-product-home")
+        var currentUrl = window.location.href
 
-	// Contact Form Handler
-	var contactForm = $(".contact-form");
-	var contactFormMethod = contactForm.attr("method");
+        var refreshCartUrl = "/cart/api/cart/"
+        var refreshCartMethod = "GET"
+        var data = {}
+        $.ajax({
+          url : refreshCartUrl,
+          method: refreshCartMethod,
+          data: data,
+          success : function(data){
+            var hiddenCartRemoveForm = $(".cart-item-remove-form")
+            if(data.products.length > 0){
 
-	var contactFormEndpoint = contactForm.attr("action"); 
-	
+            productRows.html(" ")
+            i = 1
+            $.each(data.products, function(index, value){
+              var newCartItemRemove = hiddenCartRemoveForm.clone()
+              newCartItemRemove.css("display", "block")
+              newCartItemRemove.find(".cart-item-product-id").val(value.id)
+              cartBodyHome.prepend("<tr><td class='romove-item'>" + newCartItemRemove.html() + " <td class='cart-image'><a class='entry-thumbnail' href='" + value.url +"'><img src=\"{% static 'images/products/p1.jpg' %}\" alt=''></a></td><td class='cart-product-name-info'><h4 class='cart-product-description'><a href='" + value.url + "'>" + value.name + "</a></h4><div class='row'><div class='col-sm-4'><div class='rating rateit-small'></div></div><div class='col-sm-8'><div class='reviews'>(06 Reviews)</div></div></div><div class='cart-product-info'><span class='product-color'>COLOR:<span>Blue</span></span></div></td><td class='cart-product-edit'><a href='#' class='product-edit'>Edit</a></td><td class='cart-product-quantity'><div class='quant-input'><div class='arrows'><div class='arrow plus gradient'><span class='ir'><i class='icon fa fa-sort-asc'></i></span></div><div class='arrow minus gradient'><span class='ir'><i class='icon fa fa-sort-desc'></i></span></div></div><input type='text' value='1'></div></td><td class='cart-product-sub-total'><span class='cart-sub-total-price'>$" + value.price + "</span></td><td class=cart-product-grand-total><span class=cart-grand-total-price>$" + value.price + "</span></td></tr> " )
 
-	function displaySubmitting( submitBtn, defaultText, doSubmit){
+            })
 
-		if (doSubmit){
+            cartTableHomeSomme.find(".cart-subtotal-home-somme").text(data.subtotal)
+            cartTableHomeSomme.find(".cart-total-home-somme").text(data.total)
+            console.log("Seperieur 0")
+            totalText = cartBodyHome.find(".cart-total-home").text()
+            console.log("Voici le total", data.total)
 
-		submitBtn.addClass("disabled")
-		submitBtn.html("<i class='fa fa-spin fa-spinner'></i> Sending...")
-		} else {
-			submitBtn.removeClass("disabled")
-			submitBtn.html(defaultText)
-		}
-	}
+            }
+            else{
+              window.location.href = currentUrl
+              console.log("inferieur à 0")
+            }
+            console.log("success")
 
-	contactForm.submit(function(event){
-		event.preventDefault()
-		var contactFormSubmitBtn	= contactForm.find("[type='submit']")
-		var contactFormSubmitBtnTxt = contactFormSubmitBtn.text()
-		var contactFormData = contactForm.serialize()
-		var thisForm = $(this)
-		displaySubmitting(contactFormSubmitBtn, "",true)
+            console.log(data)
 
-		$.ajax({
-			method : contactFormMethod,
-			url: contactFormEndpoint,
-			data: contactFormData,
-			success: function(data){
-				contactForm[0].reset()
-				console.log(data)
-				contactForm[0].reset()
-				$.alert({
-					title:"Success !",
-					content: data.message,
-					theme: "modern"})
-				setTimeout(function(){
-					displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt,false
-						)
-				}, 500)
+          },
 
-			},
+          error: function(errorData){
+              $.alert({
+                title: "oops !",
+                content: "Une erreur s'est occasionée",
+                theme: "modern",
+              })
+          }
+        })
 
-			error : function(error){
-				console.log(error.responseJSON)
-				var jsonData = error.responseJSON
-				var msg = ""
-				$.each(jsonData, function(key, value){
-					msg += key + ":" + value[0].message + "</br>"
-				})
-				$.alert({
-					title:"Oops !",
-					content:msg,
-					theme: "modern",})
-					setTimeout(function(){
-					displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt, false
-						)
-				}, 500)
+      }
 
-			}
-		})
-	})
 
 
 
@@ -74,202 +166,84 @@ $(document).ready(function(){
 
 
 
+       var payementMethodContainer = $(".checkout-step-01")
+       var payementMethodForm = payementMethodContainer.find("#collapseOne")
+       var payementMethodLink = payementMethodForm.find(".payement-method-link")
+       var billingContainer = $(".checkout-step-02")
+       var billinForm = billingContainer.find("#collapseTwo")
+       var billinLink = billinForm.find(".billing-link")
+       console.log()
 
 
+       var payementForm = $(".payement-choice-form")
 
+      payementForm.submit(function(event){
+        event.preventDefault()
+        var inputs = payementForm.find("input")
+        var payementMethodChoice = payementForm.find("[name='payementmethod']")
+        // console.log("La valeur est:", payementMethodChoice.checked)
 
-	// Auto Search
 
-	var searForm = $(".search-form")
+        var hiddenFacturationlivraison = $(".payement-method-livraison")
+        var hiddenFacturationBancaire = $(".payement-method-bancaire")
+        var hiddenFacturationMobile = $(".payement-method-mobile")
+        var facturationAddress = $(".facturation-address")
+        
+        facturationAddress.html(" ")
+        $.each(payementMethodChoice, function(index,choix){
+          if (choix.checked){
+            payementMethodForm.removeClass("in")
+            payementMethodLink.addClass("collapsed")
+            billinForm.addClass("in")
+            billinLink.removeClass("collapsed")
+            console.log("Un choix")
+            console.log(choix.value)
+            if(choix.value == "livraison"){
+            
+                var newFacturationLivraisonForm = hiddenFacturationlivraison.clone()
+                newFacturationLivraisonForm.css("display", "block")
 
-	var searchInput = searForm.find("[name='q']") // input name='q'
 
-	var typingTimer;
-	var typingInterval = 500 // 
-	var searchBtn = searForm.find("[type='submit']")
+                facturationAddress.prepend(newFacturationLivraisonForm.html())
+            }
 
-	searchInput.keyup(function(event){
-		//key released
-		clearTimeout(typingTimer)
-
-		typingTimer = setTimeout(perforSearch, typingInterval)
-		
-		
-	})
+            else if(choix.value == "bancaire"){
+                var newFacturationBancaireForm = hiddenFacturationBancaire.clone()
+                newFacturationBancaireForm.css("display", "block")
 
-	searchInput.keydown(function(event){
-		// key pressed
-		clearTimeout(typingTimer)
-	})
-
-	function displaySearching(){
-		searchBtn.addClass("disabled")
-		searchBtn.html("<i class='fa fa-spin fa-spinner'></i> Searching...")
-	}
-
-	function perforSearch(){
-		displaySearching()
-		var query = searchInput.val()
-
-		setTimeout(function(){
-
-		window.location.href="/search/?q=" + query
-		}, 1000)
-	}
-
-
-
-
-
-
-	// Cart And Products
-	var productForm = $(".form-product-ajax")
-
-	function getOwnedProduct(productId, submitSpan){
-		var actionEndpoint = "/orders/endpoint/verify/ownership"
-		var httpMethod = "GET"
-		var data = {
-			product_id: productId
-		}
-		var isOwner
-		$.ajax({
-			url : actionEndpoint,
-			method: httpMethod,
-			data: data,
-			success: function(data){
-				console.log(data)
-				console.log(data.owner)
-				if (data.owner){
-					isOwner = true
-					submitSpan.html("<a class='btn btn-warning' href='/library'>In library</a>")
-
-				}else{
-					isOwner =  false
-				}
-
-			},
-			error: function(error){
-				console.log(error)
-			}
-
-		})
-		return isOwner
-	}
-
-	$.each(productForm, function(index, object){
-		var $this = $(this)
-		var submitSpan = $this.find(".submit-span")
-		var isUser = $this.attr("data-user")
-		var productInput = $this.find("[name='product_id']")
-		var productId = productInput.attr("value")
-		var productIsDigital = productInput.attr("data-is-digital")
-		
-		if (productIsDigital && isUser){
-			var isOwned = getOwnedProduct(productId, submitSpan)
-
-		}
-	})
-
-	productForm.submit(function(event){
-		event.preventDefault()
-		console.log("Form is not sending")
-
-		var thisForm = $(this)
-		// var actionEndpoint = thisForm.attr("action");
-		var actionEndpoint = thisForm.attr("data-endpoint")
-		var httpMethod = thisForm.attr("method");
-		var formData = thisForm.serialize();
-
-		$.ajax({
-			url : actionEndpoint,
-			method: httpMethod,
-			data: formData,
-			success: function(data){
-			var submitSpan = thisForm.find(".submit-span")
-			if (data.added){
-				submitSpan.html('<div class="btn-group"><a class="btn btn-link" href="/cart/"><span><i class="fa fa-check"></i></span></a><button type="submit" class="btn btn-link"><span><i class="fa fa-times"></i></span></button></div>')
-			} else {
-				submitSpan.html('<button type="submit" class="btn btn-success"><span><i class="fa fa-plus-circle"></i></button>')
-			}
-
-			var navbarCount = $(".navbar-cart-count")
-			navbarCount.text(data.cartItemCount)
-
-
-			currentPath = window.location.href
-
-			if (currentPath.indexOf("cart") != -1){
-				refreshCart()
-			}
-			},
-
-			error: function(errorData){
-				$.alert({
-					title:"Oops !",
-					content:
-					"An error occured",
-					theme: "modern"})
-				
-			}
-		})
-
-		
-	})
-
-	function refreshCart(){
-		console.log("in current cart")
-
-		var cartTable = $(".cart-table")
-		var cartBody = cartTable.find(".cart-body")
-		// 
-
-		var productRows = cartBody.find(".cart-product")
-
-		var currentUrl = window.location.href
-
-		var refreshCartUrl = "api/cart/"; // "{% url 'cart:api_cart' %}";
-		var refreshCartMethod = "GET";
-		var data ={};
-
-		$.ajax({
-			url : refreshCartUrl,
-			method: refreshCartMethod,
-			data: data,
-			success: function(data){
-				
-				var hiddenCartItemRemoveForm = $(".cart-item-remove-form")
-				if(data.products.length > 0){
-
-				productRows.html(" ")
-				i = data.products.length
-				$.each(data.products, function(index, value){
-					console.log(value)
-
-					var newCartItemRemove = hiddenCartItemRemoveForm.clone()
-
-					newCartItemRemove.css("display", "block")
-					// newCartItemRemove.removeClass("hidden-class")
-
-					newCartItemRemove.find(".cart-item-product-id").val(value.id);				
-					cartBody.prepend("<tr><th scope=\"row\">" + i + "</th><td><a href='" + value.url + "'>" + value.name + "</a>" + newCartItemRemove.html() + "</td><td>" + value.price + "</td></tr>")
-					i --
-				})
-				cartBody.find(".cart-subtotal").text(data.subtotal)
-				cartBody.find(".cart-total").text(data.total)
-
-				} else {
-					window.location = currentUrl
-				}
-			
-			},
-
-			error : function(errorData){
-				$.alert({
-					title:"Oops !",
-					content:
-					"An error occured",
-					theme: "modern"})
-			}
-		})
-	}
-})
+                facturationAddress.prepend(newFacturationBancaireForm.html())
+            }
+
+            else if(choix.value == "mobile"){
+                var newFacturationMobileForm = hiddenFacturationMobile.clone()
+                newFacturationMobileForm.css("display", "block")
+
+
+                facturationAddress.prepend(newFacturationMobileForm.html())
+
+              }
+
+              else{
+                alert("Vous devez faire un choix de payement !")
+              }
+
+
+
+          }
+          else if(!choix.checked){
+            console.log("Pas de choix")
+
+          }
+
+
+        })
+
+
+      })
+ 
+
+
+
+  })
+
+

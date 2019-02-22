@@ -14,10 +14,10 @@ from django.utils import timezone
 
 
 #Locale import
-from ecommerce.utils import unique_order_id_generator, unique_order_payement_livraison_id_generator
+from utils.generator_utils import unique_order_id_generator, unique_order_payement_livraison_id_generator
 
 from billing.models import BillingProfile, PayementLivraison 
-from carts.models import Cart
+from carts.models import Cart, CartItem
 from addresses.models import Address, AddressPayementLivraison
 from products.models import Product 
 
@@ -25,15 +25,6 @@ from products.models import Product
 User = settings.AUTH_USER_MODEL
 
 
-
-ORDER_STATUS_CHOICES = (
-
-		("created", "Created"),
-		("paid", "Paid"),
-		("shipped", "Shipped"),
-		("refunded", "Refunded"),
-
-	)
 
 
 class OrderManagerQuerySet(models.query.QuerySet):
@@ -147,6 +138,21 @@ class OrderManager(models.Manager):
 
 
 class Order(models.Model):
+
+	STATUS_CREATED = "created"
+	STATUS_PAID = "paid"
+	STATUS_SHIPPED = "shipped"
+	STATUS_REFUNDED = "refunded"
+
+
+	ORDER_STATUS_CHOICES = (
+
+		(STATUS_CREATED, "Created"),
+		(STATUS_PAID, "Paid"),
+		(STATUS_SHIPPED, "Shipped"),
+		(STATUS_REFUNDED, "Refunded"),
+
+	)
 	billing_profile 	= models.ForeignKey(BillingProfile,  null=True, blank=True, on_delete=models.CASCADE)
 	order_id			= models.CharField(max_length=120, blank=True) # Maybe AB18DE#
 	shipping_address 	= models.ForeignKey(Address, related_name="shipping_address", null =True, blank=True, on_delete=models.CASCADE)
@@ -202,33 +208,23 @@ class Order(models.Model):
 
 
 	def check_done(self):
-		shipping_address_required = not self.cart.is_digital
-		shipping_done = False
-		if  shipping_address_required and self.shipping_address:
-			shipping_done = True
-
-		elif shipping_address_required and not self.shipping_address:
-			shipping_done = False
-		else:
-			shipping_done = True
-
 		billing_profile 	= self.billing_profile
 		billing_address		= self.billing_address
 
 		total = self.total
 
 
-		if billing_profile and billing_address and shipping_done and total > 0:
+		if billing_profile and billing_address and total > 0:
 			return True
 
 		return False
 
 
 	def update_purshases(self):
-		for p in self.cart.products.all():
+		for item in self.cart.items.all():
 			obj, created  = ProductPurshase.objects.get_or_create(
 				order_id = self.order_id,
-				product=p,
+				cart_item=item,
 				billing_profile=self.billing_profile
 				)
 
@@ -295,10 +291,6 @@ class ProductPurshaseQuerySet(models.query.QuerySet):
 		return self.filter(refunded=False)
 
 
-	def digital(self):
-		return self.filter(product__is_digital=True)
-
-
 	def by_request(self, request):
 		billing_profile, created = BillingProfile.objects.new_or_get(request)
 		return self.filter(billing_profile=billing_profile)
@@ -313,9 +305,6 @@ class ProductPurshaseManager(models.Manager):
 	def all(self):
 		return self.get_queryset().active()
 
-
-	def digital(self):
-		return self.get_queryset().digital()
 
 
 	def by_request(self, request):
@@ -337,7 +326,7 @@ class ProductPurshaseManager(models.Manager):
 class ProductPurshase(models.Model): #Purshase veut dire achat
 	order_id			= models.CharField(max_length=120)
 	billing_profile 	= models.ForeignKey(BillingProfile,on_delete=models.CASCADE)
-	product 			= models.ForeignKey(Product, on_delete=models.CASCADE)
+	cart_item 			= models.ForeignKey(CartItem, on_delete=models.CASCADE)
 	refunded 			= models.BooleanField(default=False)
 	updated 			= models.DateTimeField(auto_now=True)
 	timestamp 			= models.DateTimeField(auto_now_add=True)
@@ -360,14 +349,6 @@ class ProductPurshase(models.Model): #Purshase veut dire achat
 ###################################### Order payement à la livraison #########################""
 
 
-ORDER_PAYEMENT_LIVRAISON_STATUS_CHOICES = (
-
-		("created", "Created"),
-		("paid", "Paid"),
-		("shipped", "Shipped"),
-		("refunded", "Refunded"),
-
-	)
 
 
 class OrderPayementLivraisonManagerQuerySet(models.query.QuerySet):
@@ -481,6 +462,22 @@ class OrderPayementLivraisonManager(models.Manager):
 
 
 class OrderPayementLivraison(models.Model):
+
+	STATUS_CREATED = "created"
+	STATUS_PAID = "paid"
+	STATUS_SHIPPED = "shipped"
+	STATUS_REFUNDED = "refunded"
+
+
+	ORDER_PAYEMENT_LIVRAISON_STATUS_CHOICES = (
+
+		(STATUS_CREATED, "Created"),
+		(STATUS_PAID, "Paid"),
+		(STATUS_SHIPPED, "Shipped"),
+		(STATUS_REFUNDED, "Refunded"),
+
+	)
+
 	payement_livraison 				= models.ForeignKey(PayementLivraison,  null=True, blank=True, on_delete=models.CASCADE)
 	order_payement_livraison_id		= models.CharField(max_length=120, blank=True) # Maybe AB18DE#
 	livraison_address 				= models.ForeignKey(AddressPayementLivraison, related_name="livraison_address", null =True, blank=True, on_delete=models.CASCADE)
@@ -502,7 +499,7 @@ class OrderPayementLivraison(models.Model):
 	class Meta:
 		ordering = ["-timestamp", "-updated"]
 		verbose_name = "Commande avec payement à la livraison"
-		verbose_name_plural = "Commandes avec payements à la livraison"
+		verbose_name_plural = "Commandes de payements à la livraison"
 
 
 	def get_absolute_url(self):
@@ -536,27 +533,23 @@ class OrderPayementLivraison(models.Model):
 
 
 	def check_done(self):
-		livraison_done = False
-		if self.livraison_address:
-			livraison_done = True
-
 		payement_livraison 	= self.payement_livraison
 		facturation_address		= self.facturation_address
 
 		total = self.total
 
 
-		if payement_livraison and facturation_address and livraison_done and total > 0:
+		if payement_livraison and facturation_address and total > 0:
 			return True
 
 		return False
 
 
 	def update_purshases(self):
-		for p in self.cart.products.all():
+		for item in self.cart.items.all():
 			obj, created  = ProductPurshasePayementLivraison.objects.get_or_create(
 				order_payement_livraison_id = self.order_payement_livraison_id,
-				product=p,
+				cart_item=item,
 				payement_livraison=self.payement_livraison
 				)
 
@@ -625,10 +618,6 @@ class ProductPurshasePayementLivraisonQuerySet(models.query.QuerySet):
 		return self.filter(refunded=False)
 
 
-	def digital(self):
-		return self.filter(product__is_digital=True)
-
-
 	def by_request(self, request):
 		payement_livraison, created = PayementLivraison.objects.new_or_get(request)
 		return self.filter(payement_livraison=payement_livraison)
@@ -642,10 +631,6 @@ class ProductPurshasePayementLivraisonManager(models.Manager):
 
 	def all(self):
 		return self.get_queryset().active()
-
-
-	def digital(self):
-		return self.get_queryset().digital()
 
 
 	def by_request(self, request):
@@ -667,7 +652,7 @@ class ProductPurshasePayementLivraisonManager(models.Manager):
 class ProductPurshasePayementLivraison(models.Model): #Purshase veut dire achat
 	order_payement_livraison_id		= models.CharField(max_length=120)
 	payement_livraison 				= models.ForeignKey(PayementLivraison,on_delete=models.CASCADE)
-	product 						= models.ForeignKey(Product, on_delete=models.CASCADE)
+	cart_item 						= models.ForeignKey(CartItem, on_delete=models.CASCADE)
 	refunded 						= models.BooleanField(default=False)
 	updated 						= models.DateTimeField(auto_now=True)
 	timestamp 						= models.DateTimeField(auto_now_add=True)
@@ -678,8 +663,8 @@ class ProductPurshasePayementLivraison(models.Model): #Purshase veut dire achat
 
 	class Meta:
 		ordering = ["-timestamp", "-updated"]
-		verbose_name = "Produit payé avec payement à la livraison"
-		verbose_name_plural = "Produits payés avec payements à la livraison"
+		verbose_name = "Produit payé à la livraison"
+		verbose_name_plural = "Produits payés à la livraison"
 
 	def __str__(self):
-		return self.product.title
+		return ("On a {cart_item}".format(cart_item=self.cart_item))

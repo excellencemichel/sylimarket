@@ -7,8 +7,22 @@ from django.urls import reverse
 
 
 #Local import 
+#import from models
+from products.models import (  Product,
 
-from products.models import Product
+					#clothings
+					MenClothing, WomenClothing, Pantalon,
+					Culotte, Jupe, MenShoes,
+					WomenShoes, AccessoireClothng,
+
+					#computers
+					Computer, AccessoireComputer,
+
+					#phones
+					Phone, Tablette, AccessoirePhone
+
+					)
+
 from carts.models import Cart
 
 
@@ -26,6 +40,7 @@ from .forms import (
 
 def home(request):
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
+<<<<<<< HEAD
 	products = Product.objects.all()
 	phones  = products.filter(types_product="phone")
 	electromenagers  = products.filter(types_product="electromenager")
@@ -41,12 +56,39 @@ def home(request):
 	pants 			 = products.filter(types_product="pants")
 
 
+=======
+	products =  Product.objects.all()[:5]
+	news_products = Product.objects.featured()[:4]
 
+	men_clothings = MenClothing.objects.all() 
+	women_clothings  = WomenClothing.objects.all()
+	accessoire_clothings = AccessoireClothng.objects.all()
+
+	men_shoes = MenShoes.objects.all()
+	women_shoes = WomenShoes.objects.all()
+>>>>>>> dev
+
+	phones 	= Phone.objects.all()
+	tablettes = Tablette.objects.all()
+	accessoire_phones = AccessoirePhone.objects.all()
+
+	computers = Computer.objects.all()
+	accessoire_computers = AccessoireComputer.objects.all()
+
+
+	jupes = Jupe.objects.all()
+
+	pantalons = Pantalon.objects.all()
+	culottes = Culotte.objects.all()
+
+
+	
 
 
 
 
 	context = {
+<<<<<<< HEAD
 		"cart": 			cart_obj,
 		"products": 		products,
 		"phones": 			phones,
@@ -63,6 +105,32 @@ def home(request):
 		"pants": 			pants,
 
 
+=======
+		"cart": cart_obj,
+		"products": products,
+		"news_products": news_products,
+
+
+		"men_clothings": men_clothings,
+		"women_clothings": women_clothings,
+		"accessoire_clothings": accessoire_clothings,
+
+		"pantalons": pantalons,
+		"jupes": jupes,
+		"culottes": culottes,
+
+
+		"phones": phones,
+		"tablettes": tablettes,
+		"accessoire_phones": accessoire_phones,
+
+		"computers": computers,
+		"accessoire_computers": accessoire_computers,
+
+		"men_shoes": men_shoes,
+		"women_shoes": women_shoes,
+
+>>>>>>> dev
 
 
 		}

@@ -1,39 +1,138 @@
 from django.contrib import admin
 
 
-from .models import Product, ProductFile
+
+
+#import from models
+from .models import (  Product,
+
+					#clothings
+					MenClothing, WomenClothing, Pantalon,
+					Culotte, Jupe, MenShoes,
+					WomenShoes, AccessoireClothng,
+
+					#computers
+					Computer, AccessoireComputer,
+
+					#phones
+					Phone, Tablette, AccessoirePhone
+
+					)
+
+
+
+#import from forms
+from .forms.product_forms import ( ProductForm,
+
+					#clothings
+					MenClothingForm, WomenClothingForm, PantalonForm,
+					CulotteForm, JupeForm, MenShoesForm,
+					WomenShoesForm, AccessoireClothngForm,
+
+					#computers
+					ComputerForm, AccessoireComputerForm,
+
+					#phones
+					PhoneForm, TabletteForm, AccessoirePhoneForm
+
+					)
+
+
+
+
+
 
 # Register your models here.
 
 
-class ProductFileInline(admin.TabularInline):
-	model = ProductFile
-	extra = 1
-
-
-
-
+@admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-	list_display = ["__str__", "slug", "pseudo_name", "product_marque", "product_model", "types_product"]
-	list_filter = ('types_product',)
-	prepopulated_fields = {"slug": ("title",),}
-	inlines = [ProductFileInline]
-
-
-	class Meta:
-		model = Product
+	form = ProductForm
 
 
 
 
 
-admin.site.register(Product, ProductAdmin)
+
+@admin.register(MenClothing)
+class MenClothingAdmin(admin.ModelAdmin):
+	form = MenClothingForm
 
 
-class ProductFileAdmin(admin.ModelAdmin):
-	list_display = ["__str__", "id"]
 
-admin.site.register(ProductFile, ProductFileAdmin)
+@admin.register(WomenClothing)
+class WomenClothingAdmin(admin.ModelAdmin):
+	form = WomenClothingForm
+
+
+
+@admin.register(Pantalon)
+class PantalonAdmin(admin.ModelAdmin):
+	form = PantalonForm
+
+
+
+@admin.register(Culotte)
+class CulotteAdmin(admin.ModelAdmin):
+	form = CulotteForm
+
+
+
+@admin.register(Jupe)
+class JupeAdmin(admin.ModelAdmin):
+	form = JupeForm
+
+
+
+@admin.register(MenShoes)
+class MenShoesAdmin(admin.ModelAdmin):
+	form = MenShoesForm
+
+
+
+@admin.register(WomenShoes)
+class WomenShoesAdmin(admin.ModelAdmin):
+	form = WomenShoesForm
+
+
+
+@admin.register(AccessoireClothng)
+class AccessoireClothngAdmin(admin.ModelAdmin):
+	form = AccessoireClothngForm
+
+
+
+@admin.register(Computer)
+class ComputerAdmin(admin.ModelAdmin):
+	form = ComputerForm
+
+
+
+@admin.register(AccessoireComputer)
+class AccessoireComputerAdmin(admin.ModelAdmin):
+	form = AccessoireComputerForm
+
+
+
+@admin.register(Phone)
+class PhoneAdmin(admin.ModelAdmin):
+	form = PhoneForm
+
+
+
+@admin.register(Tablette)
+class TabletteAdmin(admin.ModelAdmin):
+	form = TabletteForm
+
+
+
+@admin.register(AccessoirePhone)
+class AccessoirePhoneAdmin(admin.ModelAdmin):
+	form = AccessoirePhoneForm
+
+
+
+
 
 
 
