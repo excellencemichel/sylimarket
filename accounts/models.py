@@ -51,7 +51,7 @@ class UserManager(BaseUserManager):
 				mobile = mobile
 			)
 		user_obj.set_password(password)
-		user_obj.staff = is_staff
+		user_obj.is_staff = is_staff
 		user_obj.admin = is_admin
 		user_obj.is_active = is_active
 		user_obj.save(using=self._db)
@@ -59,7 +59,7 @@ class UserManager(BaseUserManager):
 
 
 
-	def create_staffuser(self, email, mobile, password=None):
+	def create_staffuser(self, email, mobile, password):
 		user 	 = self.create_user(
 			email,
 			mobile,
@@ -81,7 +81,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
 	email 	= models.EmailField(max_length=255, unique=True)
 	is_active	= models.BooleanField(default=True) #Can login
-	staff 	= models.BooleanField(default=False) #staff user non superuser but can access at administrator
+	is_staff 	= models.BooleanField(default=False) #staff user non superuser but can access at administrator
 	admin 	= models.BooleanField(default=False) #superuser
 	timestamp	= models.DateTimeField(auto_now_add=True)
 
@@ -121,10 +121,10 @@ class User(AbstractBaseUser):
 		
 
 	@property
-	def is_staff(self):
+	def is_staff_user(self):
 		if self.is_admin:
 			return True
-		return self.staff
+		return self.is_staff
 
 
 	# @property
@@ -199,18 +199,16 @@ class EmailActivation(models.Model):
 
 	def activate(self):
 		if self.can_activate():
-			#pre activation user signal
 			user = self.user
 			user.is_active = True
 			user.save()
-			#post activation signal for user
 			self.activated =True
 			self.save()
 			return True
 		return False
 
 
-	def regenerate(self):
+	def regerate(self):
 		self.key = None
 		self.save()
 		if self.key is not None:
@@ -221,23 +219,24 @@ class EmailActivation(models.Model):
 
 
 	def send_activation_email(self):
+		print("Debut fonction send_activation_email")
 		if not self.activated and not self.forced_expered:
+			print("forced_expered")
 			if self.key:
 				print("Key")
-				base_url = getattr(settings, "BASE_URL", "https://www.sylimarket.com")
+				base_url = getattr(settings, "BASE_URL")
 				key_path = reverse("accounts:email_activate", kwargs ={"key":self.key })#use reverse
-				print("Voici le key key_path",key_path)
-				path = "{base}{path}".format(base=base_url, path=key_path)
-				print("Voici le key path",path)
+				path = "{base}{path_}".format(base=base_url, path_=key_path)
 				context = {
 				"path": path,
 				"email": self.email
 				}
 				txt_ = get_template("accounts/emails/verify.txt").render(context)
 				html_ = get_template("accounts/emails/verify.html").render(context)
-				subject = _("For activate your account in Sylimarket")
+				subject = _("For activate your account in Sylimarket place")
 				from_email = settings.DEFAULT_FROM_EMAIL
 				recipient_list = [self.email]
+				print("Dans la fonction d'envoi")
 				sent_mail = send_mail(
 						subject,
 						txt_,
@@ -260,7 +259,9 @@ def pre_save_email_activation(sender, instance, *args, **kwargs):
 pre_save.connect(pre_save_email_activation, sender=EmailActivation)
 
 def post_save_email_activate(sender, instance, created, *args, **kwargs):
+	print("Ici a été executé")
 	if created:
+		print("A été created")
 		obj = EmailActivation.objects.create(user=instance, email=instance.email)
 		obj.send_activation_email()
 

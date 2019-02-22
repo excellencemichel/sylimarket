@@ -1,5 +1,6 @@
 import datetime
 import os
+from decouple import config
 
 from ecommerce.production import AWS_GROUP_NAME, AWS_USERNAME, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 

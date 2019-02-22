@@ -38,12 +38,6 @@ ALLOWED_HOSTS = []
 BASE_URL ="www.sylimarket.com"
 
 
-GA_TRACKING_ID = 'UA-132886357-1'
-
-
-USE_GA = os.environ.get('DJANGO_USE_GA', False)
-USE_GA = {'True': True, 'False': False}.get(USE_GA, False)
-
 
 
 
@@ -133,10 +127,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 "django.template.context_processors.i18n",
-
-                #Pour Google analytics
-                "analytics.context_processors.ga_tracking_id",
-                "analytics.context_processors.use_ga"
             ],
         },
     },
@@ -209,11 +199,19 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "static_root
 
 MEDIA_URL = "/media/"
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 PROTECTED_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "protected_root")
 
 
 
+
+EMAIL_HOST = config("EMAIL_HOST", None)
+EMAIL_HOST_USER =config("EMAIL_HOST_USER", None)
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", None)
+EMAIL_PORT = "587"
+EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", None)
 
 
 ADMINS = [ 
@@ -229,6 +227,7 @@ from .production import *
 
 if os.environ.get("ENV") =="PRODUCTION":
     from ecommerce.aws.conf import *
+
 
 
 
