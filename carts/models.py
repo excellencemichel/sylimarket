@@ -71,6 +71,7 @@ class Cart(models.Model):
 			product_object_id = product.pk,
 			)
 		quantite = product.cart_items.count()
+		
 		cart_item_obj.quantite = quantite
 		cart_item_obj.save()
 		cart_item_added_signal.send_robust(sender= self.__class__, instance=self, action="added")

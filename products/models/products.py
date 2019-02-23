@@ -90,6 +90,14 @@ class Product(models.Model):
 	marque 				= models.CharField(max_length=250)
 	product_model 		= models.CharField(max_length=250)
 
+	
+	cart_items = GenericRelation(
+        'carts.CartItem',
+        'product_object_id',
+        'product_content_type_id',
+        related_query_name='products',
+    )
+
 	objects = ProductManager()
 
 
