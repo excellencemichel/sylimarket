@@ -50,7 +50,7 @@
 					<td class="romove-item">{% include "carts/snippets/remove_product.html" with product_id=item.product.id %}</td>
 					<td class="cart-image">
 						<a class="entry-thumbnail" href="{{ item.product.get_absolute_url }}">
-						    <img src="{% static 'images/products/p1.jpg' %}" alt="">
+						    <img src="{{ item.product.image.url }}" alt="">
 						</a>
 					</td>
 					<td class="cart-product-name-info">
@@ -69,7 +69,7 @@
 											<span class="product-color">COLOR:<span>Blue</span></span>
 						</div>
 					</td>
-					<td class="cart-product-edit"><a href="#" class="product-edit">Edit</a></td>
+					<td class="cart-product-edit"><a href="{{ item.product.get_absolute_url }}" class="product-edit">Edit</a></td>
 					<td class="cart-product-quantity">
 						<div class="quant-input">
 				                <div class="arrows">

@@ -12,6 +12,9 @@ from django.db import models
 
 
 #Local import
+from utils.decimal_utils import multiplier, diviser, TWOPLACES
+
+
 from .signals import cart_item_added_signal
 
 # Create your models here.
@@ -71,7 +74,7 @@ class Cart(models.Model):
 			product_object_id = product.pk,
 			)
 		quantite = product.cart_items.count()
-		
+
 		cart_item_obj.quantite = quantite
 		cart_item_obj.save()
 		cart_item_added_signal.send_robust(sender= self.__class__, instance=self, action="added")
@@ -101,7 +104,8 @@ class Cart(models.Model):
 
 def pre_save_cart_receiver(sender, instance,*args, **kwargs):
 	if instance.subtotal > 0:
-		instance.total = Decimal(instance.subtotal) * Decimal(1.08)# + 1.3
+		instance.total = multiplier(instance.subtotal, Decimal(1.08).quantize(TWOPLACES))# + 1.3
+		print("Le subtotal ajouté au total fait :", instance.total)
 	else:
 		instance.total = 0.00
 
@@ -184,6 +188,7 @@ post_delete.connect(post_delete_cart_item_receiver, sender=CartItem)
 def cart_item_added_receiver(sender, instance,  action, *args, **kwargs):
 	if action == "added" or action =="removed":
 		somme = sum(item.product.price for item in instance.items.all())
+		print("La somme est : ", somme)
 
 		if instance.subtotal != somme:
 			instance.subtotal = somme

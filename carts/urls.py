@@ -3,7 +3,9 @@ from django.urls import re_path, path
 from .views import (
 
 
-			cart_home, cart_update,
+			cart_home,
+			 cart_update_to_add,
+			 cart_update_to_delete,
 			 checkout_card,
 			 cart_detail_api_view,
 			 checkout_livraison,
@@ -27,7 +29,8 @@ urlpatterns = [
 		
 		re_path(r'^$', cart_home, name="home"),
 		path("api/cart/", cart_detail_api_view, name="api_cart"),
-		path("update", cart_update, name="update"),
+		path("update", cart_update_to_add, name="update"),
+		path("update-delete", cart_update_to_delete, name="update_to_delete"),
 		path("checkout-livraison", checkout_livraison, name="checkout_livraison"),
 		path("payement-method/choices", payement_method, name="payement_method"),
 		path("checkout-mobile", checkout_mobile, name="checkout_mobile"),

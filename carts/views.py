@@ -105,7 +105,7 @@ def cart_home(request):
 
 
 
-def cart_update(request):
+def cart_update_to_add(request):
 	product_id = request.POST.get("product_id")
 	if product_id is not None:
 		try:
@@ -115,25 +115,61 @@ def cart_update(request):
 			return redirect("carts:home")
 
 		cart_obj, new_obj = Cart.objects.new_or_get(request)
-		product_in_cart = cart_obj.cart_item_exists(product_obj)
 
-		if product_in_cart:
-			print("Dedans")
-			cart_obj.delete_item(product_obj)
-			added = False
-		else:
+		if product_obj:
+			print("On ajoute")
 			cart_obj.add_item(product_obj)
-			print("Pas dedans")
 			added = True
+		else:
+			added = False
 			
 		request.session["cart_items"] = cart_obj.items.all().count()
+		request.session["cart_total"] = str(cart_obj.total)
 
 		if request.is_ajax():
-			print("We are in ajax request")
+			print("We are in ajax request to added product")
 			json_data = {
 			"added": added,
 			"removed": not added,
 			"cartItemsCount": cart_obj.items.all().count(),
+			"cartSommeTotal": cart_obj.total,
+			}
+			return JsonResponse(json_data, status=200)
+			# return JsonResponse({"message": "Error 404"}, status=404)
+
+
+	return redirect("carts:home")
+
+
+
+def cart_update_to_delete(request):
+	product_id = request.POST.get("product_id")
+	if product_id is not None:
+		try:
+			product_obj = Product.objects.get(id=product_id)
+		except Product.DoesNotExist:
+			print("Show message to user, product is gone ?")
+			return redirect("carts:home")
+
+		cart_obj, new_obj = Cart.objects.new_or_get(request)
+
+		if product_obj:
+			print("Delete the product in the cart")
+			cart_obj.delete_item(product_obj)
+			deleted = True
+		else:
+			deleted = False
+			
+		request.session["cart_items"] = cart_obj.items.all().count()
+		request.session["cart_total"] = str(cart_obj.total)
+
+		if request.is_ajax():
+			print("We are in ajax request to delete the product in the cart")
+			json_data = {
+			"deleted": deleted,
+			"notDeleted": not deleted,
+			"cartItemsCount": cart_obj.items.all().count(),
+			"cartSommeTotal": cart_obj.total,
 			}
 			return JsonResponse(json_data, status=200)
 			# return JsonResponse({"message": "Error 404"}, status=404)
@@ -328,6 +364,7 @@ def checkout_livraison(request):
 
 
 			request.session["cart_items"] = 0
+			request.session["cart_total"] = str(0.00)
 			del request.session["cart_id"]
 			return redirect ("carts:success")
 

@@ -130,7 +130,7 @@ class MenClothing(Product, ClothingAbstractModel):
 	clothing_type = models.CharField(max_length=250, choices=TYPE_CLOTHINGS_CHOICES)
 
 	def get_absolute_url(self):
-		return reverse("products:men_clothing_detail", kwargs={ "slug": self.slug})
+		return reverse("products:men_clothing_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 
@@ -178,7 +178,7 @@ class WomenClothing(Product, ClothingAbstractModel):
 	clothing_type = models.CharField(max_length=250, choices=TYPE_CLOTHINGS_CHOICES)
 
 	def get_absolute_url(self):
-		return reverse("products:women_clothing_detail", kwargs={ "slug": self.slug})
+		return reverse("products:women_clothing_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 #Pants
@@ -216,7 +216,7 @@ class Pantalon(Product, PantsAbstractModel):
 
 
 	def get_absolute_url(self):
-		return reverse("products:pantalon_detail", kwargs={ "slug": self.slug})
+		return reverse("products:pantalon_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 
@@ -241,7 +241,7 @@ class Culotte(Product, PantsAbstractModel):
 	culotte_type = models.CharField(max_length=250, choices=CULOTTE_TYPE_CHOICES)
 
 	def get_absolute_url(self):
-		return reverse("products:culotte_detail", kwargs={ "slug": self.slug})
+		return reverse("products:culotte_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 
@@ -266,7 +266,8 @@ class Jupe(Product, ClothingAbstractModel):
 
 
 	def get_absolute_url(self):
-		return reverse("products:jupe_detail", kwargs={ "slug": self.slug})
+		print("Dans get_absolute_url de jupe_detail")
+		return reverse("products:jupe_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 #Shoes
@@ -317,7 +318,7 @@ class MenShoes(Product, ShoesAbstractModel):
 
 
 	def get_absolute_url(self):
-		return reverse("products:men_shoe_detail", kwargs={ "slug": self.slug})
+		return reverse("products:men_shoe_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 
@@ -352,7 +353,7 @@ class WomenShoes(Product, ShoesAbstractModel):
 
 
 	def get_absolute_url(self):
-		return reverse("products:women_shoe_detail", kwargs={ "slug": self.slug})
+		return reverse("products:women_shoe_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 class AccessoireClothng(Product):
@@ -394,4 +395,4 @@ class AccessoireClothng(Product):
 
 
 	def get_absolute_url(self):
-		return reverse("products:accessoire_clothing_detail", kwargs={ "slug": self.slug})
+		return reverse("products:accessoire_clothing_detail", kwargs={ "pk": self.pk, "slug": self.slug})

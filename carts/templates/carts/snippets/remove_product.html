@@ -1,8 +1,8 @@
-<form class="form form-product-ajax" method="POST" action="{% url 'carts:update' %}" data-endpoint="{% url 'carts:update' %}">
+<form class="form form-product-ajax-delete" method="POST" action="{% url 'carts:update_to_delete' %}" data-endpoint="{% url 'carts:update_to_delete' %}">
 	{% csrf_token %}
 	<input class="cart-item-product-id" type="hidden" name="product_id" value="{{ product_id }}">
 	
-	<button type="submit" class="btn btn-primary cart-btn"><i class="fa fa-trash-o"></i> Enlever</button>
+	<button type="submit" class="btn btn-primary cart-btn"><i class="fa fa-trash-o"></i>Enlever</button>
 </form>
 
 

@@ -63,7 +63,7 @@ class Computer(Product):
 
 
 	def get_absolute_url(self):
-		return reverse("products:computer_detail", kwargs={ "slug": self.slug})
+		return reverse("products:computer_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 
@@ -91,4 +91,4 @@ class AccessoireComputer(Product):
 	accesoire_computer = models.CharField(max_length=250, choices=TYPE_ACCESSOIRE)
 
 	def get_absolute_url(self):
-		return reverse("products:accessoire_computer_detail", kwargs={ "slug": self.slug})
+		return reverse("products:accessoire_computer_detail", kwargs={ "pk": self.pk, "slug": self.slug})

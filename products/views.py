@@ -90,10 +90,12 @@ class ProductListView(ListView):
 
 
 
-def product_detail(request, slug=None):
+def product_detail(request, pk=None, slug=None):
 	product = get_object_or_404(Product, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	product_in_cart = cart_obj.cart_item_exists(product)
+	print("Dans product")
+
 
 	context = {
 		"product": product,
@@ -140,8 +142,8 @@ class UserProductHistoryView(ListView):
 
 
 
-def men_clothing_detail(request, slug=None):
-	men_clothing = get_object_or_404(MenClothing, slug=slug)
+def men_clothing_detail(request, pk=None, slug=None):
+	men_clothing = get_object_or_404(MenClothing, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	product_in_cart = cart_obj.cart_item_exists(men_clothing)
 
@@ -158,8 +160,8 @@ def men_clothing_detail(request, slug=None):
 
 
 
-def women_clothing_detail(request, slug=None):
-	women_clothing = get_object_or_404(WomenClothing, slug=slug)
+def women_clothing_detail(request, pk=None, slug=None):
+	women_clothing = get_object_or_404(WomenClothing, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	product_in_cart = cart_obj.cart_item_exists(women_clothing)
 
@@ -175,8 +177,8 @@ def women_clothing_detail(request, slug=None):
 
 
 
-def accessoire_clothing_detail(request, slug=None):
-	accessoire_clothing = get_object_or_404(AccessoireClothng, slug=slug)
+def accessoire_clothing_detail(request, pk=None, slug=None):
+	accessoire_clothing = get_object_or_404(AccessoireClothng, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	product_in_cart = cart_obj.cart_item_exists(accessoire_clothing)
 
@@ -191,8 +193,8 @@ def accessoire_clothing_detail(request, slug=None):
 
 
 
-def men_shoe_detail(request, slug=None):
-	men_shoe = get_object_or_404(MenShoes, slug=slug)
+def men_shoe_detail(request, pk=None, slug=None):
+	men_shoe = get_object_or_404(MenShoes, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	product_in_cart = cart_obj.cart_item_exists(men_shoe)
 
@@ -210,8 +212,8 @@ def men_shoe_detail(request, slug=None):
 
 
 
-def women_shoe_detail(request, slug=None):
-	women_sheo = get_object_or_404(WomenShoes, slug=slug)
+def women_shoe_detail(request, pk=None, slug=None):
+	women_sheo = get_object_or_404(WomenShoes, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	product_in_cart = cart_obj.cart_item_exists(women_sheo)
 
@@ -232,8 +234,8 @@ def women_shoe_detail(request, slug=None):
 
 
 
-def patalon_detail(request, slug=None):
-	pantalon = get_object_or_404(Pantalon, slug=slug)
+def patalon_detail(request, pk=None, slug=None):
+	pantalon = get_object_or_404(Pantalon, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	product_in_cart = cart_obj.cart_item_exists(pantalon)
 
@@ -254,7 +256,7 @@ def patalon_detail(request, slug=None):
 
 
 
-def culotte_detail(request, slug=None):
+def culotte_detail(request, pk=None, slug=None):
 	culotte = get_object_or_404(Culotte, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	product_in_cart = cart_obj.cart_item_exists(culotte)
@@ -276,10 +278,11 @@ def culotte_detail(request, slug=None):
 
 
 
-def jupe_detail(request, slug=None):
-	jupe = get_object_or_404(Jupe, slug=slug)
+def jupe_detail(request, pk=None, slug=None):
+	jupe = get_object_or_404(Jupe, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	product_in_cart = cart_obj.cart_item_exists(jupe)
+	print("Dans jupe")
 
 	context = {
 		"cart": cart_obj,
@@ -293,8 +296,8 @@ def jupe_detail(request, slug=None):
 
 
 
-def phone_detail(request, slug=None):
-	phone = get_object_or_404(Phone, slug=slug)
+def phone_detail(request, pk=None, slug=None):
+	phone = get_object_or_404(Phone, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	product_in_cart = cart_obj.cart_item_exists(phone)
 
@@ -311,8 +314,8 @@ def phone_detail(request, slug=None):
 
 
 
-def tablette_detail(request, slug=None):
-	tablette = get_object_or_404(Tablette, slug=slug)
+def tablette_detail(request, pk=None, slug=None):
+	tablette = get_object_or_404(Tablette, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	product_in_cart = cart_obj.cart_item_exists(tablette)
 
@@ -333,8 +336,8 @@ def tablette_detail(request, slug=None):
 
 
 
-def accessoire_phone_detail(request, slug=None):
-	accessoire_phone = get_object_or_404(AccessoirePhone, slug=slug)
+def accessoire_phone_detail(request, pk=None, slug=None):
+	accessoire_phone = get_object_or_404(AccessoirePhone, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	product_in_cart = cart_obj.cart_item_exists(accessoire_phone)
 
@@ -355,8 +358,8 @@ def accessoire_phone_detail(request, slug=None):
 
 
 
-def computer_detail(request, slug=None):
-	computer = get_object_or_404(Computer, slug=slug)
+def computer_detail(request, pk=None, slug=None):
+	computer = get_object_or_404(Computer, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	product_in_cart = cart_obj.cart_item_exists(computer)
 
@@ -377,8 +380,8 @@ def computer_detail(request, slug=None):
 
 
 
-def accessoire_computer_detail(request, slug=None):
-	accessoire_computer = get_object_or_404(AccessoireComputer, slug=slug)
+def accessoire_computer_detail(request, pk=None, slug=None):
+	accessoire_computer = get_object_or_404(AccessoireComputer, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	product_in_cart = cart_obj.cart_item_exists(accessoire_computer)
 

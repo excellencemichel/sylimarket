@@ -111,8 +111,8 @@ class Product(models.Model):
 
 
 
-	def get_absolute_url(self):
-		return reverse("products:detail", kwargs={ "slug": self.slug})
+	# def get_absolute_url(self):
+	# 	return reverse("products:detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 
