@@ -27,7 +27,7 @@ app_name = "carts"
 urlpatterns = [
 
 		
-		re_path(r'^$', cart_home, name="home"),
+		path("", cart_home, name="home"),
 		path("api/cart/", cart_detail_api_view, name="api_cart"),
 		path("update", cart_update_to_add, name="update"),
 		path("update-delete", cart_update_to_delete, name="update_to_delete"),

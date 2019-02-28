@@ -42,7 +42,7 @@ urlpatterns = [
 
 
 			path("", ProductListView.as_view(), name="list"),
-			# re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/detail/$', product_detail, name="detail"),	
+			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/detail/$', product_detail, name="detail"),	
 
 			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/men-clothing-detail/$', men_clothing_detail, name="men_clothing_detail"),			
 			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/women-clothing-detail/$', women_clothing_detail, name="women_clothing_detail"),			

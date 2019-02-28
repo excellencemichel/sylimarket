@@ -283,6 +283,7 @@ def jupe_detail(request, pk=None, slug=None):
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	product_in_cart = cart_obj.cart_item_exists(jupe)
 	print("Dans jupe")
+	print("Si dedans", product_in_cart)
 
 	context = {
 		"cart": cart_obj,

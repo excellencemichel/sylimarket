@@ -85,7 +85,7 @@ class Phone(Product, PhoneAbstractModel):
 	phone_type = models.CharField(max_length=250, choices=TYPE_PHONE)
 
 	def get_absolute_url(self):
-		return reverse("products:phone_detail", kwargs={ "slug": self.slug})
+		return reverse("products:phone_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 
@@ -102,7 +102,7 @@ class Tablette(Product, PhoneAbstractModel):
 
 
 	def get_absolute_url(self):
-		return reverse("products:tablette_detail", kwargs={ "slug": self.slug})
+		return reverse("products:tablette_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 
@@ -132,7 +132,7 @@ class AccessoirePhone(Product):
 	caracteristique = models.TextField()
 
 	def get_absolute_url(self):
-		return reverse("products:accessoire_phone_detail", kwargs={ "slug": self.slug})
+		return reverse("products:accessoire_phone_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 
