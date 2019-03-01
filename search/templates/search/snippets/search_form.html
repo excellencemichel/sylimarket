@@ -1,19 +1,20 @@
 
 <form  method="GET" action="{% url 'search:query' %}" class="query-search-form">
-  <div class="control-group">
-    <ul class="categories-filter animate-dropdown">
-      <li class="dropdown"> <a class="dropdown-toggle"  data-toggle="dropdown" href="#">Categories <b class="caret"></b></a>
-        <ul class="dropdown-menu" role="menu" >
-          <li class="menu-header">Ordinateurs</li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Vêtements</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Electroniques</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Chausures</a></li>
-          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Watches</a></li>
-        </ul>
-      </li>
-    </ul>
-    <input class="search-field input-search-text" type="search" name="q" value="{{ request.GET.q }}" placeholder="Search here..." />
-    <button class="search-button" type="submit"></button>
-  </div>
+   {% csrf_token %}
+	<div class="control-group">
+	    <ul class="categories-filter animate-dropdown">
+	      <li class="dropdown"> <a class="dropdown-toggle"  data-toggle="dropdown" href="#">Categories <b class="caret"></b></a>
+	        <ul class="dropdown-menu" role="menu" >
+	          <li class="menu-header">Ordinateurs</li>
+	          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Vêtements</a></li>
+	          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Electroniques</a></li>
+	          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Chausures</a></li>
+	          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Watches</a></li>
+	        </ul>
+	      </li>
+	    </ul>
+	    <input class="search-field input-search-text" type="search" name="q" value="{{ request.GET.q }}" placeholder="Search here..." />
+	    <button class="search-button" type="submit"></button>
+	</div>
 
 </form>
