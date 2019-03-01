@@ -1,62 +1,46 @@
  $(document).ready(function(){
 
 
-        function refreshHome(){
-          console.log("In home")
-          var productHome = $(".product-home")
-          var productHomeItem = productHome.find(".product-home-item")
-        var productUpdateform = productHomeItem.find(".product-update-form")
+    
+  // Auto Search
 
-        var refreshProductUrl = "/api/product/"
-        var refreshProductMethod = "GET"
-        var data = {}
+  var searForm = $(".query-search-form")
 
-        $.ajax({
-          url: refreshProductUrl,
-          method: refreshProductMethod,
-          data: data,
-          success: function(data){
-            var hiddenProductAddForm = $(".product-item-add-form")
-            var hiddenProductRemoveForm = $(".product-item-remove-form")
-            if(data.products.length > 0){
-              productUpdateform.html(" ")
+  var searchInput = searForm.find("[name='q']") // input name='q'
 
-              $.each(data.products, function(index, value){
-                console.log("Dans le cart: ", value.in_cart)
-                if(value.in_cart==false){
-                var newProductAddForm = hiddenProductAddForm.clone()
-                newProductAddForm.css("display", "inline-block")
-                newProductAddForm.find(".cart-item-product-id").val(value.id)
+  var typingTimer;
+  var typingInterval = 500 // 
+  var searchBtn = searForm.find("[type='submit']")
 
-                productUpdateform.prepend(newProductAddForm.html())
+  searchInput.keyup(function(event){
+    //key released
+    clearTimeout(typingTimer)
 
+    typingTimer = setTimeout(perforSearch, typingInterval)
+    
+    
+  })
 
-                }
+  searchInput.keydown(function(event){
+    // key pressed
+    clearTimeout(typingTimer)
+  })
 
-                else if (value.in_cart==true){
-                  var newProductRemoveForm = hiddenProductRemoveForm.clone()
-                  newProductRemoveForm.css("display", "inline-block")
-                  newProductRemoveForm.find(".cart-item-product-id").val(value.id)
+  function displaySearching(){
+    searchBtn.addClass("disabled")
+    searchBtn.html("<i class='fa fa-spin fa-spinner'></i> Searching...")
+  }
 
-                  productUpdateform.prepend(newProductRemoveForm.html())
-                }
+  function perforSearch(){
+    displaySearching()
+    var query = searchInput.val()
 
+    setTimeout(function(){
 
-              })
-            }
+    window.location.href="/search/?q=" + query
+    }, 1000)
+  }
 
-          },
-
-          error: function(){
-            $.alert({
-                title: "oops !",
-                content: "Une erreur s'est occasionée",
-                theme: "modern",
-              })
-          }
-
-        })
-        }
 
         // Stat Add update
       var productFormAdd = $(".form-product-ajax-add")

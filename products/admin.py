@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from django.utils.safestring import mark_safe
 
 
 
@@ -69,6 +70,14 @@ class WomenClothingAdmin(admin.ModelAdmin):
 @admin.register(Pantalon)
 class PantalonAdmin(admin.ModelAdmin):
 	form = PantalonForm
+	readonly_fields = ["show_image"]
+	def show_image(self, obj):
+		return mark_safe('<im src={url}" width="{width}" height="{height}" />'.format(
+			url = obj.image.url,
+			width = obj.image.width,
+			height = obj.image.height,
+
+			))
 
 
 
@@ -81,6 +90,17 @@ class CulotteAdmin(admin.ModelAdmin):
 @admin.register(Jupe)
 class JupeAdmin(admin.ModelAdmin):
 	form = JupeForm
+	readonly_fields = ["show_image"]
+	print("admin Jupe exécuté")
+
+	def show_image(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url = obj.image.url,
+			width = 250,
+			height = 250,
+
+			))
+
 
 
 

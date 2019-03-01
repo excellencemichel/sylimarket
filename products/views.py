@@ -90,6 +90,10 @@ class ProductListView(ListView):
 
 
 
+
+
+
+
 def product_detail(request, pk=None, slug=None):
 	product = get_object_or_404(Product, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
@@ -132,6 +136,345 @@ class UserProductHistoryView(ListView):
 
 		
 		return views #Product.objects.filter(pk__in=viewed_ids)
+
+
+
+
+
+
+
+
+
+class MenClothingListView(ListView):
+	template_name = "products/men_clothing_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(MenClothingListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return MenClothing.objects.all()
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+class WomenClothingListView(ListView):
+	template_name = "products/women_clothing_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(WomenClothingListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return WomenClothing.objects.all()
+
+
+
+		
+
+
+
+
+
+
+
+class PantalonListView(ListView):
+	template_name = "products/pantalon_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(PantalonListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Pantalon.objects.all()
+
+
+
+		
+
+
+
+
+
+
+
+class CulotteListView(ListView):
+	template_name = "products/culotte_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(CulotteListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Culotte.objects.all()
+
+
+
+		
+
+
+
+
+
+
+
+class JupeListView(ListView):
+	template_name = "products/jupe_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(JupeListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Jupe.objects.all()
+
+
+
+		
+
+
+
+
+
+
+
+class MenShoesListView(ListView):
+	template_name = "products/men_shoes_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(MenShoesListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return MenShoes.objects.all()
+
+
+
+		
+
+
+
+
+
+
+
+class WomenShoesListView(ListView):
+	template_name = "products/women_shoes_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(WomenShoesListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return WomenShoes.objects.all()
+
+
+
+		
+
+
+
+
+
+
+
+class AccessoireClothngListView(ListView):
+	template_name = "products/accessoireclothing_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(AccessoireClothngListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return AccessoireClothng.objects.all()
+
+
+
+		
+
+
+
+
+
+
+
+class ComputerListView(ListView):
+	template_name = "products/computer_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(ComputerListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Computer.objects.all()
+
+
+
+		
+
+
+
+
+
+
+
+class AccessoireComputerListView(ListView):
+	template_name = "products/accessoire_computer_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(AccessoireComputerListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return AccessoireComputer.objects.all()
+
+
+
+		
+
+
+
+
+
+
+
+class PhoneListView(ListView):
+	template_name = "products/phone_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(PhoneListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Phone.objects.all()
+
+
+
+		
+
+
+
+
+
+
+
+class TabletteListView(ListView):
+	template_name = "products/tablette_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(TabletteListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Tablette.objects.all()
+
+
+
+		
+
+
+
+
+
+
+
+class AccessoirePhoneListView(ListView):
+	template_name = "products/accessoire_phone_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(AccessoirePhoneListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return AccessoirePhone.objects.all()
+
+
+
+		
+
+
+
+
+
+
+
+		
+
 
 
 

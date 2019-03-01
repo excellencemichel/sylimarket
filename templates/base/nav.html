@@ -57,22 +57,7 @@
           <!-- /.contact-row --> 
           <!-- ============================================================= SEARCH AREA ============================================================= -->
           <div class="search-area">
-            <form>
-              <div class="control-group">
-                <ul class="categories-filter animate-dropdown">
-                  <li class="dropdown"> <a class="dropdown-toggle"  data-toggle="dropdown" href="#">Categories <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu" >
-                      <li class="menu-header">Ordinateurs</li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Vêtements</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Electroniques</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Chausures</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Watches</a></li>
-                    </ul>
-                  </li>
-                </ul>
-                <input class="search-field" placeholder="Search here..." />
-                <a class="search-button" href="#" ></a> </div>
-            </form>
+            {% include "search/snippets/search_form.html" %}
           </div>
           <!-- /.search-area --> 
           <!-- ============================================================= SEARCH AREA : END ============================================================= --> </div>
@@ -149,13 +134,13 @@
                           <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
                             <h2 class="title">Hommes</h2>
                             <ul class="links">
-                              <li><a href="#">Pantalon</a></li>
-                              <li><a href="#">Chemises </a></li>
-                              <li><a href="#">Cullete</a></li>
-                              <li><a href="#">Accessoires</a></li>
-                              <li><a href="#">Pour le sport</a></li>
-                              <li><a href="#">Chaussures</a></li>
-                              <li><a href="#">T-Shirts</a></li>
+                              <li><a href="{% url 'products:pantalon_list' %}">Pantalon</a></li>
+                              <li><a href="{% url 'products:men_clothing_list' %}">Chemises </a></li>
+                              <li><a href="{% url 'products:culotte_list' %}">Cullete</a></li>
+                              <li><a href="{% url 'products:accessoire_clothing_list' %}">Accessoires</a></li>
+                              <li><a href="{% url 'products:men_clothing_list' %}">Pour le sport</a></li>
+                              <li><a href="{% url 'products:men_shoe_list' %}">Chaussures</a></li>
+                              <li><a href="{% url 'products:men_clothing_list' %}">T-Shirts</a></li>
                             </ul>
                           </div>
                           <!-- /.col -->
@@ -163,13 +148,13 @@
                           <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
                             <h2 class="title">Femmes</h2>
                             <ul class="links">
-                              <li><a href="#">Chemisier</a></li>
-                              <li><a href="#">Chausures</a></li>
-                              <li><a href="#">Robes </a></li>
-                              <li><a href="#">Jupes</a></li>
-                              <li><a href="#">Accessoires</a></li>
-                              <li><a href="#">Mini</a></li>
-                              <li><a href="#">Salopettes</a></li>
+                              <li><a href="{% url 'products:women_clothing_list' %}">Chemisier</a></li>
+                              <li><a href="{% url 'products:women_shoe_list' %}">Chausures</a></li>
+                              <li><a href="{% url 'products:women_clothing_list' %}">Robes </a></li>
+                              <li><a href="{% url 'products:jupe_list' %}">Jupes</a></li>
+                              <li><a href="{% url 'products:accessoire_clothing_list' %}">Accessoires</a></li>
+                              <li><a href="{% url 'products:women_clothing_list' %}">Mini</a></li>
+                              <li><a href="{% url 'products:women_clothing_list' %}">Salopettes</a></li>
                             </ul>
                           </div>
                           <!-- /.col -->
@@ -177,15 +162,15 @@
                           <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
                             <h2 class="title">Jeunes garçons</h2>
                             <ul class="links">
-                              <li><a href="#">Jeans</a></li>
+                              <li><a href="{% url 'products:pantalon_list' %}">Jeans</a></li>
                               <li><a href="#">Polo</a></li>
-                              <li><a href="#">Chemises</a></li>
-                              <li><a href="#">Pantalon</a></li>
-                              <li><a href="#">Culottes</a></li>
-                              <li><a href="#">Pulls</a></li>
-                              <li><a href="#">Sacs de cours</a></li>
-                              <li><a href="#">Chaussures</a></li>
-                              <li><a href="#">Toys & Games</a></li>
+                              <li><a href="{% url 'products:women_clothing_list' %}">Chemises</a></li>
+                              <li><a href="{% url 'products:pantalon_list' %}">Pantalon</a></li>
+                              <li><a href="{% url 'products:culotte_list' %}">Culottes</a></li>
+                              <li><a href="{% url 'products:men_clothing_list' %}">Pulls</a></li>
+                              <li><a href="{% url 'products:men_clothing_list' %}">Sacs de cours</a></li>
+                              <li><a href="{% url 'products:men_shoe_list' %}">Chaussures</a></li>
+                              <li><a href="{% url 'products:men_clothing_list' %}">Toys & Games</a></li>
                             </ul>
                           </div>
                           <!-- /.col -->
@@ -193,13 +178,13 @@
                           <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
                             <h2 class="title">Jeunes filles</h2>
                             <ul class="links">
-                              <li><a href="#">Robes </a></li>
-                              <li><a href="#">Jupes</a></li>
-                              <li><a href="#">Culottes</a></li>
-                              <li><a href="#">Chaussures</a></li>
-                              <li><a href="#">Sacs à main</a></li>
-                              <li><a href="#">RObe de nuit</a></li>
-                              <li><a href="#">Habit d'hiver</a></li>
+                              <li><a href="{% url 'products:women_clothing_list' %}">Robes </a></li>
+                              <li><a href="{% url 'products:jupe_list' %}">Jupes</a></li>
+                              <li><a href="{% url 'products:culotte_list' %}">Culottes</a></li>
+                              <li><a href="{% url 'products:women_shoe_list' %}">Chaussures</a></li>
+                              <li><a href="{% url 'products:women_clothing_list' %}">Sacs à main</a></li>
+                              <li><a href="{% url 'products:women_clothing_list' %}">Robe de nuit</a></li>
+                              <li><a href="{% url 'products:women_clothing_list' %}">Habit d'hiver</a></li>
                             </ul>
                           </div>
                           <!-- /.col -->
@@ -220,16 +205,16 @@
                           <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
                             <h2 class="title">Laptops</h2>
                             <ul class="links">
-                              <li><a href="#">Gaming</a></li>
-                              <li><a href="#">HP</a></li>
-                              <li><a href="#">Apple</a></li>
-                              <li><a href="#">Dell</a></li>
-                              <li><a href="#">Lenovo</a></li>
-                              <li><a href="#">Microsoft</a></li>
-                              <li><a href="#">Asus</a></li>
-                              <li><a href="#">Adapters</a></li>
-                              <li><a href="#">Batteries</a></li>
-                              <li><a href="#">Cooling Pads</a></li>
+                              <li><a href="{% url 'products:computer_list' %}">Gaming</a></li>
+                              <li><a href="{% url 'products:computer_list' %}">HP</a></li>
+                              <li><a href="{% url 'products:computer_list' %}">Apple</a></li>
+                              <li><a href="{% url 'products:computer_list' %}">Dell</a></li>
+                              <li><a href="{% url 'products:computer_list' %}">Lenovo</a></li>
+                              <li><a href="{% url 'products:computer_list' %}">Microsoft</a></li>
+                              <li><a href="{% url 'products:computer_list' %}">Asus</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Adapters</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Batteries</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Cooling Pads</a></li>
                             </ul>
                           </div>
                           <!-- /.col -->
@@ -237,16 +222,16 @@
                           <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
                             <h2 class="title">Desktops</h2>
                             <ul class="links">
-                              <li><a href="#">Routers & Modems</a></li>
-                              <li><a href="#">CPUs, Processors</a></li>
-                              <li><a href="#">PC Gaming Store</a></li>
-                              <li><a href="#">Graphics Cards</a></li>
-                              <li><a href="#">Components</a></li>
-                              <li><a href="#">Webcam</a></li>
-                              <li><a href="#">Memory (RAM)</a></li>
-                              <li><a href="#">Motherboards</a></li>
-                              <li><a href="#">Keyboards</a></li>
-                              <li><a href="#">Headphones</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Routers & Modems</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">CPUs, Processors</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">PC Gaming Store</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Graphics Cards</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Components</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Webcam</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Memory (RAM)</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Motherboards</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Keyboards</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Headphones</a></li>
                             </ul>
                           </div>
                           <!-- /.col -->
@@ -254,35 +239,35 @@
                           <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
                             <h2 class="title">Cameras</h2>
                             <ul class="links">
-                              <li><a href="#">Accessories</a></li>
-                              <li><a href="#">Binoculars</a></li>
-                              <li><a href="#">Telescopes</a></li>
-                              <li><a href="#">Camcorders</a></li>
-                              <li><a href="#">Digital</a></li>
-                              <li><a href="#">Film Cameras</a></li>
-                              <li><a href="#">Flashes</a></li>
-                              <li><a href="#">Lenses</a></li>
-                              <li><a href="#">Surveillance</a></li>
-                              <li><a href="#">Tripods</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Accessories</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Binoculars</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Telescopes</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Camcorders</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Digital</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Film Cameras</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Flashes</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Lenses</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Surveillance</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Tripods</a></li>
                             </ul>
                           </div>
                           <!-- /.col -->
                           <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
                             <h2 class="title">Mobile Phones</h2>
                             <ul class="links">
-                              <li><a href="#">Apple</a></li>
-                              <li><a href="#">Samsung</a></li>
-                              <li><a href="#">Lenovo</a></li>
-                              <li><a href="#">Motorola</a></li>
-                              <li><a href="#">LeEco</a></li>
-                              <li><a href="#">Asus</a></li>
-                              <li><a href="#">Acer</a></li>
-                              <li><a href="#">Accessories</a></li>
-                              <li><a href="#">Headphones</a></li>
-                              <li><a href="#">Memory Cards</a></li>
+                              <li><a href="{% url 'products:phone_list' %}">Apple</a></li>
+                              <li><a href="{% url 'products:phone_list' %}">Samsung</a></li>
+                              <li><a href="{% url 'products:phone_list' %}">Lenovo</a></li>
+                              <li><a href="{% url 'products:phone_list' %}">Motorola</a></li>
+                              <li><a href="{% url 'products:phone_list' %}">LeEco</a></li>
+                              <li><a href="{% url 'products:phone_list' %}">Asus</a></li>
+                              <li><a href="{% url 'products:phone_list' %}">Acer</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Accessories</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Headphones</a></li>
+                              <li><a href="{% url 'products:accessoire_computer_list' %}">Memory Cards</a></li>
                             </ul>
                           </div>
-                          <div class="col-xs-12 col-sm-12 col-md-4 col-menu custom-banner"> <a href="#"><img alt="" src="{% static 'images/banners/banner-side.png' %}"></a> </div>
+                          <div class="col-xs-12 col-sm-12 col-md-4 col-menu custom-banner"> <a href="{% url 'products:phone_list' %}"><img alt="" src="{% static 'images/banners/banner-side.png' %}"></a> </div>
                         </div>
                         <!-- /.row --> 
                       </div>

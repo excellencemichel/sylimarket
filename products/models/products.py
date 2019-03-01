@@ -8,6 +8,7 @@ from django.urls import reverse
 
 
 from django.db import models
+from django.db.models import Q
 from django.db.models.signals import pre_save, post_save
 
 
@@ -26,13 +27,13 @@ class ProductQuerySet(models.query.QuerySet):
 
 	def search(self, query):
 		lookups =( 
-				 Q(title__icontains=query)|
+				 Q(name__icontains=query)|
 				 Q(slug__icontains=query)|
 				 Q(description__icontains=query)|
-				 Q(price__icontains=query)|
-				 Q(tag__title__icontains=query)
+				 Q(price__icontains=query)
+				 # Q(tag__title__icontains=query)
 				)
-		return self.filter(lookups).distinct()
+		return self.filter(lookups)
 
 
 

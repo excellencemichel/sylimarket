@@ -1,8 +1,30 @@
+from itertools import chain
+
+
 from django.shortcuts import render
 from django.db.models import Q
 from django.views.generic import ListView
 
-from products.models import Product
+
+
+#import from models
+from products.models import (  Product,
+
+					#clothings
+					MenClothing, WomenClothing, Pantalon,
+					Culotte, Jupe, MenShoes,
+					WomenShoes, AccessoireClothng,
+
+					#computers
+					Computer, AccessoireComputer,
+
+					#phones
+					Phone, Tablette, AccessoirePhone
+
+					)
+
+
+# from products.models import Product
 from carts.models import Cart 
 # Create your views here.
 
@@ -33,6 +55,31 @@ class SearchProductView(ListView):
 		method_dict = request.GET
 		query = method_dict.get("q", None)
 		if query is not None:
-			return Product.objects.search(query)
-		return Product.objects.featured()
+			q_menclothing = MenClothing.objects.search(query)
+			q_womenclothing = WomenClothing.objects.search(query)
+			q_pantalon = Pantalon.objects.search(query)
+			q_culotte = Culotte.objects.search(query)
+			q_jupe = Jupe.objects.search(query)
+			q_menshoes = MenShoes.objects.search(query)
+			q_womenshoes = WomenShoes.objects.search(query)
+			q_accessoire_clothing = AccessoireClothng.objects.search(query)
+			q_cumputer = Computer.objects.search(query)
+			q_accessoire_computer = AccessoireComputer.objects.search(query)
+			q_phone = Phone.objects.search(query)
+			q_tablette = Tablette.objects.search(query)
+			q_accessoire_phone = AccessoirePhone.objects.search(query)
+
+			product_list = sorted(
+        		chain(q_menclothing,
+				q_womenclothing, q_pantalon, q_culotte, q_jupe,
+				q_menshoes, q_womenshoes, q_accessoire_clothing,
+				q_cumputer, q_accessoire_computer,
+				q_phone, q_tablette, q_accessoire_phone
+				),
+        		key=lambda product: product.updated, reverse=True
+        		)
+
+			return product_list
+
+		return 
 

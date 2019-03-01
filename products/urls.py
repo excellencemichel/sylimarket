@@ -20,7 +20,15 @@ from .views import (
 
 			accessoire_phone_detail, computer_detail, 
 
-			accessoire_computer_detail
+			accessoire_computer_detail,
+
+
+			MenClothingListView,
+			WomenClothingListView, PantalonListView, CulotteListView,
+ 			JupeListView, MenShoesListView,
+			WomenShoesListView, AccessoireClothngListView,
+			 ComputerListView, AccessoireComputerListView, PhoneListView, 
+			 TabletteListView, AccessoirePhoneListView,
 
 
 			)
@@ -42,6 +50,24 @@ urlpatterns = [
 
 
 			path("", ProductListView.as_view(), name="list"),
+
+			#list products
+			path("men-clothing-list", MenClothingListView.as_view(), name="men_clothing_list"),
+			path("women-clothing-list", WomenClothingListView.as_view(), name="women_clothing_list"),
+			path("pantalon-list", PantalonListView.as_view(), name="pantalon_list"),
+			path("culotte-list", CulotteListView.as_view(), name="culotte_list"),
+			path("jupe-list", JupeListView.as_view(), name="jupe_list"),
+			path("men-shoe-list", MenShoesListView.as_view(), name="men_shoe_list"),
+			path("women-shoe-list", WomenShoesListView.as_view(), name="women_shoe_list"),
+			path("accessoire-clothing-list", AccessoireClothngListView.as_view(), name="accessoire_clothing_list"),
+			path("computer-list", ComputerListView.as_view(), name="computer_list"),
+			path("accessoire-computer-list", AccessoireComputerListView.as_view(), name="accessoire_computer_list"),
+			path("phone-list", PhoneListView.as_view(), name="phone_list"),
+			path("tablette-list", TabletteListView.as_view(), name="tablette_list"),
+			path("accessoire-phone-list", AccessoirePhoneListView.as_view(), name="accessoire_phone_list"),
+
+
+
 			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/detail/$', product_detail, name="detail"),	
 
 			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/men-clothing-detail/$', men_clothing_detail, name="men_clothing_detail"),			
