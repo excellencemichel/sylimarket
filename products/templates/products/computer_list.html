@@ -9,16 +9,9 @@
   <div class="container">
     <div class="breadcrumb-inner">
       <ul class="list-inline list-unstyled">
-        <li><a href="#">Home</a></li>
-        <li class='active'>Handbags</li>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li class='active'>Computer</li>
       </ul>
-      		{% if request.GET.q %}
-
-			Resultat for <b> 	{{ query }}
-			</b>
-			<hr/>
-
-		{% endif %}
 
     </div>
     <!-- /.breadcrumb-inner --> 
@@ -42,53 +35,53 @@
                     <div class="row">
                       <div class="col-sm-12 col-md-3">
                         <ul class="links list-unstyled">
-                          <li><a href="#">Dresses</a></li>
-                          <li><a href="#">Shoes </a></li>
-                          <li><a href="#">Jackets</a></li>
-                          <li><a href="#">Sunglasses</a></li>
-                          <li><a href="#">Sport Wear</a></li>
-                          <li><a href="#">Blazers</a></li>
-                          <li><a href="#">Shirts</a></li>
-                          <li><a href="#">Shorts</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Dresses</a></li>
+                          <li><a href="{% url 'products:women_shoe_list' %}">Shoes </a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Jackets</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Sunglasses</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Sport Wear</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Blazers</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Shirts</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Shorts</a></li>
                         </ul>
                       </div>
                       <!-- /.col -->
                       <div class="col-sm-12 col-md-3">
                         <ul class="links list-unstyled">
-                          <li><a href="#">Handbags</a></li>
-                          <li><a href="#">Jwellery</a></li>
-                          <li><a href="#">Swimwear </a></li>
-                          <li><a href="#">Tops</a></li>
-                          <li><a href="#">Flats</a></li>
-                          <li><a href="#">Shoes</a></li>
-                          <li><a href="#">Winter Wear</a></li>
-                          <li><a href="#">Night Suits</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Handbags</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Jwellery</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Swimwear </a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Tops</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Flats</a></li>
+                          <li><a href="{% url 'products:men_shoe_list' %}">Shoes</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Winter Wear</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Night Suits</a></li>
                         </ul>
                       </div>
                       <!-- /.col -->
                       <div class="col-sm-12 col-md-3">
                         <ul class="links list-unstyled">
-                          <li><a href="#">Toys &amp; Games</a></li>
-                          <li><a href="#">Jeans</a></li>
-                          <li><a href="#">Shirts</a></li>
-                          <li><a href="#">Shoes</a></li>
-                          <li><a href="#">School Bags</a></li>
-                          <li><a href="#">Lunch Box</a></li>
-                          <li><a href="#">Footwear</a></li>
-                          <li><a href="#">Wipes</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Toys &amp; Games</a></li>
+                          <li><a href="{% url 'products:pantalon_list' %}">Jeans</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Shirts</a></li>
+                          <li><a href="{% url 'products:men_shoe_list' %}">Shoes</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">School Bags</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Lunch Box</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Footwear</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Wipes</a></li>
                         </ul>
                       </div>
                       <!-- /.col -->
                       <div class="col-sm-12 col-md-3">
                         <ul class="links list-unstyled">
-                          <li><a href="#">Sandals </a></li>
-                          <li><a href="#">Shorts</a></li>
-                          <li><a href="#">Dresses</a></li>
-                          <li><a href="#">Jwellery</a></li>
-                          <li><a href="#">Bags</a></li>
-                          <li><a href="#">Night Dress</a></li>
-                          <li><a href="#">Swim Wear</a></li>
-                          <li><a href="#">Toys</a></li>
+                          <li><a href="{% url 'products:women_shoe_list' %}">Sandals </a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Shorts</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Dresses</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Jwellery</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Bags</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Night Dress</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Swim Wear</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Toys</a></li>
                         </ul>
                       </div>
                       <!-- /.col --> 
@@ -107,30 +100,30 @@
                     <div class="row">
                       <div class="col-xs-12 col-sm-12 col-lg-4">
                         <ul>
-                          <li><a href="#">Gaming</a></li>
-                          <li><a href="#">Laptop Skins</a></li>
-                          <li><a href="#">Apple</a></li>
-                          <li><a href="#">Dell</a></li>
-                          <li><a href="#">Lenovo</a></li>
-                          <li><a href="#">Microsoft</a></li>
-                          <li><a href="#">Asus</a></li>
-                          <li><a href="#">Adapters</a></li>
-                          <li><a href="#">Batteries</a></li>
-                          <li><a href="#">Cooling Pads</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Gaming</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Laptop Skins</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Apple</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Dell</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Lenovo</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Microsoft</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Asus</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Adapters</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Batteries</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Cooling Pads</a></li>
                         </ul>
                       </div>
                       <div class="col-xs-12 col-sm-12 col-lg-4">
                         <ul>
-                          <li><a href="#">Routers &amp; Modems</a></li>
-                          <li><a href="#">CPUs, Processors</a></li>
-                          <li><a href="#">PC Gaming Store</a></li>
-                          <li><a href="#">Graphics Cards</a></li>
-                          <li><a href="#">Components</a></li>
-                          <li><a href="#">Webcam</a></li>
-                          <li><a href="#">Memory (RAM)</a></li>
-                          <li><a href="#">Motherboards</a></li>
-                          <li><a href="#">Keyboards</a></li>
-                          <li><a href="#">Headphones</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Routers &amp; Modems</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">CPUs, Processors</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">PC Gaming Store</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Graphics Cards</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Components</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Webcam</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Memory (RAM)</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Motherboards</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Keyboards</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Headphones</a></li>
                         </ul>
                       </div>
                       <div class="dropdown-banner-holder"> <a href="#"><img alt="" src="{% static 'images/banners/banner-side.png' %}" /></a> </div>
@@ -149,53 +142,53 @@
                     <div class="row">
                       <div class="col-sm-12 col-md-3">
                         <ul class="links list-unstyled">
-                          <li><a href="#">Dresses</a></li>
-                          <li><a href="#">Shoes </a></li>
-                          <li><a href="#">Jackets</a></li>
-                          <li><a href="#">Sunglasses</a></li>
-                          <li><a href="#">Sport Wear</a></li>
-                          <li><a href="#">Blazers</a></li>
-                          <li><a href="#">Shirts</a></li>
-                          <li><a href="#">Shorts</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Dresses</a></li>
+                          <li><a href="{% url 'products:women_shoe_list' %}">Shoes </a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Jackets</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Sunglasses</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Sport Wear</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Blazers</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Shirts</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Shorts</a></li>
                         </ul>
                       </div>
                       <!-- /.col -->
                       <div class="col-sm-12 col-md-3">
                         <ul class="links list-unstyled">
-                          <li><a href="#">Handbags</a></li>
-                          <li><a href="#">Jwellery</a></li>
-                          <li><a href="#">Swimwear </a></li>
-                          <li><a href="#">Tops</a></li>
-                          <li><a href="#">Flats</a></li>
-                          <li><a href="#">Shoes</a></li>
-                          <li><a href="#">Winter Wear</a></li>
-                          <li><a href="#">Night Suits</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Handbags</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Jwellery</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Swimwear </a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Tops</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Flats</a></li>
+                          <li><a href="{% url 'products:men_shoe_list' %}">Shoes</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Winter Wear</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Night Suits</a></li>
                         </ul>
                       </div>
                       <!-- /.col -->
                       <div class="col-sm-12 col-md-3">
                         <ul class="links list-unstyled">
-                          <li><a href="#">Toys &amp; Games</a></li>
-                          <li><a href="#">Jeans</a></li>
-                          <li><a href="#">Shirts</a></li>
-                          <li><a href="#">Shoes</a></li>
-                          <li><a href="#">School Bags</a></li>
-                          <li><a href="#">Lunch Box</a></li>
-                          <li><a href="#">Footwear</a></li>
-                          <li><a href="#">Wipes</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Toys &amp; Games</a></li>
+                          <li><a href="{% url 'products:pantalon_list' %}">Jeans</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Shirts</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Shoes</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">School Bags</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Lunch Box</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Footwear</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Wipes</a></li>
                         </ul>
                       </div>
                       <!-- /.col -->
                       <div class="col-sm-12 col-md-3">
                         <ul class="links list-unstyled">
-                          <li><a href="#">Sandals </a></li>
-                          <li><a href="#">Shorts</a></li>
-                          <li><a href="#">Dresses</a></li>
-                          <li><a href="#">Jwellery</a></li>
-                          <li><a href="#">Bags</a></li>
-                          <li><a href="#">Night Dress</a></li>
-                          <li><a href="#">Swim Wear</a></li>
-                          <li><a href="#">Toys</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Sandals </a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Shorts</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Dresses</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Jwellery</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Bags</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Night Dress</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Swim Wear</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Toys</a></li>
                         </ul>
                       </div>
                       <!-- /.col --> 
@@ -213,30 +206,30 @@
                     <div class="row">
                       <div class="col-xs-12 col-sm-12 col-lg-4">
                         <ul>
-                          <li><a href="#">Gaming</a></li>
-                          <li><a href="#">Laptop Skins</a></li>
-                          <li><a href="#">Apple</a></li>
-                          <li><a href="#">Dell</a></li>
-                          <li><a href="#">Lenovo</a></li>
-                          <li><a href="#">Microsoft</a></li>
-                          <li><a href="#">Asus</a></li>
-                          <li><a href="#">Adapters</a></li>
-                          <li><a href="#">Batteries</a></li>
-                          <li><a href="#">Cooling Pads</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Gaming</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Laptop Skins</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Apple</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Dell</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Lenovo</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Microsoft</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Asus</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Adapters</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Batteries</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Cooling Pads</a></li>
                         </ul>
                       </div>
                       <div class="col-xs-12 col-sm-12 col-lg-4">
                         <ul>
-                          <li><a href="#">Routers &amp; Modems</a></li>
-                          <li><a href="#">CPUs, Processors</a></li>
-                          <li><a href="#">PC Gaming Store</a></li>
-                          <li><a href="#">Graphics Cards</a></li>
-                          <li><a href="#">Components</a></li>
-                          <li><a href="#">Webcam</a></li>
-                          <li><a href="#">Memory (RAM)</a></li>
-                          <li><a href="#">Motherboards</a></li>
-                          <li><a href="#">Keyboards</a></li>
-                          <li><a href="#">Headphones</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Routers &amp; Modems</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">CPUs, Processors</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">PC Gaming Store</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Graphics Cards</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Components</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Webcam</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Memory (RAM)</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Motherboards</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Keyboards</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Headphones</a></li>
                         </ul>
                       </div>
                       <div class="dropdown-banner-holder"> <a href="#"><img alt="" src="{% static 'images/banners/banner-side.png' %}" /></a> </div>
@@ -254,53 +247,53 @@
                     <div class="row">
                       <div class="col-sm-12 col-md-3">
                         <ul class="links list-unstyled">
-                          <li><a href="#">Dresses</a></li>
-                          <li><a href="#">Shoes </a></li>
-                          <li><a href="#">Jackets</a></li>
-                          <li><a href="#">Sunglasses</a></li>
-                          <li><a href="#">Sport Wear</a></li>
-                          <li><a href="#">Blazers</a></li>
-                          <li><a href="#">Shirts</a></li>
-                          <li><a href="#">Shorts</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Dresses</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Shoes </a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Jackets</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Sunglasses</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Sport Wear</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Blazers</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Shirts</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Shorts</a></li>
                         </ul>
                       </div>
                       <!-- /.col -->
                       <div class="col-sm-12 col-md-3">
                         <ul class="links list-unstyled">
-                          <li><a href="#">Handbags</a></li>
-                          <li><a href="#">Jwellery</a></li>
-                          <li><a href="#">Swimwear </a></li>
-                          <li><a href="#">Tops</a></li>
-                          <li><a href="#">Flats</a></li>
-                          <li><a href="#">Shoes</a></li>
-                          <li><a href="#">Winter Wear</a></li>
-                          <li><a href="#">Night Suits</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Handbags</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Jwellery</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Swimwear </a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Tops</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Flats</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Shoes</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Winter Wear</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Night Suits</a></li>
                         </ul>
                       </div>
                       <!-- /.col -->
                       <div class="col-sm-12 col-md-3">
                         <ul class="links list-unstyled">
-                          <li><a href="#">Toys &amp; Games</a></li>
-                          <li><a href="#">Jeans</a></li>
-                          <li><a href="#">Shirts</a></li>
-                          <li><a href="#">Shoes</a></li>
-                          <li><a href="#">School Bags</a></li>
-                          <li><a href="#">Lunch Box</a></li>
-                          <li><a href="#">Footwear</a></li>
-                          <li><a href="#">Wipes</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Toys &amp; Games</a></li>
+                          <li><a href="{% url 'products:pantalon_list' %}">Jeans</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Shirts</a></li>
+                          <li><a href="{% url 'products:women_shoe_list' %}">Shoes</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">School Bags</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Lunch Box</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Footwear</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Wipes</a></li>
                         </ul>
                       </div>
                       <!-- /.col -->
                       <div class="col-sm-12 col-md-3">
                         <ul class="links list-unstyled">
-                          <li><a href="#">Sandals </a></li>
-                          <li><a href="#">Shorts</a></li>
-                          <li><a href="#">Dresses</a></li>
-                          <li><a href="#">Jwellery</a></li>
-                          <li><a href="#">Bags</a></li>
-                          <li><a href="#">Night Dress</a></li>
-                          <li><a href="#">Swim Wear</a></li>
-                          <li><a href="#">Toys</a></li>
+                          <li><a href="{% url 'products:women_shoe_list' %}">Sandals </a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Shorts</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Dresses</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Jwellery</a></li>
+                          <li><a href="{% url 'products:accessoire_clothing_list' %}">Bags</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Night Dress</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Swim Wear</a></li>
+                          <li><a href="{% url 'products:women_clothing_list' %}">Toys</a></li>
                         </ul>
                       </div>
                       <!-- /.col --> 
@@ -318,30 +311,30 @@
                     <div class="row">
                       <div class="col-xs-12 col-sm-12 col-lg-4">
                         <ul>
-                          <li><a href="#">Gaming</a></li>
-                          <li><a href="#">Laptop Skins</a></li>
-                          <li><a href="#">Apple</a></li>
-                          <li><a href="#">Dell</a></li>
-                          <li><a href="#">Lenovo</a></li>
-                          <li><a href="#">Microsoft</a></li>
-                          <li><a href="#">Asus</a></li>
-                          <li><a href="#">Adapters</a></li>
-                          <li><a href="#">Batteries</a></li>
-                          <li><a href="#">Cooling Pads</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Gaming</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Laptop Skins</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Apple</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Dell</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Lenovo</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Microsoft</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Asus</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Adapters</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Batteries</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Cooling Pads</a></li>
                         </ul>
                       </div>
                       <div class="col-xs-12 col-sm-12 col-lg-4">
                         <ul>
-                          <li><a href="#">Routers &amp; Modems</a></li>
-                          <li><a href="#">CPUs, Processors</a></li>
-                          <li><a href="#">PC Gaming Store</a></li>
-                          <li><a href="#">Graphics Cards</a></li>
-                          <li><a href="#">Components</a></li>
-                          <li><a href="#">Webcam</a></li>
-                          <li><a href="#">Memory (RAM)</a></li>
-                          <li><a href="#">Motherboards</a></li>
-                          <li><a href="#">Keyboards</a></li>
-                          <li><a href="#">Headphones</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Routers &amp; Modems</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">CPUs, Processors</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">PC Gaming Store</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Graphics Cards</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Components</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Webcam</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Memory (RAM)</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Motherboards</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Keyboards</a></li>
+                          <li><a href="{% url 'products:computer_list' %}">Headphones</a></li>
                         </ul>
                       </div>
                       <div class="dropdown-banner-holder"> <a href="#"><img alt="" src="{% static 'images/banners/banner-side.png' %}" /></a> </div>
@@ -715,50 +708,50 @@
             <div class="tab-pane active " id="grid-container">
               <div class="category-product">
                 <div class="row">
-					{% for object in object_list %}
+          {% for object in object_list %}
 
-	                  <div class="col-sm-6 col-md-4 wow fadeInUp">
-	                    <div class="products">
-	                      <div class="product">
-	                        <div class="product-image">
-	                          <div class="image"> <a href="{{ object.get_absolute_url }}"><img  src="{{ object.image.url }}" alt=""></a> </div>
-	                          <!-- /.image -->
-	                          
-	                          <div class="tag new"><span>new</span></div>
-	                        </div>
-	                        <!-- /.product-image -->
-	                        
-	                        <div class="product-info text-left">
-	                          <h3 class="name"><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></h3>
-	                          <div class="rating rateit-small"></div>
-	                          <div class="description"></div>
-	                          <div class="product-price"> <span class="price"> ${{ object.price }} </span> <span class="price-before-discount">$ {{ object.price }}</span> </div>
-	                          <!-- /.product-price --> 
-	                          
-	                        </div>
-	                        <!-- /.product-info -->
-	                        <div class="cart clearfix animate-effect">
-	                          <div class="action">
-	                            <ul class="list-unstyled">
-	                              <li class="add-cart-button btn-group">
-	                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-	                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-	                              </li>
-	                              <li class="lnk wishlist"> <a class="add-to-cart" href="{{ object.get_absolute_url }}" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-	                              <li class="lnk"> <a class="add-to-cart" href="{{ object.get_absolute_url }}" title="Compare"> <i class="fa fa-signal"></i> </a> </li>
-	                            </ul>
-	                          </div>
-	                          <!-- /.action --> 
-	                        </div>
-	                        <!-- /.cart --> 
-	                      </div>
-	                      <!-- /.product --> 
-	                      
-	                    </div>
-	                    <!-- /.products --> 
-	                  </div>
-	                  <!-- /.item -->
-	  				{% endfor %}
+                    <div class="col-sm-6 col-md-4 wow fadeInUp">
+                      <div class="products">
+                        <div class="product">
+                          <div class="product-image">
+                            <div class="image"> <a href="{{ object.get_absolute_url }}"><img  src="{{ object.image.url }}" alt=""></a> </div>
+                            <!-- /.image -->
+                            
+                            <div class="tag new"><span>new</span></div>
+                          </div>
+                          <!-- /.product-image -->
+                          
+                          <div class="product-info text-left">
+                            <h3 class="name"><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></h3>
+                            <div class="rating rateit-small"></div>
+                            <div class="description"></div>
+                            <div class="product-price"> <span class="price"> ${{ object.price }} </span> <span class="price-before-discount">$ {{ object.price }}</span> </div>
+                            <!-- /.product-price --> 
+                            
+                          </div>
+                          <!-- /.product-info -->
+                          <div class="cart clearfix animate-effect">
+                            <div class="action">
+                              <ul class="list-unstyled">
+                                <li class="add-cart-button btn-group">
+                                  <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
+                                  <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
+                                </li>
+                                <li class="lnk wishlist"> <a class="add-to-cart" href="{{ object.get_absolute_url }}" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                                <li class="lnk"> <a class="add-to-cart" href="{{ object.get_absolute_url }}" title="Compare"> <i class="fa fa-signal"></i> </a> </li>
+                              </ul>
+                            </div>
+                            <!-- /.action --> 
+                          </div>
+                          <!-- /.cart --> 
+                        </div>
+                        <!-- /.product --> 
+                        
+                      </div>
+                      <!-- /.products --> 
+                    </div>
+                    <!-- /.item -->
+            {% endfor %}
 
                 </div>
                 <!-- /.row --> 
@@ -770,53 +763,53 @@
             
             <div class="tab-pane "  id="list-container">
               <div class="category-product">
-				{% for object in object_list %}
-	                <div class="category-product-inner wow fadeInUp">
-	                  <div class="products">
-	                    <div class="product-list product">
-	                      <div class="row product-list-row">
-	                        <div class="col col-sm-4 col-lg-4">
-	                          <div class="product-image">
-	                            <div class="image"> <img src="{{ object.image.url }}" alt=""> </div>
-	                          </div>
-	                          <!-- /.product-image --> 
-	                        </div>
-	                        <!-- /.col -->
-	                        <div class="col col-sm-8 col-lg-8">
-	                          <div class="product-info">
-	                            <h3 class="name"><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></h3>
-	                            <div class="rating rateit-small"></div>
-	                            <div class="product-price"> <span class="price"> ${{ object.price}} </span> <span class="price-before-discount">$ {{ object.price}}</span> </div>
-	                            <!-- /.product-price -->
-	                            <div class="description m-t-10">{{ object.description }}</div>
-	                            <div class="cart clearfix animate-effect">
-	                              <div class="action">
-	                                <ul class="list-unstyled">
-	                                  <li class="add-cart-button btn-group">
-	                                    <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-	                                    <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-	                                  </li>
-	                                  <li class="lnk wishlist"> <a class="add-to-cart" href="{{ object.get_absolute_url }}" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-	                                  <li class="lnk"> <a class="add-to-cart" href="{{ object.get_absolute_url }}" title="Compare"> <i class="fa fa-signal"></i> </a> </li>
-	                                </ul>
-	                              </div>
-	                              <!-- /.action --> 
-	                            </div>
-	                            <!-- /.cart --> 
-	                            
-	                          </div>
-	                          <!-- /.product-info --> 
-	                        </div>
-	                        <!-- /.col --> 
-	                      </div>
-	                      <!-- /.product-list-row -->
-	                      <div class="tag new"><span>new</span></div>
-	                    </div>
-	                    <!-- /.product-list --> 
-	                  </div>
-	                  <!-- /.products --> 
-	                </div>
-	                <!-- /.category-product-inner -->
+        {% for object in object_list %}
+                  <div class="category-product-inner wow fadeInUp">
+                    <div class="products">
+                      <div class="product-list product">
+                        <div class="row product-list-row">
+                          <div class="col col-sm-4 col-lg-4">
+                            <div class="product-image">
+                              <div class="image"> <img src="{{ object.image.url }}" alt=""> </div>
+                            </div>
+                            <!-- /.product-image --> 
+                          </div>
+                          <!-- /.col -->
+                          <div class="col col-sm-8 col-lg-8">
+                            <div class="product-info">
+                              <h3 class="name"><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></h3>
+                              <div class="rating rateit-small"></div>
+                              <div class="product-price"> <span class="price"> ${{ object.price}} </span> <span class="price-before-discount">$ {{ object.price}}</span> </div>
+                              <!-- /.product-price -->
+                              <div class="description m-t-10">{{ object.description }}</div>
+                              <div class="cart clearfix animate-effect">
+                                <div class="action">
+                                  <ul class="list-unstyled">
+                                    <li class="add-cart-button btn-group">
+                                      <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
+                                      <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
+                                    </li>
+                                    <li class="lnk wishlist"> <a class="add-to-cart" href="{{ object.get_absolute_url }}" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                                    <li class="lnk"> <a class="add-to-cart" href="{{ object.get_absolute_url }}" title="Compare"> <i class="fa fa-signal"></i> </a> </li>
+                                  </ul>
+                                </div>
+                                <!-- /.action --> 
+                              </div>
+                              <!-- /.cart --> 
+                              
+                            </div>
+                            <!-- /.product-info --> 
+                          </div>
+                          <!-- /.col --> 
+                        </div>
+                        <!-- /.product-list-row -->
+                        <div class="tag new"><span>new</span></div>
+                      </div>
+                      <!-- /.product-list --> 
+                    </div>
+                    <!-- /.products --> 
+                  </div>
+                  <!-- /.category-product-inner -->
                 {% endfor %}
                 
                 
