@@ -714,7 +714,7 @@
                       <div class="products">
                         <div class="product">
                           <div class="product-image">
-                            <div class="image"> <a href="{{ object.get_absolute_url }}"><img  src="{{ object.image.url }}" alt=""></a> </div>
+                            <div class="image"> <a href="{{ object.get_absolute_url }}"> {% if object.image %}<img  src="{{ object.image.url }}" alt=""> {% else %}Pas d'image encore{% endif %}</a> </div>
                             <!-- /.image -->
                             
                             <div class="tag new"><span>new</span></div>
@@ -770,7 +770,7 @@
                         <div class="row product-list-row">
                           <div class="col col-sm-4 col-lg-4">
                             <div class="product-image">
-                              <div class="image"> <img src="{{ object.image.url }}" alt=""> </div>
+                              <div class="image">{% if object.image %} <img src="{{ object.image.url }}" alt=""> {% else %} Pas d'image encore {% endif %} </div>
                             </div>
                             <!-- /.product-image --> 
                           </div>
@@ -874,7 +874,7 @@
           <div class="item"> <a href="#" class="image"> <img data-echo="{% static 'images/brands/brand4.png' %}" src="assets/images/blank.gif' %}" alt=""> </a> </div>
           <!--/.item-->
           
-          <div class="item"> <a href="#" class="image"> <img data-echo="{% static 'images/brands/brand1.png" src="{% static 'images/blank.gif" alt=""> </a> </div>
+          <div class="item"> <a href="#" class="image"> <img data-echo="{% static 'images/brands/brand1.png' %}" src="{% static 'images/blank.gif' %}" alt=""> </a> </div>
           <!--/.item-->
           
           <div class="item"> <a href="#" class="image"> <img data-echo="{% static 'images/brands/brand5.png' %}" src="{% static 'images/blank.gif' %}" alt=""> </a> </div>
