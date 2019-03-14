@@ -69,6 +69,7 @@
               navBarCount.text(data.cartItemsCount)
               console.log("Item du panier est : " ,navBarCount.text())
               navBarCartSommeTotal.text(data.cartSommeTotal)
+              console.log("Valeur du panier :", data.cartSommeTotal)
               // var currentPath = window.location.href
               // if(currentPath.indexOf("") != -1){
               //   refreshHome()
@@ -175,12 +176,16 @@
               var navBarCartSommeTotal = $(".cart-somme-total")
               navBarCount.text(data.cartItemsCount)
               navBarCartSommeTotal.text(data.cartSommeTotal)
+              console.log("Valeur du panier :", data.cartSommeTotal)
+
               var currentPath = window.location.href
               // if(currentPath.indexOf("") != -1){
               //   refreshHome()
               // }
               if(currentPath.indexOf("cart") != -1){
                 refreshCartPostDelete()
+                navBarCartSommeTotal.text(data.cartSommeTotal)
+
               }
             },
 

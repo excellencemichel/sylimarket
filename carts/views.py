@@ -124,6 +124,7 @@ def cart_update_to_add(request):
 			added = False
 			
 		request.session["cart_items"] = cart_obj.items.all().count()
+		request.session["items"] = str(cart_obj.items.all())
 		request.session["cart_total"] = str(cart_obj.total)
 
 		if request.is_ajax():
@@ -161,6 +162,7 @@ def cart_update_to_delete(request):
 			deleted = False
 			
 		request.session["cart_items"] = cart_obj.items.all().count()
+		request.session["items"] = str(cart_obj.items.all())
 		request.session["cart_total"] = str(cart_obj.total)
 
 		if request.is_ajax():
@@ -365,6 +367,8 @@ def checkout_livraison(request):
 
 			request.session["cart_items"] = 0
 			request.session["cart_total"] = str(0.00)
+			request.session["items"] = []
+
 			del request.session["cart_id"]
 			return redirect ("carts:success")
 
