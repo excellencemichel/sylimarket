@@ -69,7 +69,7 @@
           <div class="dropdown dropdown-cart"> <a href="#" class="dropdown-toggle lnk-cart" data-toggle="dropdown">
             <div class="items-cart-inner">
               <div class="basket"> <i class="glyphicon glyphicon-shopping-cart"></i> </div>
-              <div class="basket-item-count"><span class="count navbar-cart-count ">{{ request.session.cart_items }}</span></div>
+              <div class="basket-item-count"><span class="count navbar-cart-count ">{% if request.session.cart_items > 0 %}{{ request.session.cart_items }}{% else %}0{% endif %}</span></div>
               <div class="total-price-basket"> <span class="lbl">cart -</span> <span class="total-price"> <span class="sign">$</span><span class="value cart-somme-total">{{ request.session.cart_total }}</span> </span> </div>
             </div>
             </a>
