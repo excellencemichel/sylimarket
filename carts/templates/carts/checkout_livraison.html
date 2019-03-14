@@ -135,7 +135,7 @@
 
 									<h5 class="unicase-checkout-title">Adresse de facturation:</h5> <p>{{ object.facturation_address.get_address }}</p>
 
-									<p>Mode de paiement: <strong>Payement à la livraison</strong> (<a href="{% url 'carts:home' %}?next={{ request.build_absolute_uri }}">Changer</a>) </p>
+									<p>Mode de paiement: <strong>Payement à la livraison</strong> (<a href="{% url 'carts:payement_method' %}?next={{ request.build_absolute_uri }}">Changer</a>) </p>
 
 
 									<p>Panier Total : {{ object.cart.total }}</p>

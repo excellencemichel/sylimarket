@@ -59,7 +59,7 @@ def payement_method(request):
 			return redirect("carts:checkout")
 
 		elif paymement_choices =="mobile":
-			return redirect("cats:mobile")
+			return redirect("carts:mobile")
 		else:
 			return redirect("carts:payement_method")
 
