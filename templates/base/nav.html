@@ -1,16 +1,39 @@
 {% load static %}
   
+
+{% url 'home' as home_url %}
+
+{% url "products:list" as products_list_url %}
+
+{% url "contact" as contact_url %}
+
+{% url "accounts:login" as login_url %}
+{% url "accounts:logout" as logout_url %}
+{% url "accounts:register" as register_url %}
+{% url "accounts:home" as account_home_url %}
+
+
+{% url "carts:home" as cart_home_url %}
+
   <!-- ============================================== TOP MENU ============================================== -->
   <div class="top-bar animate-dropdown">
     <div class="container">
       <div class="header-top-inner">
         <div class="cnt-account">
           <ul class="list-unstyled">
-            <li><a href="#"><i class="icon fa fa-user"></i>Mon compte</a></li>
             <li><a href="#"><i class="icon fa fa-heart"></i>Favories</a></li>
-            <li><a href="{% url 'carts:home' %}"><i class="icon fa fa-shopping-cart"></i>Mon panier</a></li>
+            <li><a href="{{ cart_home_url }}"><i class="icon fa fa-shopping-cart"></i>Mon panier</a></li>
             <li><a href="{% url 'carts:payement_method' %}"><i class="icon fa fa-check"></i>La caisse</a></li>
-            <li><a href="{% url 'accounts:login' %}"><i class="icon fa fa-lock"></i>Connexion</a></li>
+            {% if request.user.is_authenticated %}
+
+            <li><a href="{% url 'accounts:home' %}"><i class="icon fa fa-user"></i>Mon compte</a></li>
+            <li><a href="{{ logout_url }}"><i class="icon fa fa-user"></i>Deconnexion</a></li>
+
+            {% else %}
+             <li><a href="{{ login_url }}"><i class="icon fa fa-lock"></i>Connexion</a></li>
+             <li><a href="{{ register_url }}"><i class="icon fa fa-lock"></i>S'enregistrer</a></li>
+
+            {% endif %}
           </ul>
         </div>
         <!-- /.cnt-account -->

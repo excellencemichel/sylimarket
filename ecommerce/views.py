@@ -64,6 +64,26 @@ def home(request):
 	culottes = Culotte.objects.all()
 
 
+	# New
+	men_clothings_new = MenClothing.objects.featured()[:3]
+	women_clothings_new  = WomenClothing.objects.featured()[:3]
+	accessoire_clothings_new = AccessoireClothng.objects.featured()[:3]
+
+	men_shoes_new = MenShoes.objects.featured()[:3]
+	women_shoes_new = WomenShoes.objects.featured()[:3]
+
+	phones_new 	= Phone.objects.featured()[:3]
+	tablettes_new = Tablette.objects.featured()[:3]
+	accessoire_phones_new = AccessoirePhone.objects.featured()[:3]
+
+	computers_new = Computer.objects.featured()[:3]
+	accessoire_computers_new = AccessoireComputer.objects.featured()[:3]
+
+
+	jupes_new = Jupe.objects.featured()[:3]
+
+	pantalons_new = Pantalon.objects.featured()[:3]
+	culottes_new = Culotte.objects.featured()[:3]
 	
 
 
@@ -93,6 +113,26 @@ def home(request):
 
 		"men_shoes": men_shoes,
 		"women_shoes": women_shoes,
+
+		# New
+		"men_clothings_new": men_clothings_new,
+		"women_clothings_new": women_clothings_new,
+		"accessoire_clothings_new": accessoire_clothings_new,
+
+		"pantalons_new": pantalons_new,
+		"jupes_new": jupes_new,
+		"culottes_new": culottes_new,
+
+
+		"phones_new": phones_new,
+		"tablettes_new": tablettes_new,
+		"accessoire_phones_new": accessoire_phones_new,
+
+		"computers_new": computers_new,
+		"accessoire_computers_new": accessoire_computers_new,
+
+		"men_shoes_new": men_shoes_new,
+		"women_shoes_new": women_shoes_new,
 
 
 

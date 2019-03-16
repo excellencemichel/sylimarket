@@ -9,7 +9,7 @@ var afficherOnglet = function(a, animations){
 		var li = a.parentNode
 		var div = a.parentNode.parentNode.parentNode
 		var aAfficher = div.querySelector(a.getAttribute("href"))
-		var activeTab = div.querySelector(".tab-content.active")
+		var activeTab = div.querySelector(".marque-tab-content.active")
 
 		//On verifie est-ce que l'élément sur lequel on veut retirer la classe active n'est pas celle qui a la classe
 		if(li.classList.contains("active")){
@@ -20,7 +20,7 @@ var afficherOnglet = function(a, animations){
 
 		//Dans le cas contraire on continu l'exécution
 		//On retir la classe active de l'ongle qui est actif
-		div.querySelector(".tabs .active").classList.remove("active")
+		div.querySelector(".marque-tabs .active").classList.remove("active")
 
 		//On ajoute la classe active à l'élément qui a été siblé par l'évenement écouté en l'ocurrence click
 		li.classList.add("active")
@@ -67,7 +67,7 @@ var afficherOnglet = function(a, animations){
 }
 
 
-var tabs = document.querySelectorAll(".tabs a")
+var tabs = document.querySelectorAll(".marque-tabs a")
 
 for(var i = 0; i<tabs.length; i++){
 	tabs[i].addEventListener("click", function(event){
