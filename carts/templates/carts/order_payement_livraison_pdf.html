@@ -13,7 +13,7 @@
                     <p><strong> {{ models_instance.updated }} </strong></p>
 
      				<p>
-     					Cart Items : {% for product in  models_instance.cart.products.all %} {{ product }} {% if not forloop.last %}, {% endif %} {% endfor %}
+     					Les articles sont : {% for product in  models_instance.cart.items.all %} {{ product }} {% if not forloop.last %}, {% endif %} {% endfor %}
      				</p>
 
 

@@ -4,7 +4,6 @@ from .views import (
 
 
 			ProductListView,
-			product_detail,
 			ProductFeaturedListView,
 			ProductFeaturedDetailView,
 			UserProductHistoryView,
@@ -21,6 +20,9 @@ from .views import (
 			accessoire_phone_detail, computer_detail, 
 
 			accessoire_computer_detail,
+			# product_detail,
+			
+
 
 
 			MenClothingListView,
@@ -66,9 +68,10 @@ urlpatterns = [
 			path("tablette-list", TabletteListView.as_view(), name="tablette_list"),
 			path("accessoire-phone-list", AccessoirePhoneListView.as_view(), name="accessoire_phone_list"),
 
+			# re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/detail/$', product_detail, name="detail"),	
 
 
-			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/detail/$', product_detail, name="detail"),	
+
 
 			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/men-clothing-detail/$', men_clothing_detail, name="men_clothing_detail"),			
 			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/women-clothing-detail/$', women_clothing_detail, name="women_clothing_detail"),			

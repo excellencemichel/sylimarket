@@ -7,12 +7,12 @@ from django.db import models
 from utils.files_utils import upload_file_location
 
 
-from .products import Product 
+from .products import Product, PrototypeAbstract
 
 
 
 
-class PhoneAbstractModel(models.Model):
+class PhoneAbstractModel(PrototypeAbstract):
 	class Meta:
 		abstract = True
 	WHITE_COLOR = "white"
@@ -56,7 +56,7 @@ class PhoneAbstractModel(models.Model):
 
 
 
-class Phone(Product, PhoneAbstractModel):
+class Phone(PhoneAbstractModel):
 
 	TYPE_SAMSUNG = "iphone"
 	TYPE_IPHONE = "iphone"
@@ -83,13 +83,17 @@ class Phone(Product, PhoneAbstractModel):
 		)
 
 	phone_type = models.CharField(max_length=250, choices=TYPE_PHONE)
+	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="phones")
 
-	def get_absolute_url(self):
-		return reverse("products:phone_detail", kwargs={ "pk": self.pk, "slug": self.slug})
+	def __str__(self):
+		return self.name
 
 
 
-class Tablette(Product, PhoneAbstractModel):
+
+
+
+class Tablette(PhoneAbstractModel):
 	TYPE_IPAD = "ipad"
 	TYPE_TABLETTE = "tablette"
 	TABLETE_TYPE = (
@@ -98,17 +102,20 @@ class Tablette(Product, PhoneAbstractModel):
 		)
 
 	tablette_type = models.CharField(max_length=250, choices=TABLETE_TYPE)
+	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="tablettes")
+
+
+	def __str__(self):
+		return self.name
 
 
 
-	def get_absolute_url(self):
-		return reverse("products:tablette_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 
 
 
-class AccessoirePhone(Product):
+class AccessoirePhone(PrototypeAbstract):
 	ACCESSOIRE_CHARGEUR = "chargeur"
 	ACCESSOIRE_ECOUTEURS = "ecouteurs"
 	ACCESSOIRE_ECRAN = "ecran"
@@ -130,9 +137,11 @@ class AccessoirePhone(Product):
 	accessoire_type = models.CharField(max_length=250, choices=TYPE_ACCESSOIRE)
 
 	caracteristique = models.TextField()
+	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="accessoire_phones")
 
-	def get_absolute_url(self):
-		return reverse("products:accessoire_phone_detail", kwargs={ "pk": self.pk, "slug": self.slug})
+
+	def __str__(self):
+		return self.name
 
 
 

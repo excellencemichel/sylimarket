@@ -1,0 +1,55 @@
+<div class="col-xs-12 col-sm-6 col-md-5 gallery-holder">
+    <div class="product-item-holder size-big single-product-gallery small-gallery">
+
+        <div id="owl-single-product">
+            <div class="single-product-gallery-item" id="slide1">
+                <a data-lightbox="image-1" data-title="Gallery" href="{{ product.image.url }}">
+                    <img class="img-responsive" alt="" src="{{ product.image.url }}" data-echo="{{ product.image.url }}" />
+                </a>
+            </div><!-- /.single-product-gallery-item -->
+            <div class="single-product-gallery-item" id="slide2">
+                <a data-lightbox="image-1" data-title="Gallery" href="{{ clothing.image_derriere.url }}">
+                    <img class="img-responsive" alt="" src="{{ clothing.image_derriere.url }}" data-echo="{{ clothing.image_derriere.url }}" />
+                </a>
+            </div><!-- /.single-product-gallery-item -->
+
+            <div class="single-product-gallery-item" id="slide3">
+                <a data-lightbox="image-1" data-title="Gallery" href="{{ clothing.image_devant.url }}">
+                    <img class="img-responsive" alt="" src="{{ clothing.image_devant.url }}" data-echo="{{ clothing.image_devant.url }}" />
+                </a>
+            </div><!-- /.single-product-gallery-item -->
+        </div> <!-- /.single-product-slider -->
+
+
+
+
+
+
+        <div class="single-product-gallery-thumbs gallery-thumbs">
+
+            <div id="owl-single-product-thumbnails">
+                <div class="item">
+                    <a class="horizontal-thumb active" data-target="#owl-single-product" data-slide="1" href="#slide1">
+                        <img class="img-responsive" width="85" alt="" src="{{ product.image.url }}" data-echo="{{ product.image.url }}" />
+                    </a>
+                </div>
+
+                <div class="item">
+                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="2" href="#slide2">
+                        <img class="img-responsive" width="85" alt="" src="{{ clothing.image_derriere.url }}" data-echo="{{ clothing.image_derriere.url }}"/>
+                    </a>
+                </div>
+                <div class="item">
+
+                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="3" href="#slide3">
+                        <img class="img-responsive" width="85" alt="" src="{{ clothing.image_devant.url }}" data-echo="{{ clothing.image_devant.url }}" />
+                    </a>
+                </div>
+            </div><!-- /#owl-single-product-thumbnails -->
+
+            
+
+        </div><!-- /.gallery-thumbs -->
+
+    </div><!-- /.single-product-gallery -->
+</div><!-- /.gallery-holder -->    

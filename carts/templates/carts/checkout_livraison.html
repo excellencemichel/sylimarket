@@ -129,7 +129,9 @@
 							    		</h4>
 							    	</div>
 
-									<h5 class="unicase-checkout-title">Les articles sont :</h5> <p>{% for product in  object.cart.items.all %} {{ product }} {% if not forloop.last %}, {% endif %} {% endfor %}</p>
+									<h5 class="unicase-checkout-title">Les articles sont :</h5> <p>
+										{% for product in  object.cart.items.all %} {{ product }} {% if not forloop.last %}, {% endif %} {% endfor %}
+									</p>
 
 									<h5 class="unicase-checkout-title">Adresse de livraison :</h5> <p> {{ object.livraison_address.get_address }}</p>
 

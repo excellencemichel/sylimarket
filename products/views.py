@@ -6,6 +6,8 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, View, DetailView
 
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse, reverse_lazy
+
 
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
@@ -94,22 +96,6 @@ class ProductListView(ListView):
 
 
 
-def product_detail(request, pk=None, slug=None):
-	product = get_object_or_404(Product, slug=slug)
-	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	product_in_cart = cart_obj.cart_item_exists(product)
-	print("Dans product")
-
-
-	context = {
-		"product": product,
-		"cart": cart_obj,
-		"product_in_cart": product_in_cart,
-	}
-
-
-	return render(request, "products/detail.html", context)
-
 
 
 
@@ -158,7 +144,7 @@ class MenClothingListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return MenClothing.objects.all()
+		return Product.objects.get_men_clothings()
 
 
 
@@ -186,7 +172,7 @@ class WomenClothingListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return WomenClothing.objects.all()
+		return Product.objects.get_women_clothings()
 
 
 
@@ -211,7 +197,7 @@ class PantalonListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Pantalon.objects.all()
+		return Product.objects.get_pantalons()
 
 
 
@@ -236,7 +222,7 @@ class CulotteListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Culotte.objects.all()
+		return Product.objects.culottes()
 
 
 
@@ -261,7 +247,7 @@ class JupeListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Jupe.objects.all()
+		return Product.objects.jupes()
 
 
 
@@ -286,7 +272,7 @@ class MenShoesListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return MenShoes.objects.all()
+		return Product.objects.men_shoes()
 
 
 
@@ -311,7 +297,7 @@ class WomenShoesListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return WomenShoes.objects.all()
+		return Product.objects.women_shoes()
 
 
 
@@ -336,9 +322,87 @@ class AccessoireClothngListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return AccessoireClothng.objects.all()
+		return Product.objects.clothing_accessoires()
 
 
+
+# def product_detail(request, slug=None, pk=None, *args, **kwargs):
+# 	context = {}
+# 	instance = get_object_or_404(Product, pk=pk, slug=slug)
+	
+# 	cart_obj, new_obj = Cart.objects.new_or_get(request)
+
+# 	if instance:
+# 		object_viewed_signal.send(instance.__class__, instance=instance, request=request)
+# 		print("Type instance", instance.product_type)
+
+# 		if instance.product_type == "men_clothing":
+# 			men_clothing = MenClothing.objects.filter(product_id = instance.id)
+
+# 			context["men_clothing"] = men_clothing
+# 		elif instance.product_type == "women_clothing":
+# 			women_clothing = WomenClothing.objects.filter(product_id = instance.id)
+# 			context["women_clothing"] = women_clothing
+
+# 		elif instance.product_type == "clothing_accessoire":
+# 			accessoire_clothing = AccessoireClothng.objects.filter(product_id = instance.id)
+# 			context["accessoire_clothing"] = accessoire_clothing
+
+# 		elif instance.product_type == "pantalon":
+# 			pantalon = Pantalon.objects.filter(product_id = instance.id)
+# 			context["pantalon"] = pantalon
+
+
+# 		elif instance.product_type == "culotte":
+# 			culotte = Culotte.objects.filter(product_id = instance.id)
+# 			context["culotte"] = culotte
+
+# 		elif instance.product_type == "jupe":
+# 			jupe = Jupe.objects.filter(product_id = instance.id)
+# 			context["jupe"] = jupe
+
+
+# 		elif instance.product_type == "men_shoe":
+# 			men_shoe = MenShoes.objects.filter(product_id = instance.id)
+# 			context["men_shoe"] = men_shoe
+
+
+# 		elif instance.product_type == "women_shoe":
+# 			women_sheo = WomenShoes.objects.filter(product_id = instance.id)
+# 			context["women_shoe"] = women_shoe
+
+
+# 		elif instance.product_type == "phone":
+# 			phone = Phone.objects.filter(product_id = instance.id)
+# 			context["phone"] = phone
+
+# 		elif instance.product_type == "tablette":
+# 			tablette = Tablette.objects.filter(product_id = instance.id)
+# 			context["tablette"] = tablette
+
+
+# 		elif instance.product_type =="phone_accessoire":
+# 			accessoire_phone = AccessoirePhone.objects.filter(product_id = instance.id)
+# 			context["accessoire_phone"] = accessoire_phone
+
+
+# 		elif instance.product_type == "computer":
+# 			computer = Computer.objects.filter(product_id = instance.id)
+# 			context["computer"] = computer
+
+
+# 		elif instance.product_type == "computer_accessoire":
+# 			accessoire_computer = AccessoireComputer.objects.filter(product_id = instance.id)
+# 			context["accessoire_computer"] = accessoire_computer
+
+
+
+
+# 	context["product"] = instance
+# 	context["cart"] = cart_obj
+
+
+# 	return render(request, "products/detail.html", context)
 
 		
 
@@ -361,7 +425,7 @@ class ComputerListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Computer.objects.all()
+		return Product.objects.computers()
 
 
 
@@ -386,7 +450,7 @@ class AccessoireComputerListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return AccessoireComputer.objects.all()
+		return Product.objects.computer_accessoires()
 
 
 
@@ -411,7 +475,7 @@ class PhoneListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Phone.objects.all()
+		return Product.objects.phones()
 
 
 
@@ -436,7 +500,7 @@ class TabletteListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Tablette.objects.all()
+		return Product.objects.tablettes()
 
 
 
@@ -461,39 +525,33 @@ class AccessoirePhoneListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return AccessoirePhone.objects.all()
+		return Product.objects.phone_accessoires()
 
 
 
 		
-
-
-
-
-
-
-
-		
-
-
-
-
-
-
-
-
-
 
 
 def men_clothing_detail(request, pk=None, slug=None):
-	men_clothing = get_object_or_404(MenClothing, pk=pk, slug=slug)
+	print("Men clothing detail appélé")
+	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	product_in_cart = cart_obj.cart_item_exists(men_clothing)
+	try:
+		men_clothing = MenClothing.objects.get(product_id = product.id)
+	except MenClothing.MultipleObjectsReturned:
+		men_clothing = MenClothing.objects.filter(product_id=product.id).first()
+
+	except MenClothing.DoesNotExist:
+		pass
+
+	except:
+		print("Autre erreur non lié à la laison")
 
 	context = {
 		"cart": cart_obj,
-		"product_in_cart": product_in_cart,
-		"product": men_clothing,
+		"product": product,
+		"men_clothing": men_clothing,
+
 	}
 
 
@@ -504,14 +562,24 @@ def men_clothing_detail(request, pk=None, slug=None):
 
 
 def women_clothing_detail(request, pk=None, slug=None):
-	women_clothing = get_object_or_404(WomenClothing, pk=pk, slug=slug)
+	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	product_in_cart = cart_obj.cart_item_exists(women_clothing)
+	try:
+		women_clothing = WomenClothing.objects.get(product_id = product.id)
+
+	except WomenClothing.MultipleObjectsReturned:
+		women_clothing = WomenClothing.objects.filter(product_id=product.id).first()
+
+	except WomenClothing.DoesNotExist:
+		pass
+
+	except:
+		print("Autre erreur non liée à la laison")
 
 	context = {
 		"cart": cart_obj,
-		"product_in_cart": product_in_cart,
-		"product": women_clothing
+		"product": product,
+		"women_clothing" : women_clothing
 	}
 
 
@@ -521,14 +589,23 @@ def women_clothing_detail(request, pk=None, slug=None):
 
 
 def accessoire_clothing_detail(request, pk=None, slug=None):
-	accessoire_clothing = get_object_or_404(AccessoireClothng, pk=pk, slug=slug)
+	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	product_in_cart = cart_obj.cart_item_exists(accessoire_clothing)
+	try:
+		accessoire_clothing = AccessoireClothng.objects.get(product_id = product.id)
+	except AccessoireClothng.MultipleObjectsReturned:
+		accessoire_clothing = AccessoireClothng.objects.filter(product_id=product.id).first()
+
+	except AccessoireClothng.DoesNotExist:
+		pass
+
+	except:
+		print("Autre erreur non liée à la laison")
 
 	context = {
 		"cart": cart_obj,
-		"product_in_cart": product_in_cart,
-		"product": accessoire_clothing
+		"product": product,
+		"accessoire_clothing" : accessoire_clothing
 	}
 
 
@@ -537,14 +614,23 @@ def accessoire_clothing_detail(request, pk=None, slug=None):
 
 
 def men_shoe_detail(request, pk=None, slug=None):
-	men_shoe = get_object_or_404(MenShoes, pk=pk, slug=slug)
+	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	product_in_cart = cart_obj.cart_item_exists(men_shoe)
+	try:
+		men_shoe = MenShoes.objects.get(product_id = product.id)
+	except MenShoes.MultipleObjectsReturned:
+		men_shoe = MenShoes.objects.filter(product_id=product.id).first()
+
+	except MenShoes.DoesNotExist:
+		pass
+
+	except:
+		print("Autre erreur non liée à la laison")
 
 	context = {
 		"cart": cart_obj,
-		"product_in_cart": product_in_cart,
-		"product": men_shoe
+		"product": product,
+		"men_shoe": men_shoe
 	}
 
 
@@ -553,17 +639,24 @@ def men_shoe_detail(request, pk=None, slug=None):
 
 
 
-
-
 def women_shoe_detail(request, pk=None, slug=None):
-	women_sheo = get_object_or_404(WomenShoes, pk=pk, slug=slug)
+	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	product_in_cart = cart_obj.cart_item_exists(women_sheo)
+	try:
+		women_sheo = WomenShoes.objects.get(product_id = product.id)
+	except WomenShoes.MultipleObjectsReturned:
+		women_sheo = WomenShoes.objects.filter(product_id=product.id).first()
+
+	except WomenShoes.DoesNotExist:
+		pass
+
+	except:
+		print("Autre erreur non liée à la laison")
 
 	context = {
 		"cart": cart_obj,
-		"product_in_cart": product_in_cart,
-		"product": women_sheo
+		"product": product,
+		"women_sheo" : women_sheo
 	}
 
 
@@ -573,19 +666,24 @@ def women_shoe_detail(request, pk=None, slug=None):
 
 
 
-
-
-
-
 def patalon_detail(request, pk=None, slug=None):
-	pantalon = get_object_or_404(Pantalon, pk=pk, slug=slug)
+	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	product_in_cart = cart_obj.cart_item_exists(pantalon)
+	try:
+		pantalon = Pantalon.objects.get(product_id = product.id)
+	except Pantalon.MultipleObjectsReturned:
+		pantalon = Pantalon.objects.filter(product_id=product.id).first()
+
+	except Pantalon.DoesNotExist:
+		pass
+
+	except:
+		print("Autre erreur non liée à la laison")
 
 	context = {
 		"cart": cart_obj,
-		"product_in_cart": product_in_cart,
-		"product": pantalon
+		"product": product,
+		"pantalon" : pantalon
 	}
 
 
@@ -593,21 +691,23 @@ def patalon_detail(request, pk=None, slug=None):
 
 
 
-
-
-
-
-
-
 def culotte_detail(request, pk=None, slug=None):
-	culotte = get_object_or_404(Culotte, slug=slug)
+	product = get_object_or_404(Product, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	product_in_cart = cart_obj.cart_item_exists(culotte)
+	try:
+		culotte = Culotte.objects.get(product_id = product.id)
+
+	except Culotte.MultipleObjectsReturned:
+		culotte = Culotte.objects.filter(product_id=product.id).first()
+	except Culotte.DoesNotExist:
+		pass
+	except:
+		print("Autre erreur non liée à la laison")
 
 	context = {
 		"cart": cart_obj,
-		"product_in_cart": product_in_cart,
-		"product": culotte
+		"product": product,
+		"culotte" : culotte 
 	}
 
 
@@ -615,23 +715,23 @@ def culotte_detail(request, pk=None, slug=None):
 
 
 
-
-
-
-
-
-
 def jupe_detail(request, pk=None, slug=None):
-	jupe = get_object_or_404(Jupe, pk=pk, slug=slug)
+	product = Product.objects.get(pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	product_in_cart = cart_obj.cart_item_exists(jupe)
-	print("Dans jupe")
-	print("Si dedans", product_in_cart)
+	try:
+		jupe = Jupe.objects.get(product_id=product.id)
+	except Jupe.MultipleObjectsReturned:
+		jupe = Jupe.objects.filter(product_id=product.id).first()
+	except Jupe.DoesNotExist:
+		pass
+	except:
+		print("Autre erreur non liée à laison")
+	# import pdb; pdb.set_trace()
 
 	context = {
 		"cart": cart_obj,
-		"product_in_cart": product_in_cart,
-		"product": jupe
+		"product": product,
+		"jupe" :jupe
 	}
 
 
@@ -639,16 +739,25 @@ def jupe_detail(request, pk=None, slug=None):
 
 
 
-
 def phone_detail(request, pk=None, slug=None):
-	phone = get_object_or_404(Phone, pk=pk, slug=slug)
+	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	product_in_cart = cart_obj.cart_item_exists(phone)
+	try:
+		phone = Phone.objects.get(product_id = product.id)
+
+	except Phone.MultipleObjectsReturned:
+		phone = Phone.objects.filter(product_id=product.id).first()
+
+	except Phone.DoesNotExist:
+		pass
+
+	except:
+		print("Autre erreur non liée à la laison")
 
 	context = {
 		"cart": cart_obj,
-		"product_in_cart": product_in_cart,
-		"product": phone
+		"product": product,
+		"phone": phone
 	}
 
 
@@ -659,14 +768,23 @@ def phone_detail(request, pk=None, slug=None):
 
 
 def tablette_detail(request, pk=None, slug=None):
-	tablette = get_object_or_404(Tablette, pk=pk, slug=slug)
+	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	product_in_cart = cart_obj.cart_item_exists(tablette)
+	try:
+		tablette = Tablette.objects.get(product_id = product.id)
+	except Tablette.MultipleObjectsReturned:
+		tablette = Tablette.objects.filter(product_id=product.id).first()
+
+	except Tablette.DoesNotExist:
+		pass
+
+	except:
+		print("Autre erreur non lié à la laison")
 
 	context = {
 		"cart": cart_obj,
-		"product_in_cart": product_in_cart,
-		"product": tablette
+		"product": product,
+		"tablette" :tablette
 	}
 
 
@@ -678,17 +796,26 @@ def tablette_detail(request, pk=None, slug=None):
 
 
 
-
-
 def accessoire_phone_detail(request, pk=None, slug=None):
-	accessoire_phone = get_object_or_404(AccessoirePhone, pk=pk, slug=slug)
+	print("Phone accessoire detail appélé")
+	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	product_in_cart = cart_obj.cart_item_exists(accessoire_phone)
+	try:
+		accessoire_phone = AccessoirePhone.objects.get(product_id = product.id)
+
+	except AccessoirePhone.MultipleObjectsReturned:
+		accessoire_phone = AccessoirePhone.objects.filter(product_id=product.id).first()
+
+	except AccessoirePhone.DoesNotExist:
+		pass
+
+	except:
+		print("Autre erreur non liée à la laison")
 
 	context = {
 		"cart": cart_obj,
-		"product_in_cart": product_in_cart,
-		"product": accessoire_phone
+		"product": product,
+		"accessoire_phone" : accessoire_phone
 	}
 
 
@@ -703,14 +830,24 @@ def accessoire_phone_detail(request, pk=None, slug=None):
 
 
 def computer_detail(request, pk=None, slug=None):
-	computer = get_object_or_404(Computer, pk=pk, slug=slug)
+	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	product_in_cart = cart_obj.cart_item_exists(computer)
+	try:
+		computer = Computer.objects.get(product_id = product.id)
+
+	except Computer.MultipleObjectsReturned:
+		computer = Computer.objects.filter(product_id=product.id).first()
+
+	except Computer.DoesNotExist:
+		pass
+
+	except:
+		prin("Autre erreur non lié à la laison")
 
 	context = {
 		"cart": cart_obj,
-		"product_in_cart": product_in_cart,
-		"product": computer
+		"product": product,
+		"computer": computer
 	}
 
 
@@ -725,14 +862,24 @@ def computer_detail(request, pk=None, slug=None):
 
 
 def accessoire_computer_detail(request, pk=None, slug=None):
-	accessoire_computer = get_object_or_404(AccessoireComputer, pk=pk, slug=slug)
+	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	product_in_cart = cart_obj.cart_item_exists(accessoire_computer)
+	try:
+		accessoire_computer = AccessoireComputer.objects.get(product_id = product.id)
+
+	except AccessoireComputer.MultipleObjectsReturned:
+		accessoire_computer = AccessoireComputer.objects.filter(product_id=product.id).first()
+
+	except AccessoireComputer.DoesNotExist:
+		pass
+
+	except:
+		print("Autre erreur non liée à la laison")
 
 	context = {
 		"cart": cart_obj,
-		"product_in_cart": product_in_cart,
-		"product": accessoire_computer
+		"product": product,
+		"accessoire_computer" :accessoire_computer
 	}
 
 

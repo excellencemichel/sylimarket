@@ -91,7 +91,6 @@ def checkout_address_livraison_create_view(request):
 			instance.save()
 
 			request.session[address_payement_livraison_type + "_address_id"] = instance.id 
-			print("Dans la session: ", address_payement_livraison_type + "_address_id")
 			
 
 		else:
@@ -112,18 +111,12 @@ def checkout_address_livraison_use_view(request):
 		next_ = request.GET.get("next")
 		next_post	= request.POST.get("next")
 		redirect_path	= next_ or next_post or None
-		print("Reuse utilisé")
 
 		if request.method == "POST":
-			print("Est poste !")
 			adresse_livraison	=	request.POST.get("livraison_address", None)
 			address_payement_livraison_type	= request.POST.get("address_payement_livraison_type", "livraison")
 			payement_livraison, payement_livraison_created = PayementLivraison.objects.new_or_get(request)
-			print("Jusqu'ici !")
-			print(payement_livraison)
-			print("Adress de livraison: ", adresse_livraison)
 			if adresse_livraison is not None:
-				print("Pas ici")
 				# import pdb; pdb.set_trace()
 				qs	=	AddressPayementLivraison.objects.filter(payement_livraison=payement_livraison, id=adresse_livraison)
 				if qs.exists():

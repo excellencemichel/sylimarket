@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
+from django.db.models import Q
 
 
 #Local import 
@@ -40,51 +41,83 @@ from .forms import (
 
 def home(request):
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	products =  Product.objects.all()[:5]
-	news_products = Product.objects.featured()[:4]
+	products =  Product.objects.all()
+	news_products = Product.objects.featured()
 
-	men_clothings = MenClothing.objects.all() 
-	women_clothings  = WomenClothing.objects.all()
-	accessoire_clothings = AccessoireClothng.objects.all()
-
-	men_shoes = MenShoes.objects.all()
-	women_shoes = WomenShoes.objects.all()
-
-	phones 	= Phone.objects.all()
-	tablettes = Tablette.objects.all()
-	accessoire_phones = AccessoirePhone.objects.all()
-
-	computers = Computer.objects.all()
-	accessoire_computers = AccessoireComputer.objects.all()
+	news_clothings = news_products.filter(
+		Q(product_type=Product.MEN_CLOTHING)|
+		Q(product_type=Product.WOMEN_CLOTHING)|
+		Q(product_type=Product.PANTALON)|
+		Q(product_type=Product.CULOTTE)|
+		Q(product_type=Product.JUPE)|
+		Q(product_type=Product.CLOTHING_ACCESSOIRE)
+		)
 
 
-	jupes = Jupe.objects.all()
+	news_electroniques = news_products.filter(
+		Q(product_type=Product.PHONE)|
+		Q(product_type=Product.TABLETE)|
+		Q(product_type=Product.PHONE_ACCESSOIRE)|
+		Q(product_type=Product.COMPUTER)|
+		Q(product_type=Product.COMPUTER_ACCESSOIRE)
+		)
 
-	pantalons = Pantalon.objects.all()
-	culottes = Culotte.objects.all()
+	news_chaussures = news_products.filter(
+		Q(product_type=Product.MEN_SHOE)|
+		Q(product_type=Product.WOMEN_SHOE)|
+		Q(product_type=Product.CLOTHING_ACCESSOIRE)
+		)
+
+	clothings = products.filter(
+		Q(product_type=Product.MEN_CLOTHING)|
+		Q(product_type=Product.WOMEN_CLOTHING)|
+		Q(product_type=Product.PANTALON)|
+		Q(product_type=Product.CULOTTE)|
+		Q(product_type=Product.JUPE)|
+		Q(product_type=Product.CLOTHING_ACCESSOIRE)
+		)
 
 
-	# New
-	men_clothings_new = MenClothing.objects.featured()[:3]
-	women_clothings_new  = WomenClothing.objects.featured()[:3]
-	accessoire_clothings_new = AccessoireClothng.objects.featured()[:3]
+	men_clothings = products.filter(product_type=Product.MEN_CLOTHING) 
+	women_clothings  = products.filter(product_type=Product.WOMEN_CLOTHING) 
+	accessoire_clothings = products.filter(product_type=Product.CLOTHING_ACCESSOIRE)
 
-	men_shoes_new = MenShoes.objects.featured()[:3]
-	women_shoes_new = WomenShoes.objects.featured()[:3]
-
-	phones_new 	= Phone.objects.featured()[:3]
-	tablettes_new = Tablette.objects.featured()[:3]
-	accessoire_phones_new = AccessoirePhone.objects.featured()[:3]
-
-	computers_new = Computer.objects.featured()[:3]
-	accessoire_computers_new = AccessoireComputer.objects.featured()[:3]
+	chaussures = products.filter(
+		Q(product_type=Product.MEN_SHOE)|
+		Q(product_type=Product.WOMEN_SHOE)|
+		Q(product_type=Product.CLOTHING_ACCESSOIRE)
+		)
 
 
-	jupes_new = Jupe.objects.featured()[:3]
+	electroniques = products.filter(
+		Q(product_type=Product.PHONE)|
+		Q(product_type=Product.TABLETE)|
+		Q(product_type=Product.PHONE_ACCESSOIRE)|
+		Q(product_type=Product.COMPUTER)|
+		Q(product_type=Product.COMPUTER_ACCESSOIRE)
+		)
 
-	pantalons_new = Pantalon.objects.featured()[:3]
-	culottes_new = Culotte.objects.featured()[:3]
-	
+	day_products = products.day_products()
+	special_products = products.special_products()
+	best_sellers  = products.best_seller()
+
+
+	men_shoes = Product.objects.get_men_shoes()
+	women_shoes = Product.objects.get_women_shoes()
+
+	phones 	= Product.objects.get_phones()
+	tablettes = Product.objects.get_tablettes()
+	accessoire_phones = Product.objects.get_phone_accessoires()
+
+	computers = Product.objects.get_computers()
+	accessoire_computers = Product.objects.get_computer_accessoires()
+
+
+	jupes = Product.objects.get_jupes()
+
+	pantalons = Product.objects.get_pantalons()
+	culottes = Product.objects.get_culottes()
+
 
 
 
@@ -92,12 +125,26 @@ def home(request):
 	context = {
 		"cart": cart_obj,
 		"products": products,
+		"best_sellers" : best_sellers,
 		"news_products": news_products,
+		"news_clothings": news_clothings,
+		"news_electroniques" : news_electroniques,
+		"news_chaussures": news_chaussures,
 
 
+
+		"day_products" : day_products,
+		"special_products": special_products,
+
+
+		"clothings": clothings,
 		"men_clothings": men_clothings,
 		"women_clothings": women_clothings,
 		"accessoire_clothings": accessoire_clothings,
+
+		"chaussures" : chaussures,
+
+		"electroniques" : electroniques,
 
 		"pantalons": pantalons,
 		"jupes": jupes,
@@ -115,24 +162,24 @@ def home(request):
 		"women_shoes": women_shoes,
 
 		# New
-		"men_clothings_new": men_clothings_new,
-		"women_clothings_new": women_clothings_new,
-		"accessoire_clothings_new": accessoire_clothings_new,
+		# "men_clothings_new": men_clothings_new,
+		# "women_clothings_new": women_clothings_new,
+		# "accessoire_clothings_new": accessoire_clothings_new,
 
-		"pantalons_new": pantalons_new,
-		"jupes_new": jupes_new,
-		"culottes_new": culottes_new,
+		# "pantalons_new": pantalons_new,
+		# "jupes_new": jupes_new,
+		# "culottes_new": culottes_new,
 
 
-		"phones_new": phones_new,
-		"tablettes_new": tablettes_new,
-		"accessoire_phones_new": accessoire_phones_new,
+		# "phones_new": phones_new,
+		# "tablettes_new": tablettes_new,
+		# "accessoire_phones_new": accessoire_phones_new,
 
-		"computers_new": computers_new,
-		"accessoire_computers_new": accessoire_computers_new,
+		# "computers_new": computers_new,
+		# "accessoire_computers_new": accessoire_computers_new,
 
-		"men_shoes_new": men_shoes_new,
-		"women_shoes_new": women_shoes_new,
+		# "men_shoes_new": men_shoes_new,
+		# "women_shoes_new": women_shoes_new,
 
 
 
@@ -191,39 +238,6 @@ def contact_page(request):
 
 
 
-
-def home_page_old(request):
-	html_ = """
-			<!doctype html>
-			<html lang="en">
-			  <head>
-			    <!-- Required meta tags -->
-			    <meta charset="utf-8">
-			    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-			    <!-- Bootstrap CSS -->
-			    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-			    <title>Hello, world!</title>
-			  </head>
-			  <body>
-			  	<div class="text-center">
-			    <h1>Hello, world!</h1>
-
-			    </div>
-
-			    <!-- Optional JavaScript -->
-			    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-			    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-			    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-			    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-			  </body>
-			</html>
-
-
-	"""
-
-	return HttpResponse(html_)
 
 
 

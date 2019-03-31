@@ -47,7 +47,9 @@
 			<tbody class="cart-body-home">
 				{% for item in cart.items.all %}
 				<tr class="cart-product-home">
-					<td class="romove-item">{% include "carts/snippets/remove_product.html" with product_id=item.product.id %}</td>
+					<td class="romove-item"> 
+					   {% include "carts/snippets/remove_product.html" with product_id=item.product.id %}
+					</td>
 					<td class="cart-image">
 						<a class="entry-thumbnail" href="{{ item.product.get_absolute_url }}">
 						    <img src="{{ item.product.image.url }}" alt="">
@@ -74,7 +76,9 @@
 						<div class="quant-input">
 				                <div class="arrows">
 				                  <div class="arrow plus gradient"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
-				                  <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>
+				                  <div class="arrow minus gradient"><span class="ir">
+				                  
+				                  	<i class="icon fa fa-sort-desc"></i></span></div>
 				                </div>
 				                <input type="text" value="1">
 			              </div>

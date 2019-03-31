@@ -6,10 +6,10 @@ from django.contrib.postgres.fields import JSONField
 #Locales import 
 from utils.files_utils import upload_file_location
 
-from .products import Product 
+from .products import Product, PrototypeAbstract
 
 
-class Computer(Product):
+class Computer(PrototypeAbstract):
 
 	WHITE_COLOR  = "white"
 	RED_COLOR    = "red"
@@ -62,14 +62,17 @@ class Computer(Product):
 	ports 			     = models.CharField(max_length=250)
 
 
-	def get_absolute_url(self):
-		return reverse("products:computer_detail", kwargs={ "pk": self.pk, "slug": self.slug})
+	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="computers")
+
+	def __str__(self):
+		return self.name
 
 
 
 
 
-class AccessoireComputer(Product):
+
+class AccessoireComputer(PrototypeAbstract):
 	ACCESSOIRE_DISQUE_DURE = "disquedur"
 	ACCESSOIRE_CHARGEUR = "chargeur"
 	ACCESSOIRE_MICRO = "micro"
@@ -89,6 +92,9 @@ class AccessoireComputer(Product):
 		)
 
 	accesoire_computer = models.CharField(max_length=250, choices=TYPE_ACCESSOIRE)
+	caracteristque 	   = models.TextField()
 
-	def get_absolute_url(self):
-		return reverse("products:accessoire_computer_detail", kwargs={ "pk": self.pk, "slug": self.slug})
+	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="accesoire_computers")
+
+	def __str__(self):
+		return self.name

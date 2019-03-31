@@ -42,8 +42,8 @@
   }
 
 
-        // Stat Add update
-      var productFormAdd = $(".form-product-ajax-add")
+        // Start add product to cart
+      var productFormAdd = $(".form-product-ajax")
       productFormAdd.submit(function(event){
           event.preventDefault()
           var thisForm = $(this)
@@ -57,26 +57,53 @@
             data: formData,
             success: function(data){
               var submitSpan = thisForm.find(".submit-span")
-              if (data.added){
-                submitSpan.html("<a href='/cart' class='btn btn-primary' style='margin: 7px;'><i class='fa fa-shopping-cart inner-right-vs'>VOIR DANS LE PANIER</i></a>|<button type='submit' class='btn btn-primary' style='margin: 7px;'><i class='fa fa-shopping-cart inner-right-vs'></i>AUGMENTER LA QUANTITE</a>")
-              }
-              else{
-                submitSpan.html("<button type='submit' class='btn btn-primary'><i class='fa fa-shopping-cart inner-right-vs'></i>PAYER MAINTENANT</button>")
-              }
+                var growHiddenForm = $(".grow-hidden")
+                var growFirstRefresh = $(".first-refresh")
+                var qtyInCart = $(".qty-in-cart")
+                qtyInCart.text(data.qutyInCart)
+                  if(!data.stock_finish){
+
+
+                  if (data.added){
+                    growFirstRefresh.hide()
+                    submitSpan.html('<input type="hidden" name="for_remove_product" value="removed"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Enlever</button>')
+                    growHiddenForm.show()
+                  } 
+ 
+                   else if (data.removed){
+                    submitSpan.html('<input type="hidden" name="for_add_product" value="added"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Add to cart</button>')
+                    growHiddenForm.hide()
+                    growFirstRefresh.hide()
+
+                  }
+
+                  if(data.hiddenGrow){
+                  growHiddenForm.hide()
+                  }
+                }
+                else{
+                   $.alert({
+                title: "oops !",
+                content: "La quantité du produit en stock est fini nous revenons dans pas longtemps",
+                theme: "modern",
+              })
+                }
+
+
+
+               currentPath = window.location.href
+
+              if (currentPath.indexOf("cart") != -1){
+                refreshCart()
+               }
+
+
 
               var navBarCount = $(".navbar-cart-count")
               var navBarCartSommeTotal = $(".cart-somme-total")
-              navBarCount.text(data.cartItemsCount)
+              navBarCount.text(data.cartItemCount)
               console.log("Item du panier est : " ,navBarCount.text())
-              navBarCartSommeTotal.text(data.cartSommeTotal)
-              console.log("Valeur du panier :", data.cartSommeTotal)
-              // var currentPath = window.location.href
-              // if(currentPath.indexOf("") != -1){
-              //   refreshHome()
-              // }
-              // if(currentPath.indexOf("cart") != -1){
-              //   refreshCartPostAdd()
-              // }
+              navBarCartSommeTotal.text(data.cartTotal)
             },
 
             error: function(errorData){
@@ -89,69 +116,13 @@
           })
       })
 
-      // function refreshCartPostAdd(){
-      //   console.log("In current cart for add")
-      //   var cartTableHomeSomme = $(".cart-table-home-somme")
-      //   var cartTableHome = $(".cart-table-home")
-      //   var cartBodyHome = cartTableHome.find(".cart-body-home")
-      //   var productRows = cartBodyHome.find(".cart-product-home")
-      //   var currentUrl = window.location.href
-
-      //   var refreshCartUrl = "/cart/api/cart/"
-      //   var refreshCartMethod = "GET"
-      //   var data = {}
-      //   $.ajax({
-      //     url : refreshCartUrl,
-      //     method: refreshCartMethod,
-      //     data: data,
-      //     success : function(data){
-      //       var hiddenCartRemoveForm = $(".cart-item-remove-form")
-      //       if(data.products.length > 0){
-
-      //       productRows.html(" ")
-      //       i = 1
-      //       $.each(data.products, function(index, value){
-      //         var newCartItemRemove = hiddenCartRemoveForm.clone()
-      //         newCartItemRemove.css("display", "block")
-      //         newCartItemRemove.find(".cart-item-product-id").val(value.id)
-      //         cartBodyHome.prepend("<tr><td class='romove-item'>" + newCartItemRemove.html() + " <td class='cart-image'><a class='entry-thumbnail' href='" + value.url +"'><img src=\"{% static 'images/products/p1.jpg' %}\" alt=''></a></td><td class='cart-product-name-info'><h4 class='cart-product-description'><a href='" + value.url + "'>" + value.name + "</a></h4><div class='row'><div class='col-sm-4'><div class='rating rateit-small'></div></div><div class='col-sm-8'><div class='reviews'>(06 Reviews)</div></div></div><div class='cart-product-info'><span class='product-color'>COLOR:<span>Blue</span></span></div></td><td class='cart-product-edit'><a href='" + value.url + "' class='product-edit'>Edit</a></td><td class='cart-product-quantity'><div class='quant-input'><div class='arrows'><div class='arrow plus gradient'><span class='ir'><i class='icon fa fa-sort-asc'></i></span></div><div class='arrow minus gradient'><span class='ir'><i class='icon fa fa-sort-desc'></i></span></div></div><input type='text' value='1'></div></td><td class='cart-product-sub-total'><span class='cart-sub-total-price'>$" + value.price + "</span></td><td class=cart-product-grand-total><span class=cart-grand-total-price>$" + value.price + "</span></td></tr> " )
-
-      //       })
-
-      //       cartTableHomeSomme.find(".cart-subtotal-home-somme").text(data.subtotal)
-      //       cartTableHomeSomme.find(".cart-total-home-somme").text(data.total)
-      //       console.log("Seperieur 0")
-      //       totalText = cartBodyHome.find(".cart-total-home").text()
-      //       console.log("Voici le total", data.total)
-
-      //       }
-      //       else{
-      //         window.location.href = currentUrl
-      //         console.log("inferieur à 0")
-      //       }
-      //       console.log("success")
-
-      //       console.log(data)
-
-      //     },
-
-      //     error: function(errorData){
-      //         $.alert({
-      //           title: "oops !",
-      //           content: "Une erreur s'est occasionée",
-      //           theme: "modern",
-      //         })
-      //     }
-      //   })
-
-      // }
-
-      // End Add update
+      // End add product to cart
 
 
-      // Start Delete update
 
-      var productFormDelete = $(".form-product-ajax-delete")
+      // Start remove product from cart
+
+      var productFormDelete = $(".form-product-ajax-remove")
       productFormDelete.submit(function(event){
           event.preventDefault()
           var thisForm = $(this)
@@ -165,26 +136,28 @@
             data: formData,
             success: function(data){
               var submitSpan = thisForm.find(".submit-span")
-              if (data.deleted){
-                submitSpan.html("<a href='/cart' class='btn btn-primary' style='margin: 7px;'><i class='fa fa-shopping-cart inner-right-vs'>VOIR DANS LE PANIER</i></a>|<button type='submit' class='btn btn-primary' style='margin: 7px;'><i class='fa fa-shopping-cart inner-right-vs'></i>ENLEVER DU PANIER</a>")
-              }
-              else{
-                submitSpan.html("<button type='submit' class='btn btn-primary'><i class='fa fa-shopping-cart inner-right-vs'></i>PAYER MAINTENANT</button>")
-              }
+
+                  if (data.removed){
+
+                    submitSpan.html('<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Add to cart</button>')
+                  } 
+                  // else {
+                  //   submitSpan.html('<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;"><i class="fa fa-trash-o"></i>Enlever</button>')
+                  // }
+              // submitSpan.html("<button type='submit' class='btn btn-primary'><i class='fa fa-shopping-cart inner-right-vs'></i>PAYER MAINTENANT</button>")
 
               var navBarCount = $(".navbar-cart-count")
               var navBarCartSommeTotal = $(".cart-somme-total")
-              navBarCount.text(data.cartItemsCount)
-              navBarCartSommeTotal.text(data.cartSommeTotal)
-              console.log("Valeur du panier :", data.cartSommeTotal)
+              navBarCount.text(data.cartItemCount)
+              navBarCartSommeTotal.text(data.cartTotal)
+              cartNavRefresh()
+              console.log("Valeur du panier :", data.cartTotal)
 
               var currentPath = window.location.href
-              // if(currentPath.indexOf("") != -1){
-              //   refreshHome()
-              // }
+
               if(currentPath.indexOf("cart") != -1){
                 refreshCartPostDelete()
-                navBarCartSommeTotal.text(data.cartSommeTotal)
+                navBarCartSommeTotal.text(data.cartTotal)
 
               }
             },
@@ -201,8 +174,7 @@
 
 
 
-      function refreshCartPostDelete(){
-        console.log("In current cart for delete")
+      function refreshCart(){
         var cartTableHomeSomme = $(".cart-table-home-somme")
         var cartTableHome = $(".cart-table-home")
         var cartBodyHome = cartTableHome.find(".cart-body-home")
@@ -226,8 +198,7 @@
               var newCartItemRemove = hiddenCartRemoveForm.clone()
               newCartItemRemove.css("display", "block")
               newCartItemRemove.find(".cart-item-product-id").val(value.id)
-              console.log("L'url est :", value.url)
-              cartBodyHome.prepend("<tr><td class='romove-item'>" + newCartItemRemove.html() + " <td class='cart-image'><a class='entry-thumbnail' href='" + value.url +"'><img src=\"{% static 'images/products/p1.jpg' %}\" alt=''></a></td><td class='cart-product-name-info'><h4 class='cart-product-description'><a href='" + value.url + "'>" + value.name + "</a></h4><div class='row'><div class='col-sm-4'><div class='rating rateit-small'></div></div><div class='col-sm-8'><div class='reviews'>(06 Reviews)</div></div></div><div class='cart-product-info'><span class='product-color'>COLOR:<span>Blue</span></span></div></td><td class='cart-product-edit'><a href='" + value.url + "' class='product-edit'>Edit</a></td><td class='cart-product-quantity'><div class='quant-input'><div class='arrows'><div class='arrow plus gradient'><span class='ir'><i class='icon fa fa-sort-asc'></i></span></div><div class='arrow minus gradient'><span class='ir'><i class='icon fa fa-sort-desc'></i></span></div></div><input type='text' value='1'></div></td><td class='cart-product-sub-total'><span class='cart-sub-total-price'>$" + value.price + "</span></td><td class=cart-product-grand-total><span class=cart-grand-total-price>$" + value.price + "</span></td></tr> " )
+              cartBodyHome.prepend("<tr><td class='romove-item'>" + newCartItemRemove.html() + " <td class='cart-image'><a class='entry-thumbnail' href='" + value.url +"'><img src='{{ value.image }}' alt=''></a></td><td class='cart-product-name-info'><h4 class='cart-product-description'><a href='" + value.url + "'>" + value.name + "</a></h4><div class='row'><div class='col-sm-4'><div class='rating rateit-small'></div></div><div class='col-sm-8'><div class='reviews'>(06 Reviews)</div></div></div><div class='cart-product-info'><span class='product-color'>COLOR:<span>Blue</span></span></div></td><td class='cart-product-edit'><a href='" + value.url + "' class='product-edit'>Edit</a></td><td class='cart-product-quantity'><div class='quant-input'><div class='arrows'><div class='arrow plus gradient'><span class='ir'><i class='icon fa fa-sort-asc'></i></span></div><div class='arrow minus gradient'><span class='ir'><i class='icon fa fa-sort-desc'></i></span></div></div><input type='text' value='1'></div></td><td class='cart-product-sub-total'><span class='cart-sub-total-price'>$" + value.price + "</span></td><td class=cart-product-grand-total><span class=cart-grand-total-price>$" + value.price + "</span></td></tr> " )
 
             })
 
@@ -260,11 +231,8 @@
       }
 
 
+      // End remove product from cart
 
-
-
-
-      // End Delete update
 
 
 

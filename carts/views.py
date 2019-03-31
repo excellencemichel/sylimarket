@@ -2,6 +2,9 @@ from io import BytesIO
 from email.mime.base import MIMEBase
 from email import encoders
 from time import strftime
+from decimal import Decimal 
+
+
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives, EmailMessage
 
@@ -11,9 +14,11 @@ from django.utils.decorators import method_decorator
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
+from django.contrib import messages
 
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
 
 
 
@@ -27,6 +32,10 @@ stripe.api_key = STRIPE_SECRET_KEY
 
 #Local imports
 from utils.generator_utils import render_to_pdf
+from utils.decimal_utils import TWOPLACES
+
+from analytics.signals import product_purshase_create_signal
+
 
 from .models import Cart
 from .forms import PayementMethod
@@ -58,43 +67,56 @@ def payement_method(request):
 		elif paymement_choices == "bancaire":
 			return redirect("carts:checkout")
 
-		elif paymement_choices =="mobile":
+		elif paymement_choices == "mobile":
 			return redirect("carts:mobile")
 		else:
 			return redirect("carts:payement_method")
 
 
-	context = {
-		"form": form,
-		"login_form": login_form,
+	context = { "form": form,
+	"login_form" : login_form
 	}
-
 
 
 	return render(request, "carts/payement_method.html", context)
 
 def cart_detail_api_view(request):
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-
 	products = [
-
-		{
-		"id": x.product.id,
-		"url": x.product.get_absolute_url(),
-		"name": x.product.name,
-		"price" : x.product.price
-		}
-		for x in cart_obj.items.all()
-	]
+			
+			{
+			"id": x.product.id,
+			"url": x.product.get_absolute_url(),
+			"name": x.product.name,
+			 "price":x.product.price
+			 } 
+			 for x in cart_obj.items.all()] # [<object>, <object>, <object>]
 
 	cart_data = {
-	"products": products, "subtotal": cart_obj.subtotal, "total": cart_obj.total
-	}
+		"products": products, "subtotal":cart_obj.subtotal, "total": cart_obj.total
 
+	}
 	return JsonResponse(cart_data)
 
 
+def cart_nav_api_view(request):
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	print("For nav")
+	products = [
+			
+			{
+			"id": x.product.id,
+			"url": x.product.get_absolute_url(),
+			"name": x.product.name,
+			 "price":x.product.price
+			 } 
+			 for x in cart_obj.items.all()] # [<object>, <object>, <object>]
 
+	cart_data = {
+		"products": products, "subtotal":cart_obj.subtotal, "total": cart_obj.total
+
+	}
+	return JsonResponse(cart_data)
 
 def cart_home(request):
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
@@ -105,7 +127,81 @@ def cart_home(request):
 
 
 
-def cart_update_to_add(request):
+def update_cart(request):
+	product_id = request.POST.get("product_id")
+	for_add_product = request.POST.get("for_add_product")
+	for_remove_product = request.POST.get("for_remove_product")
+	for_grow_product = request.POST.get("for_grow_product")
+
+
+
+	added = False
+	removed = False
+	grow   = False
+	grow_show = False
+	stock_finish = False
+
+	if product_id is not None:
+		try:
+			product_obj = Product.objects.get(id=product_id)
+		except Product.DoesNotExist:
+			# print("Show message to user, product is gone ?")
+			messages.success(request, _("Désolé Mme M {user} le produit vient de finir dans le dépôt nous revenons dans sous peu".format(user=request.user)))
+			stock_finish = True
+			return redirect(reverse("carts:home"))
+
+
+		cart_obj, new_obj = Cart.objects.new_or_get(request)
+		if product_obj.stock >0:
+
+			if for_add_product:
+				cart_obj.add_item(product_obj)
+				added = True
+
+			elif for_grow_product:
+				cart_obj.add_item(product_obj)
+				grow = True
+
+			elif for_remove_product:
+				cart_obj.remove_item(product_obj)
+				if product_obj.products.all().count()>0:
+					removed = False
+				else:
+					removed = True
+		else:
+			stock_finish = True
+			print("Le stock est fini")
+
+
+
+		request.session["cart_items"] = cart_obj.items.all().count()
+		request.session["cart_total"] = str(Decimal(cart_obj.total).quantize(Decimal('1.00')))
+
+
+
+		
+
+		if request.is_ajax():
+			print("Ajax request for update_cart")
+			json_data = {
+				"added": added,
+				"removed": removed,
+				"grow" : grow,
+				"stock_finish": stock_finish,
+				"hiddenGrow": product_obj.products.all().count()==0,
+				"qutyInCart" : product_obj.products.all().count(),
+				"cartItemCount": cart_obj.items.all().count(),
+				"cartTotal": str(Decimal(cart_obj.total).quantize(Decimal('1.00'))),
+
+			}
+			return JsonResponse(json_data, status=200)
+		print("Appel après return")
+
+	return redirect("carts:home")
+
+
+
+def remove_product(request):
 	product_id = request.POST.get("product_id")
 	if product_id is not None:
 		try:
@@ -114,70 +210,32 @@ def cart_update_to_add(request):
 			print("Show message to user, product is gone ?")
 			return redirect("carts:home")
 
-		cart_obj, new_obj = Cart.objects.new_or_get(request)
-
 		if product_obj:
-			print("On ajoute")
-			cart_obj.add_item(product_obj)
-			added = True
-		else:
-			added = False
-			
+			cart_obj, new_obj = Cart.objects.new_or_get(request)
+			cart_obj.remove_item(product_obj)
+			removed = True
+
 		request.session["cart_items"] = cart_obj.items.all().count()
-		request.session["items"] = str(cart_obj.items.all())
-		request.session["cart_total"] = str(cart_obj.total)
+		request.session["cart_total"] = str(Decimal(cart_obj.total).quantize(Decimal('1.00')))
+
+
+		
 
 		if request.is_ajax():
-			print("We are in ajax request to added product")
+			print("Ajax request for remove")
 			json_data = {
-			"added": added,
-			"removed": not added,
-			"cartItemsCount": cart_obj.items.all().count(),
-			"cartSommeTotal": cart_obj.total,
-			}
-			return JsonResponse(json_data, status=200)
-			# return JsonResponse({"message": "Error 404"}, status=404)
+				"removed": removed,
+				"notRemoved": not removed,
+				"cartItemCount": cart_obj.items.all().count(),
+				"cartTotal": str(Decimal(cart_obj.total).quantize(Decimal('1.00'))),
 
+			}
+
+			return JsonResponse(json_data, status=200)
 
 	return redirect("carts:home")
 
 
-
-def cart_update_to_delete(request):
-	product_id = request.POST.get("product_id")
-	if product_id is not None:
-		try:
-			product_obj = Product.objects.get(id=product_id)
-		except Product.DoesNotExist:
-			print("Show message to user, product is gone ?")
-			return redirect("carts:home")
-
-		cart_obj, new_obj = Cart.objects.new_or_get(request)
-
-		if product_obj:
-			print("Delete the product in the cart")
-			cart_obj.delete_item(product_obj)
-			deleted = True
-		else:
-			deleted = False
-			
-		request.session["cart_items"] = cart_obj.items.all().count()
-		request.session["items"] = str(cart_obj.items.all())
-		request.session["cart_total"] = str(cart_obj.total)
-
-		if request.is_ajax():
-			print("We are in ajax request to delete the product in the cart")
-			json_data = {
-			"deleted": deleted,
-			"notDeleted": not deleted,
-			"cartItemsCount": cart_obj.items.all().count(),
-			"cartSommeTotal": cart_obj.total,
-			}
-			return JsonResponse(json_data, status=200)
-			# return JsonResponse({"message": "Error 404"}, status=404)
-
-
-	return redirect("carts:home")
 
 
   
@@ -325,7 +383,6 @@ def checkout_livraison(request):
 		is_prepared = order_obj.check_done()
 		if is_prepared:
 			order_obj.mark_paid()
-
 			to_email = ["sylimarket@gmail.com",]
 			if request.user.is_authenticated:
 

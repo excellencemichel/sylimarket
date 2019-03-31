@@ -6,10 +6,10 @@ from django.urls import reverse
 #Locales import 
 from utils.files_utils import upload_file_location
 
-from .products import Product
+from .products import Product, PrototypeAbstract
 
 
-class ClothingAbstractModel(models.Model):
+class ClothingAbstractModel(PrototypeAbstract):
 	class Meta:
 		abstract = True
 
@@ -99,7 +99,7 @@ class ClothingAbstractModel(models.Model):
 
 
 
-class MenClothing(Product, ClothingAbstractModel):
+class MenClothing(ClothingAbstractModel):
 
 	CLOTHING_SHIRT = "shirt"
 	CLOTHING_TSHIRT = "tshirt"
@@ -128,13 +128,16 @@ class MenClothing(Product, ClothingAbstractModel):
 		)
 
 	clothing_type = models.CharField(max_length=250, choices=TYPE_CLOTHINGS_CHOICES)
+	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="men_clothings")
 
-	def get_absolute_url(self):
-		return reverse("products:men_clothing_detail", kwargs={ "pk": self.pk, "slug": self.slug})
+	def __str__(self):
+		return self.name
 
 
 
-class WomenClothing(Product, ClothingAbstractModel):
+
+
+class WomenClothing(ClothingAbstractModel):
 
 	CLOTHING_SHIRT = "shirt"
 	CLOTHING_TSHIRT = "tshirt"
@@ -176,9 +179,12 @@ class WomenClothing(Product, ClothingAbstractModel):
 		)
 
 	clothing_type = models.CharField(max_length=250, choices=TYPE_CLOTHINGS_CHOICES)
+	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="women_clothings")
 
-	def get_absolute_url(self):
-		return reverse("products:women_clothing_detail", kwargs={ "pk": self.pk, "slug": self.slug})
+	def __str__(self):
+		return self.name
+
+
 
 
 #Pants
@@ -194,12 +200,14 @@ class PantsAbstractModel(ClothingAbstractModel):
 	manche 			= None
 
 
-class Pantalon(Product, PantsAbstractModel):
+class Pantalon(PantsAbstractModel):
 	PANTALON_JEANS ="jeans"
 	PANTALON_CHINO ="chino"
 	PANTALON_TISSU ="tissu"
 	PANTALON_JOGGING ="jggin"
 	PANTALON_NILON ="nilon"
+	PANTALON_MINI ="mini"
+
 
 	PANTALON_TYPE_CHOICES = (
 
@@ -208,19 +216,22 @@ class Pantalon(Product, PantsAbstractModel):
 		(PANTALON_CHINO, "Pantalon Chino"),
 		(PANTALON_TISSU, "Pantalon Tissu "),
 		(PANTALON_NILON, "Pantalon en nilon"),
+		(PANTALON_MINI, "Pantalon en mini"),
+
 
 
 		)
 
 	pantalon_type = models.CharField(max_length=250, choices=PANTALON_TYPE_CHOICES)
+	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="pantalons")
+
+	def __str__(self):
+		return self.name
 
 
-	def get_absolute_url(self):
-		return reverse("products:pantalon_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
-
-class Culotte(Product, PantsAbstractModel):
+class Culotte(PantsAbstractModel):
 	CULOTTE_JEANS ="jeans"
 	CULOTTE_CHINO ="chino"
 	CULOTTE_TISSU ="tissu"
@@ -239,15 +250,18 @@ class Culotte(Product, PantsAbstractModel):
 		)
 
 	culotte_type = models.CharField(max_length=250, choices=CULOTTE_TYPE_CHOICES)
+	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="culottes")
 
-	def get_absolute_url(self):
-		return reverse("products:culotte_detail", kwargs={ "pk": self.pk, "slug": self.slug})
-
-
-
+	def __str__(self):
+		return self.name
 
 
-class Jupe(Product, ClothingAbstractModel):
+
+
+
+
+
+class Jupe(ClothingAbstractModel):
 
 	TAILLE_MOYENNE ="moyenne"
 	TAILLE_COURTE ="courte"
@@ -264,10 +278,13 @@ class Jupe(Product, ClothingAbstractModel):
 	genre 			= None
 	manche 			= None
 
+	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="jupes")
 
-	def get_absolute_url(self):
-		print("Dans get_absolute_url de jupe_detail")
-		return reverse("products:jupe_detail", kwargs={ "pk": self.pk, "slug": self.slug})
+
+	def __str__(self):
+		return self.name
+
+
 
 
 #Shoes
@@ -290,7 +307,7 @@ class ShoesAbstractModel(ClothingAbstractModel):
 	manche 			= None
 
 
-class MenShoes(Product, ShoesAbstractModel):
+class MenShoes(ShoesAbstractModel):
 	SHOES_BASKET = "basket"
 	SHOES_REPOSE_PIED = "reposepied"
 	SHOES_SOULIER = "soulier"
@@ -314,18 +331,21 @@ class MenShoes(Product, ShoesAbstractModel):
 		(SHOES_MAX, "Chaussure max grande taille"),
 		)
 	shoes_type      = models.CharField(max_length=250, choices=SHOES_TYPE)
+	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="men_shoes")
+
+
+	def __str__(self):
+		return self.name
 
 
 
-	def get_absolute_url(self):
-		return reverse("products:men_shoe_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 
 
 
 
-class WomenShoes(Product, ShoesAbstractModel):
+class WomenShoes(ShoesAbstractModel):
 	SHOES_TALON  = "talon"
 	SHOES_BASKET = "basket"
 	SHOES_REPOSE_PIED = "reposepied"
@@ -351,12 +371,15 @@ class WomenShoes(Product, ShoesAbstractModel):
 	
 	shoes_type      = models.CharField(max_length=250, choices=SHOES_TYPE)
 
+	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="women_shoes")
 
-	def get_absolute_url(self):
-		return reverse("products:women_shoe_detail", kwargs={ "pk": self.pk, "slug": self.slug})
+	def __str__(self):
+		return self.name
 
 
-class AccessoireClothng(Product):
+
+
+class AccessoireClothng(PrototypeAbstract):
 	ACCESSOIRE_CEINTEUR = "ceinture"
 	ACCESSOIRE_LUNETTE = "lunette"
 	ACCESSOIRE_KEPI = "kepi"
@@ -392,7 +415,13 @@ class AccessoireClothng(Product):
 	accessoire_type  	= models.CharField(max_length=250, choices=TYPE_ACCESSOIRES)
 	genre 				= models.CharField(max_length=250, choices=GENRE_CHOICE, default=GENRE_MIX)
 	caracteristque 		= models.TextField()
+	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="accessoire_clothings")
 
 
-	def get_absolute_url(self):
-		return reverse("products:accessoire_clothing_detail", kwargs={ "pk": self.pk, "slug": self.slug})
+	def __str__(self):
+		return self.name
+
+
+
+
+
