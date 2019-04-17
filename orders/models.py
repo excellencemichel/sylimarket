@@ -698,4 +698,4 @@ class ProductPurshasePayementLivraison(models.Model): #Purshase veut dire achat
 		verbose_name_plural = "Produits payés à la livraison"
 
 	def __str__(self):
-		return self.cart_item.product.name
+		return self.product.name
