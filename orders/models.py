@@ -17,7 +17,7 @@ from django.utils import timezone
 from utils.generator_utils import unique_order_id_generator, unique_order_payement_livraison_id_generator
 
 from billing.models import BillingProfile, PayementLivraison 
-from carts.models import Cart, CartItem
+from carts.models import Cart
 from addresses.models import Address, AddressPayementLivraison
 from products.models import Product 
 from analytics.signals import product_purshase_create_signal
@@ -39,7 +39,7 @@ class OrderManagerQuerySet(models.query.QuerySet):
 	def get_sales_breakdown(self):
 		recent = self.recent().not_refunded()
 		recent_data = recent.totals_data()
-		# recent_cart_data = recent.cart_data()
+		recent_cart_data = recent.cart_data()
 		shipped = recent.not_refunded().by_status(status="shipped")
 		shipped_data = shipped.totals_data()
 		paid = recent.by_status(status="paid")
@@ -48,7 +48,7 @@ class OrderManagerQuerySet(models.query.QuerySet):
 		data = {
 			"recent":recent,
 			"recent_data" :recent_data,
-			# "recent_cart_data": recent_cart_data,
+			"recent_cart_data": recent_cart_data,
 			"shipped" : shipped,
 			"shipped_data" : shipped_data,
 			"paid":paid,
@@ -86,12 +86,12 @@ class OrderManagerQuerySet(models.query.QuerySet):
 
 
 
-	# def cart_data(self):
-	# 	return self.aggregate(
-	# 				Sum("cart__items__product__price"),
-	# 				Avg("cart__items__product__price"),
-	# 				Count("cart__items__product")
-	# 		)
+	def cart_data(self):
+		return self.aggregate(
+					Sum("cart__products__price"),
+					Avg("cart__products__price"),
+					Count("cart__products")
+			)
 
 
 	def by_status(self, status="shipped"):
@@ -161,6 +161,8 @@ class Order(models.Model):
 	order_id			= models.CharField(max_length=120, blank=True) # Maybe AB18DE#
 	shipping_address 	= models.ForeignKey(Address, related_name="shipping_address", null =True, blank=True, on_delete=models.CASCADE)
 	billing_address		= models.ForeignKey(Address, related_name="billing_address", null=True, blank=True, on_delete=models.CASCADE) 
+	shipping_address_final    = models.TextField(blank=True, null=True)
+	billing_address_final     = models.TextField(blank=True, null=True)
 	cart 				= models.ForeignKey(Cart, on_delete=models.CASCADE)
 	status  			= models.CharField(max_length=250, default="created", choices=ORDER_STATUS_CHOICES)
 	shipping_total		= models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
@@ -235,7 +237,7 @@ class Order(models.Model):
 
 
 	def update_purshases(self):
-		for p in self.cart.items.all():
+		for p in self.cart.products.all():
 			obj, created  = ProductPurshase.objects.get_or_create(
 				order_id = self.order_id,
 				product=p,
@@ -264,7 +266,11 @@ def pre_save_create_order_id(sender, instance, *args, **kwargs):
 	if qs.exists():
 		qs.update(active=False)
 
+	if instance.shipping_address and not instance.shipping_address_final:
+		instance.shipping_address_final = instance.shipping_address.get_address()
 
+	if instance.billing_address and not instance.billing_address_final:
+		instance.billing_address_final = instance.billing_address.get_address()
 
 
 
@@ -305,9 +311,6 @@ class ProductPurshaseQuerySet(models.query.QuerySet):
 		return self.filter(refunded=False)
 
 
-	def digital(self):
-		return self.filter(product__is_digital=True)
-
 
 	def by_request(self, request):
 		billing_profile, created = BillingProfile.objects.new_or_get(request)
@@ -323,9 +326,6 @@ class ProductPurshaseManager(models.Manager):
 	def all(self):
 		return self.get_queryset().active()
 
-
-	def digital(self):
-		return self.get_queryset().digital()
 
 
 	def by_request(self, request):
@@ -381,7 +381,7 @@ class OrderPayementLivraisonManagerQuerySet(models.query.QuerySet):
 	def get_sales_breakdown(self):
 		recent = self.recent().not_refunded()
 		recent_data = recent.totals_data()
-		# recent_cart_data = recent.cart_data()
+		recent_cart_data = recent.cart_data()
 		shipped = recent.not_refunded().by_status(status="shipped")
 		shipped_data = shipped.totals_data()
 		paid = recent.by_status(status="paid")
@@ -390,7 +390,7 @@ class OrderPayementLivraisonManagerQuerySet(models.query.QuerySet):
 		data = {
 			"recent":recent,
 			"recent_data" :recent_data,
-			# "recent_cart_data": recent_cart_data,
+			"recent_cart_data": recent_cart_data,
 			"shipped" : shipped,
 			"shipped_data" : shipped_data,
 			"paid":paid,
@@ -428,12 +428,12 @@ class OrderPayementLivraisonManagerQuerySet(models.query.QuerySet):
 
 
 
-	# def cart_data(self):
-	# 	return self.aggregate(
-	# 				Sum("cart__items__product__price"),
-	# 				Avg("cart__items__product__price"),
-	# 				Count("cart__items__product")
-	# 		)
+	def cart_data(self):
+		return self.aggregate(
+					Sum("cart__items__product__price"),
+					Avg("cart__items__product__price"),
+					Count("cart__items__product")
+			)
 
 
 	def by_status(self, status="shipped"):
@@ -502,7 +502,10 @@ class OrderPayementLivraison(models.Model):
 	payement_livraison 				= models.ForeignKey(PayementLivraison,  null=True, blank=True, on_delete=models.CASCADE)
 	order_payement_livraison_id		= models.CharField(max_length=120, blank=True) # Maybe AB18DE#
 	livraison_address 				= models.ForeignKey(AddressPayementLivraison, related_name="livraison_address", null =True, blank=True, on_delete=models.CASCADE)
-	facturation_address				= models.ForeignKey(AddressPayementLivraison, related_name="facturation_address", null=True, blank=True, on_delete=models.CASCADE) 
+	facturation_address				= models.ForeignKey(AddressPayementLivraison, related_name="facturation_address", null=True, blank=True, on_delete=models.CASCADE)
+	livraison_address_final    = models.TextField(blank=True, null=True)
+	facturation_address_final     = models.TextField(blank=True, null=True)
+
 	cart 							= models.ForeignKey(Cart, on_delete=models.CASCADE)
 	status  						= models.CharField(max_length=250, default="created", choices=ORDER_PAYEMENT_LIVRAISON_STATUS_CHOICES)
 	shipping_total					= models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
@@ -567,10 +570,10 @@ class OrderPayementLivraison(models.Model):
 
 
 	def update_purshases(self):
-		for item in self.cart.items.all():
+		for p in self.cart.products.all():
 			obj, created  = ProductPurshasePayementLivraison.objects.get_or_create(
 				order_payement_livraison_id = self.order_payement_livraison_id,
-				cart_item=item,
+				product=p,
 				payement_livraison=self.payement_livraison
 				)
 
@@ -596,6 +599,12 @@ def pre_save_create_order_payement_livraison_id(sender, instance, *args, **kwarg
 	qs	= OrderPayementLivraison.objects.filter(cart=instance.cart).exclude(payement_livraison=instance.payement_livraison)
 	if qs.exists():
 		qs.update(active=False)
+
+	if instance.livraison_address and not instance.livraison_address_final:
+		instance.livraison_address_final = instance.livraison_address.get_address()
+
+	if instance.facturation_address and not instance.facturation_address_final:
+		instance.facturation_address_final = instance.facturation_address.get_address()
 
 
 
@@ -674,7 +683,7 @@ class ProductPurshasePayementLivraisonManager(models.Manager):
 class ProductPurshasePayementLivraison(models.Model): #Purshase veut dire achat
 	order_payement_livraison_id		= models.CharField(max_length=120)
 	payement_livraison 				= models.ForeignKey(PayementLivraison,on_delete=models.CASCADE)
-	cart_item 						= models.ForeignKey(CartItem, on_delete=models.CASCADE)
+	product 						= models.ForeignKey(Product, on_delete=models.CASCADE)
 	refunded 						= models.BooleanField(default=False)
 	updated 						= models.DateTimeField(auto_now=True)
 	timestamp 						= models.DateTimeField(auto_now_add=True)
@@ -690,38 +699,3 @@ class ProductPurshasePayementLivraison(models.Model): #Purshase veut dire achat
 
 	def __str__(self):
 		return self.cart_item.product.name
-
-
-
-
-
-def post_paid_receiver(instance, *args, **kwargs):
-	product_purshase_create_signal.send_robust(sender= ProductPurshasePayementLivraison, product_id=instance.cart_item)
-
-
-
-
-
-post_save.connect(post_paid_receiver, sender=ProductPurshasePayementLivraison)
-post_save.connect(post_paid_receiver, sender=ProductPurshase)
-
-
-
-def product_stock_increment_receiver(instance, *args, **kwargs):
-	print("Incrementation de stock", instance)
-	print("Total st", instance.items.all().count())
-
-
-	for item in instance.items.all():
-		product = Product.objects.filter(cartitem__products__id=item.id).first()
-		product.stock = F("stock") -1
-		print(item)
-		# cart_item = CartItem.objects.filter(pk=item.pk)
-
-
-	import pdb; pdb.set_trace()
-
-
-
-
-product_purshase_create_signal.connect(product_stock_increment_receiver)

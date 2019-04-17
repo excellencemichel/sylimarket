@@ -66,25 +66,14 @@
 								<div class="row">
 									
 									<div class="col-sm-2">
-										<span class="label">Qty in cart :</span>
+										<span class="label">Qty :</span>
 									</div>
 									
-									<div class="col-sm-2">
-										<div class="cart-quantity">
-											<div class="quant-input">
-								                <div class="arrows">
-								                  <div class="arrow plus gradient"></div>
-								                <p class="qty-in-cart">{{ product.products.all.count }}</p>
-								                  <div class="arrow minus gradient"></div>
-								                </div>
+										{% include "carts/snippets/update_quantite.html" with product=product %}
 
-							              </div>
-							            </div>
-									</div>
-
-									<div class="col-sm-7">
-												{% include "carts/snippets/grow_product.html" with product=product %}
-                        						{% include "carts/snippets/update_cart.html" with product=product %}
+									<div class="col-sm-6">
+										
+                        						{% include "carts/snippets/update_cart.html" with product=product cart=cart %}
 
 
 									</div>

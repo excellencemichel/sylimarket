@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db import models
 from django.db.models.signals import pre_save, post_save, m2m_changed, pre_delete, post_delete
 from django.db.models import  F 
+from django.contrib.postgres.fields import HStoreField
 
 
 from .signals import cart_item_added_signal
@@ -16,6 +17,62 @@ from products.models import Product
 
 
 User = settings.AUTH_USER_MODEL
+
+
+
+from django.contrib.postgres.signals import (
+    get_citext_oids, get_hstore_oids, register_type_handlers,
+)
+from django.db.migrations.operations.base import Operation
+
+
+class CreateExtension(Operation):
+    reversible = True
+
+    def __init__(self, name):
+        self.name = name
+
+    def state_forwards(self, app_label, state):
+        pass
+
+    def database_forwards(self, app_label, schema_editor, from_state, to_state):
+        if schema_editor.connection.vendor != 'postgresql':
+            return
+        schema_editor.execute("CREATE EXTENSION IF NOT EXISTS %s" % schema_editor.quote_name(self.name))
+        # Clear cached, stale oids.
+        get_hstore_oids.cache_clear()
+        get_citext_oids.cache_clear()
+        # Registering new type handlers cannot be done before the extension is
+        # installed, otherwise a subsequent data migration would use the same
+        # connection.
+        register_type_handlers(schema_editor.connection)
+
+    def database_backwards(self, app_label, schema_editor, from_state, to_state):
+        schema_editor.execute("DROP EXTENSION %s" % schema_editor.quote_name(self.name))
+        # Clear cached, stale oids.
+        get_hstore_oids.cache_clear()
+        get_citext_oids.cache_clear()
+
+    def describe(self):
+        return "Creates extension %s" % self.name
+
+
+
+
+
+
+
+
+
+
+class HStoreExtension(CreateExtension):
+
+    def __init__(self):
+        self.name = 'hstore'
+
+
+
+
 
 
 class CartManager(models.Manager):
@@ -44,10 +101,12 @@ class CartManager(models.Manager):
 		if user is not None:
 			if user.is_authenticated:
 				user_obj=user
-		return self.model.objects.create(user=user_obj)
+		return self.model.objects.create(user=user_obj, quantite={})
 
 class Cart(models.Model):
 	user 		= models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+	products    = models.ManyToManyField(Product, blank=True)
+	quantite    = HStoreField(null=True, blank=True)
 	subtotal 	= models.DecimalField(default=0.00, max_digits=100, decimal_places =2 )
 	total 		= models.DecimalField(default=0.00, max_digits=100, decimal_places =2 )
 
@@ -65,50 +124,21 @@ class Cart(models.Model):
 
 
 
+def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
+    if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
+	    products = instance.products.all()
+	    total = 0
+	    print(instance.quantite)
+	    for x in products:
+	    	total += (multiplier(x.price , Decimal(int(instance.quantite[str(x.id)])).quantize(TWOPLACES)))
+	    if instance.subtotal != total:
+	        instance.subtotal = total
+	        instance.save()
 
 
 
 
-
-	def add_item(self, product, *args, **kwargs)->"CartItem":
-		product = Product.objects.get(id=product.id)
-
-		cart_item_obj = CartItem.objects.create(
-			cart=self,
-			product = product,
-			)
-		cart_item_obj.save()
-		cart_item_added_signal.send_robust(sender= self.__class__, instance=self, action="added")
-		product.stock = F('stock') - 1
-		product.save()
-
-		return cart_item_obj
-
-
-	def remove_item(self, product, *args, **kwargs)->"CartItem":
-		product = Product.objects.get(id=product.id)
-		try:
-			cart_item_obj = CartItem.objects.get(product_id=product.id)
-			cart_item_obj.delete()
-			product.stock = F('stock') + 1
-			product.save()
-		except CartItem.MultipleObjectsReturned:
-			cart_item_obj = CartItem.objects.filter(product_id=product.id).first()
-			cart_item_obj.delete()
-			product.stock = F('stock') + 1
-			product.save()
-		except CartItem.DoesNotExist:
-			pass
-	
-		cart_item_added_signal.send_robust(sender= self.__class__, instance=self, action="removed")
-
-
-
-	
-
-
-
-
+m2m_changed.connect(m2m_changed_cart_receiver, sender=Cart.products.through)
 
 
 
@@ -122,57 +152,3 @@ def pre_save_cart_receiver(sender, instance,*args, **kwargs):
 
 
 pre_save.connect(pre_save_cart_receiver, sender=Cart)
-
-
-
-
-
-class CartItem(models.Model):
-	cart 		= models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")
-	product		= models.ForeignKey(Product, on_delete=models.CASCADE, related_name="products" )
-
-
-	def __str__(self):
-		return ("{product}".format(product=self.product))
-
-
-
-
-
-def pre_save_cart_item_receiver(sender, instance, *args, **kwargs):
-
-	cart_item_added_signal.send_robust(sender= instance.__class__, instance=instance.cart, action="added")
-
-
-def post_save_cart_item_receiver(sender, instance, *args, **kwargs):
-
-	cart_item_added_signal.send_robust(sender= instance.__class__, instance=instance.cart, action="added")
-
-def pre_delete_cart_item_receiver(sender, instance, *args, **kwargs):
-
-	cart_item_added_signal.send_robust(sender= instance.__class__, instance=instance.cart, action="removed")
-
-
-def post_delete_cart_item_receiver(sender, instance, *args, **kwargs):
-	cart_item_added_signal.send_robust(sender= instance.__class__, instance=instance.cart, action="removed")
-
-
-pre_save.connect(pre_save_cart_item_receiver, sender=CartItem)
-# post_save.connect(post_save_cart_item_receiver, sender=CartItem)
-pre_delete.connect(pre_delete_cart_item_receiver, sender=CartItem)
-# post_delete.connect(post_delete_cart_item_receiver, sender=CartItem)
-
-
-def cart_item_added_receiver(sender, instance,  action, *args, **kwargs):
-	if action == "added" or action == "removed":
-		somme = sum(item.product.price for item in instance.items.all())
-		print("La somme est : ", somme)
-
-		if instance.subtotal != somme:
-			instance.subtotal = somme
-			instance.save()
-
-
-
-
-cart_item_added_signal.connect(cart_item_added_receiver)

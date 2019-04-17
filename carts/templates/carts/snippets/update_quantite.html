@@ -1,7 +1,23 @@
-<form class="form form-product-ajax" method="POST" action="{% url 'carts:update' %}" data-endpoint="{% url 'carts:update' %}" style="display: inline-block;">
+<div class="col-sm-2">
+	<form class="form form-product-ajax" method="POST" action="{% url 'carts:update_cart' %}" data-endpoint="{% url 'carts:update_cart' %}" style="display: inline-block;">
 	{% csrf_token %}
-	<input class="cart-item-product-id" type="hidden" name="product_id" value="{{ product.id }}">
-    <button type="submit" class="btn btn-primary cart-btn">Modifier</button>
-</form>
+		<div class="cart-quantity">
+			<div class="quant-input">
+                <div class="arrows">
+                  <div class="arrow plus gradient"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
+                  <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>
+                </div>
+                <input class="product-qty-input" name="product_quantite" type="text" value="{% if quantite %} {{ quantite }} {% else %} 1 {% endif %}">
+				<input type="hidden" name="for_qty_product" value="{{ product.id }}">
+
+          </div>
+        </div>
+		<input class="cart-item-product-id" type="hidden" name="product_id" value="{{ product.id }}">
+    	<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">
+    		<span>Valider</span>
+    	</button>
+		
+	</form>
+</div>
 
 

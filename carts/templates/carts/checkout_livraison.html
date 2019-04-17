@@ -128,26 +128,33 @@
 							    			<span style="background-color: #0f6cb2; color: #fff;">4 </span>Finalisez la caisse
 							    		</h4>
 							    	</div>
+									<hr>
 
 									<h5 class="unicase-checkout-title">Les articles sont :</h5> <p>
-										{% for product in  object.cart.items.all %} {{ product }} {% if not forloop.last %}, {% endif %} {% endfor %}
+										{% for product in  object.cart.products.all %} {{ product }} {% if not forloop.last %} ;  {% endif %} {% endfor %}
 									</p>
+									<hr>
 
 									<h5 class="unicase-checkout-title">Adresse de livraison :</h5> <p> {{ object.livraison_address.get_address }}</p>
-
+									<hr>
 									<h5 class="unicase-checkout-title">Adresse de facturation:</h5> <p>{{ object.facturation_address.get_address }}</p>
+									<hr>
 
-									<p>Mode de paiement: <strong>Payement à la livraison</strong> (<a href="{% url 'carts:payement_method' %}?next={{ request.build_absolute_uri }}">Changer</a>) </p>
+									<p>Mode de paiement: <strong>Payement à la livraison</strong> (<a href="{% url 'carts:payement_method' %}?next={{ request.build_absolute_uri }}" style="color: blue">Changer</a>) </p>
 
+									<hr>
 
 									<p>Panier Total : {{ object.cart.total }}</p>
 									<p>Total d'expédition: {{ object.shipping_total }}</p>
+									<hr>
 
 									<p>Total de la commande: {{ object.total }}</p>
 
 									<form class="form" method="POST" action="">
 										{% csrf_token %}
 										<h3>Si vous ne constatez pas d'ereurs quelques part ? Alors ...</h3>
+									<hr>
+										
 										<button type="submit" class="btn btn-success">Terminez la caisse</button>
 									</form>
 								</div>

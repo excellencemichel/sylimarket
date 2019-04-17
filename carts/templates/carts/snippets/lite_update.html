@@ -1,17 +1,14 @@
 
 
-<form class="form form-product-ajax for-qty" method="POST" action="{% url 'carts:update_cart' %}" data-endpoint="{% url 'carts:update_cart' %}" style="display: inline-block;">
+<form class="form form-product-ajax" method="POST" action="{% url 'carts:update_cart' %}" data-endpoint="{% url 'carts:update_cart' %}" style="display: inline-block;">
 
 	{% csrf_token %}
 	<input class="cart-item-product-id" type="hidden" name="product_id" value="{{ product.id }}">
 
-		<span class="submit-span submit-for-qty">
+		<span class="submit-span">
 			{% if product in cart.products.all %}
-				<input type="hidden" name="for_remove_product" value="removed">
 				<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Enlever</button>
-
 			{% else %}
-				<input type="hidden" name="for_add_product" value="added">
 				<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Add to cart</button>
 			{% endif %}
 		</span>

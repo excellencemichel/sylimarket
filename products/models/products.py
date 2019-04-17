@@ -408,4 +408,4 @@ def product_pre_save_receiver(sender, instance, *args, **kwargs):
 
 
 
-post_save.connect(product_pre_save_receiver, sender=Product)
+pre_save.connect(product_pre_save_receiver, sender=Product)

@@ -44,6 +44,7 @@
 
         // Start add product to cart
       var productFormAdd = $(".form-product-ajax")
+      var forQty = $(".for-qty")
       productFormAdd.submit(function(event){
           event.preventDefault()
           var thisForm = $(this)
@@ -57,34 +58,45 @@
             data: formData,
             success: function(data){
               var submitSpan = thisForm.find(".submit-span")
-                var growHiddenForm = $(".grow-hidden")
-                var growFirstRefresh = $(".first-refresh")
-                var qtyInCart = $(".qty-in-cart")
-                qtyInCart.text(data.qutyInCart)
+                var spnQty = forQty.find(".submit-for-qty")
+                console.log("minimum", data.minimum)
                   if(!data.stock_finish){
-
-
-                  if (data.added){
-                    growFirstRefresh.hide()
-                    submitSpan.html('<input type="hidden" name="for_remove_product" value="removed"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Enlever</button>')
-                    growHiddenForm.show()
-                  } 
- 
-                   else if (data.removed){
+                    if (data.added){
+                      submitSpan.html('<input type="hidden" name="for_remove_product" value="removed"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Enlever</button>')
+                    } 
+                  else {
                     submitSpan.html('<input type="hidden" name="for_add_product" value="added"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Add to cart</button>')
-                    growHiddenForm.hide()
-                    growFirstRefresh.hide()
+                      }
 
+                  if(data.quantited){
+                      spnQty.html('<input type="hidden" name="for_remove_product" value="removed"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Enlever</button>')
                   }
 
-                  if(data.hiddenGrow){
-                  growHiddenForm.hide()
-                  }
+                  if(data.minimum){
+                      $.alert({
+                        title: "Erreur d'entrée de quantité",
+                        content: "La quantité du produit entrée ne doit pas être inferieur à 1",
+                        theme: "modern",
+                        })
+
+                    } 
+
+                  if(data.no_number_quantite){
+                      spnQty.html('<input type="hidden" name="for_add_product" value="added"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Add to cart</button>')
+                      $.alert({
+                        title: "Erreur d'entrée de quantité",
+                        content: "La quantité du produit entrée doit être un nombre et superieur ou égale à 1",
+                        theme: "modern",
+                        })
+
+                    } 
+
+
                 }
                 else{
                    $.alert({
                 title: "oops !",
-                content: "La quantité du produit en stock est fini nous revenons dans pas longtemps",
+                content: "Votre commande dépasse notre stock nous vous conseillons de la completer avec soit le même produit mais de couleur/marque différentes. Au plaisir nous allons faire un réapprovisionnement dans sous peu. Merci",
                 theme: "modern",
               })
                 }
@@ -120,60 +132,6 @@
 
 
 
-      // Start remove product from cart
-
-      var productFormDelete = $(".form-product-ajax-remove")
-      productFormDelete.submit(function(event){
-          event.preventDefault()
-          var thisForm = $(this)
-          // var actionEndpoint = thisForm.attr("action")
-          var actionEndpoint = thisForm.attr("data-endpoint")
-          var httpMethod = thisForm.attr("method")
-          var formData = thisForm.serialize();
-          $.ajax({
-            url: actionEndpoint,
-            method: httpMethod,
-            data: formData,
-            success: function(data){
-              var submitSpan = thisForm.find(".submit-span")
-
-                  if (data.removed){
-
-                    submitSpan.html('<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Add to cart</button>')
-                  } 
-                  // else {
-                  //   submitSpan.html('<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;"><i class="fa fa-trash-o"></i>Enlever</button>')
-                  // }
-              // submitSpan.html("<button type='submit' class='btn btn-primary'><i class='fa fa-shopping-cart inner-right-vs'></i>PAYER MAINTENANT</button>")
-
-              var navBarCount = $(".navbar-cart-count")
-              var navBarCartSommeTotal = $(".cart-somme-total")
-              navBarCount.text(data.cartItemCount)
-              navBarCartSommeTotal.text(data.cartTotal)
-              cartNavRefresh()
-              console.log("Valeur du panier :", data.cartTotal)
-
-              var currentPath = window.location.href
-
-              if(currentPath.indexOf("cart") != -1){
-                refreshCartPostDelete()
-                navBarCartSommeTotal.text(data.cartTotal)
-
-              }
-            },
-
-            error: function(errorData){
-              $.alert({
-                title: "oops !",
-                content: "Une erreur s'est occasionée",
-                theme: "modern",
-              })
-            }
-          })
-      })
-
-
-
       function refreshCart(){
         var cartTableHomeSomme = $(".cart-table-home-somme")
         var cartTableHome = $(".cart-table-home")
@@ -198,7 +156,7 @@
               var newCartItemRemove = hiddenCartRemoveForm.clone()
               newCartItemRemove.css("display", "block")
               newCartItemRemove.find(".cart-item-product-id").val(value.id)
-              cartBodyHome.prepend("<tr><td class='romove-item'>" + newCartItemRemove.html() + " <td class='cart-image'><a class='entry-thumbnail' href='" + value.url +"'><img src='{{ value.image }}' alt=''></a></td><td class='cart-product-name-info'><h4 class='cart-product-description'><a href='" + value.url + "'>" + value.name + "</a></h4><div class='row'><div class='col-sm-4'><div class='rating rateit-small'></div></div><div class='col-sm-8'><div class='reviews'>(06 Reviews)</div></div></div><div class='cart-product-info'><span class='product-color'>COLOR:<span>Blue</span></span></div></td><td class='cart-product-edit'><a href='" + value.url + "' class='product-edit'>Edit</a></td><td class='cart-product-quantity'><div class='quant-input'><div class='arrows'><div class='arrow plus gradient'><span class='ir'><i class='icon fa fa-sort-asc'></i></span></div><div class='arrow minus gradient'><span class='ir'><i class='icon fa fa-sort-desc'></i></span></div></div><input type='text' value='1'></div></td><td class='cart-product-sub-total'><span class='cart-sub-total-price'>$" + value.price + "</span></td><td class=cart-product-grand-total><span class=cart-grand-total-price>$" + value.price + "</span></td></tr> " )
+              cartBodyHome.prepend("<tr><td class='romove-item'>" + newCartItemRemove.html() + " <td class='cart-image'><a class='entry-thumbnail' href='" + value.url +"'><img src='" + value.image + "' alt=''></a></td><td class='cart-product-name-info'><h4 class='cart-product-description'><a href='" + value.url + "'>" + value.name + "</a></h4></td><td class='cart-product-edit'><a href='" + value.url + "'class='product-edit'>Edit</a></td><td class='cart-product-sub-total'><span class='cart-sub-total-price'>$" + value.price + "</span></td><td class=cart-product-grand-total><span class=cart-grand-total-price>$" + value.price + "</span></td></tr> " )
 
             })
 

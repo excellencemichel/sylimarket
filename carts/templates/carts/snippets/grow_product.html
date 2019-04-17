@@ -2,7 +2,7 @@
 	<form class="form form-product-ajax" method="POST" action="{% url 'carts:update_cart' %}" data-endpoint="{% url 'carts:update_cart' %}" style="display: inline-block;">
 		{% csrf_token %}
 		<div class="first-refresh">
-			{% if product.products.count > 0 %}
+			 {% if cart.quantite[product.id] > 1 %}
 				<input class="cart-item-product-id" type="hidden" name="product_id" value="{{ product.id }}">
 				<input type="hidden" name="for_grow_product" value="added">
 				<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Augmenter la qté</button>|
@@ -17,3 +17,5 @@
 
 
 	</form>
+
+

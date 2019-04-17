@@ -222,7 +222,7 @@ class CulotteListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Product.objects.culottes()
+		return Product.objects.get_culottes()
 
 
 
@@ -247,7 +247,7 @@ class JupeListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Product.objects.jupes()
+		return Product.objects.get_jupes()
 
 
 
@@ -272,7 +272,7 @@ class MenShoesListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Product.objects.men_shoes()
+		return Product.objects.get_men_shoes()
 
 
 
@@ -297,7 +297,7 @@ class WomenShoesListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Product.objects.women_shoes()
+		return Product.objects.get_women_shoes()
 
 
 
@@ -322,89 +322,7 @@ class AccessoireClothngListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Product.objects.clothing_accessoires()
-
-
-
-# def product_detail(request, slug=None, pk=None, *args, **kwargs):
-# 	context = {}
-# 	instance = get_object_or_404(Product, pk=pk, slug=slug)
-	
-# 	cart_obj, new_obj = Cart.objects.new_or_get(request)
-
-# 	if instance:
-# 		object_viewed_signal.send(instance.__class__, instance=instance, request=request)
-# 		print("Type instance", instance.product_type)
-
-# 		if instance.product_type == "men_clothing":
-# 			men_clothing = MenClothing.objects.filter(product_id = instance.id)
-
-# 			context["men_clothing"] = men_clothing
-# 		elif instance.product_type == "women_clothing":
-# 			women_clothing = WomenClothing.objects.filter(product_id = instance.id)
-# 			context["women_clothing"] = women_clothing
-
-# 		elif instance.product_type == "clothing_accessoire":
-# 			accessoire_clothing = AccessoireClothng.objects.filter(product_id = instance.id)
-# 			context["accessoire_clothing"] = accessoire_clothing
-
-# 		elif instance.product_type == "pantalon":
-# 			pantalon = Pantalon.objects.filter(product_id = instance.id)
-# 			context["pantalon"] = pantalon
-
-
-# 		elif instance.product_type == "culotte":
-# 			culotte = Culotte.objects.filter(product_id = instance.id)
-# 			context["culotte"] = culotte
-
-# 		elif instance.product_type == "jupe":
-# 			jupe = Jupe.objects.filter(product_id = instance.id)
-# 			context["jupe"] = jupe
-
-
-# 		elif instance.product_type == "men_shoe":
-# 			men_shoe = MenShoes.objects.filter(product_id = instance.id)
-# 			context["men_shoe"] = men_shoe
-
-
-# 		elif instance.product_type == "women_shoe":
-# 			women_sheo = WomenShoes.objects.filter(product_id = instance.id)
-# 			context["women_shoe"] = women_shoe
-
-
-# 		elif instance.product_type == "phone":
-# 			phone = Phone.objects.filter(product_id = instance.id)
-# 			context["phone"] = phone
-
-# 		elif instance.product_type == "tablette":
-# 			tablette = Tablette.objects.filter(product_id = instance.id)
-# 			context["tablette"] = tablette
-
-
-# 		elif instance.product_type =="phone_accessoire":
-# 			accessoire_phone = AccessoirePhone.objects.filter(product_id = instance.id)
-# 			context["accessoire_phone"] = accessoire_phone
-
-
-# 		elif instance.product_type == "computer":
-# 			computer = Computer.objects.filter(product_id = instance.id)
-# 			context["computer"] = computer
-
-
-# 		elif instance.product_type == "computer_accessoire":
-# 			accessoire_computer = AccessoireComputer.objects.filter(product_id = instance.id)
-# 			context["accessoire_computer"] = accessoire_computer
-
-
-
-
-# 	context["product"] = instance
-# 	context["cart"] = cart_obj
-
-
-# 	return render(request, "products/detail.html", context)
-
-		
+		return Product.objects.get_clothing_accessoires()
 
 
 
@@ -425,7 +343,7 @@ class ComputerListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Product.objects.computers()
+		return Product.objects.get_computers()
 
 
 
@@ -450,7 +368,7 @@ class AccessoireComputerListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Product.objects.computer_accessoires()
+		return Product.objects.get_computer_accessoires()
 
 
 
@@ -475,7 +393,7 @@ class PhoneListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Product.objects.phones()
+		return Product.objects.get_phones()
 
 
 
@@ -500,7 +418,7 @@ class TabletteListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Product.objects.tablettes()
+		return Product.objects.get_tablettes()
 
 
 
@@ -525,7 +443,7 @@ class AccessoirePhoneListView(ListView):
 
 	def get_queryset(self, *args, **kwargs):
 		request = self.request
-		return Product.objects.phone_accessoires()
+		return Product.objects.get_phone_accessoires()
 
 
 
@@ -694,6 +612,7 @@ def patalon_detail(request, pk=None, slug=None):
 def culotte_detail(request, pk=None, slug=None):
 	product = get_object_or_404(Product, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	quantite = None
 	try:
 		culotte = Culotte.objects.get(product_id = product.id)
 
@@ -704,10 +623,14 @@ def culotte_detail(request, pk=None, slug=None):
 	except:
 		print("Autre erreur non liée à la laison")
 
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
 	context = {
 		"cart": cart_obj,
 		"product": product,
-		"culotte" : culotte 
+		"culotte" : culotte,
+		"quantite": quantite
 	}
 
 
@@ -726,8 +649,6 @@ def jupe_detail(request, pk=None, slug=None):
 		pass
 	except:
 		print("Autre erreur non liée à laison")
-	# import pdb; pdb.set_trace()
-
 	context = {
 		"cart": cart_obj,
 		"product": product,

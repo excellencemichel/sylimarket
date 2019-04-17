@@ -22,6 +22,7 @@ from django.urls import reverse, reverse_lazy
 
 
 
+
 import stripe
 
 STRIPE_SECRET_KEY = getattr(settings, "STRIPE_SECRET_KEY")
@@ -52,6 +53,8 @@ from addresses.models import Address, AddressPayementLivraison
 from orders.models import Order, OrderPayementLivraison
 
 from billing.models import BillingProfile, PayementLivraison
+
+
 # Create your views here.
 
 
@@ -85,12 +88,13 @@ def cart_detail_api_view(request):
 	products = [
 			
 			{
-			"id": x.product.id,
-			"url": x.product.get_absolute_url(),
-			"name": x.product.name,
-			 "price":x.product.price
+			"id": x.id,
+			"url": x.get_absolute_url(),
+			"name": x.name,
+			 "price":x.price,
+			 "image": x.image.url
 			 } 
-			 for x in cart_obj.items.all()] # [<object>, <object>, <object>]
+			 for x in cart_obj.products.all()] # [<object>, <object>, <object>]
 
 	cart_data = {
 		"products": products, "subtotal":cart_obj.subtotal, "total": cart_obj.total
@@ -98,25 +102,6 @@ def cart_detail_api_view(request):
 	}
 	return JsonResponse(cart_data)
 
-
-def cart_nav_api_view(request):
-	cart_obj, new_obj = Cart.objects.new_or_get(request)
-	print("For nav")
-	products = [
-			
-			{
-			"id": x.product.id,
-			"url": x.product.get_absolute_url(),
-			"name": x.product.name,
-			 "price":x.product.price
-			 } 
-			 for x in cart_obj.items.all()] # [<object>, <object>, <object>]
-
-	cart_data = {
-		"products": products, "subtotal":cart_obj.subtotal, "total": cart_obj.total
-
-	}
-	return JsonResponse(cart_data)
 
 def cart_home(request):
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
@@ -132,6 +117,8 @@ def update_cart(request):
 	for_add_product = request.POST.get("for_add_product")
 	for_remove_product = request.POST.get("for_remove_product")
 	for_grow_product = request.POST.get("for_grow_product")
+	for_qty_product  = request.POST.get("for_qty_product")
+	product_quantite = request.POST.get("product_quantite")
 
 
 
@@ -139,7 +126,11 @@ def update_cart(request):
 	removed = False
 	grow   = False
 	grow_show = False
+	quantited = False
 	stock_finish = False
+	quantite = None
+	minimum = False #Minimum de quantité à faire entrer
+	no_number_quantite = False #Donnée de quantité 
 
 	if product_id is not None:
 		try:
@@ -155,26 +146,49 @@ def update_cart(request):
 		if product_obj.stock >0:
 
 			if for_add_product:
-				cart_obj.add_item(product_obj)
+				cart_obj.quantite[str(product_obj.id)] = 1
+				cart_obj.products.add(product_obj)
 				added = True
 
-			elif for_grow_product:
-				cart_obj.add_item(product_obj)
-				grow = True
-
 			elif for_remove_product:
-				cart_obj.remove_item(product_obj)
-				if product_obj.products.all().count()>0:
-					removed = False
-				else:
-					removed = True
+				print("remove")
+				cart_obj.products.remove(product_obj)
+				cart_obj.quantite.pop(str(product_obj.id))
+				cart_obj.save()
+				quantite = None
+				removed = True
+
+
+			if for_qty_product:
+				try:
+					nb_quantite = int(product_quantite)
+				except ValueError:
+					no_number_quantite = True
+					nb_quantite = None
+
+				if nb_quantite or nb_quantite==0:
+					if nb_quantite >=1:
+						try:
+							cart_obj.quantite.get(str(product_obj.id)).update(product_quantite) #Une mise à jour du tableau des quantits
+							cart_obj.products.remove(product_obj)
+							cart_obj.quantite.get(str(product_obj.id)).update(product_quantite)
+							cart_obj.products.add(product_obj)
+						except AttributeError:
+							cart_obj.products.remove(product_obj)
+							cart_obj.quantite[str(product_obj.id)] = product_quantite
+							cart_obj.products.add(product_obj)
+
+						quantited = True
+						quantite = cart_obj.quantite[str(product_obj.id)]
+
+					else:
+						minimum = True
+
+
 		else:
-			stock_finish = True
-			print("Le stock est fini")
+			stock_finish = True #Le cas où le stock restant du produit est fini on envoie un message à l'utilisateur
 
-
-
-		request.session["cart_items"] = cart_obj.items.all().count()
+		request.session["cart_items"] = cart_obj.products.count()
 		request.session["cart_total"] = str(Decimal(cart_obj.total).quantize(Decimal('1.00')))
 
 
@@ -182,57 +196,20 @@ def update_cart(request):
 		
 
 		if request.is_ajax():
-			print("Ajax request for update_cart")
 			json_data = {
 				"added": added,
 				"removed": removed,
 				"grow" : grow,
+				"quantited" : quantited,
+				"quantite": quantite,
+				"minimum": minimum,
+				"no_number_quantite": no_number_quantite,
 				"stock_finish": stock_finish,
-				"hiddenGrow": product_obj.products.all().count()==0,
-				"qutyInCart" : product_obj.products.all().count(),
-				"cartItemCount": cart_obj.items.all().count(),
+				"cartItemCount": cart_obj.products.count(),
 				"cartTotal": str(Decimal(cart_obj.total).quantize(Decimal('1.00'))),
 
 			}
 			return JsonResponse(json_data, status=200)
-		print("Appel après return")
-
-	return redirect("carts:home")
-
-
-
-def remove_product(request):
-	product_id = request.POST.get("product_id")
-	if product_id is not None:
-		try:
-			product_obj = Product.objects.get(id=product_id)
-		except Product.DoesNotExist:
-			print("Show message to user, product is gone ?")
-			return redirect("carts:home")
-
-		if product_obj:
-			cart_obj, new_obj = Cart.objects.new_or_get(request)
-			cart_obj.remove_item(product_obj)
-			removed = True
-
-		request.session["cart_items"] = cart_obj.items.all().count()
-		request.session["cart_total"] = str(Decimal(cart_obj.total).quantize(Decimal('1.00')))
-
-
-		
-
-		if request.is_ajax():
-			print("Ajax request for remove")
-			json_data = {
-				"removed": removed,
-				"notRemoved": not removed,
-				"cartItemCount": cart_obj.items.all().count(),
-				"cartTotal": str(Decimal(cart_obj.total).quantize(Decimal('1.00'))),
-
-			}
-
-			return JsonResponse(json_data, status=200)
-
 	return redirect("carts:home")
 
 
@@ -243,7 +220,7 @@ def remove_product(request):
 def checkout_card(request):
 	cart_obj, cart_created = Cart.objects.new_or_get(request)
 	order_obj = None
-	if cart_created or cart_obj.items.all().count() == 0:
+	if cart_created or cart_obj.products.count() == 0:
 		return redirect("carts:home")
 
 	login_form 		= LoginForm(request=request)
@@ -289,7 +266,6 @@ def checkout_card(request):
 					guest_address_email = guest_form.cleaned_data.get("email")
 
 					to_email.append(guest_address_email)
-					import pdb; pdb.set_trace()
 
 				from_email = settings.EMAIL_HOST_USER
 
@@ -353,9 +329,10 @@ def checkout_card(request):
 
 @login_required
 def checkout_livraison(request):
+	print("On arrive ici")
 	cart_obj, cart_created = Cart.objects.new_or_get(request)
 	order_obj = None
-	if cart_created or cart_obj.items.all().count() == 0:
+	if cart_created or cart_obj.products.count() == 0:
 		return redirect("carts:home")
 
 	address_payement_livraison_form 				= AddressPayementLivraisonForm()
