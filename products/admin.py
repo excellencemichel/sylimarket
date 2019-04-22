@@ -51,6 +51,28 @@ class ProductAdmin(admin.ModelAdmin):
 	form = ProductForm
 
 
+	def get_actions(self, request):
+		actions = super().get_actions(request)
+		if 'delete_selected' in actions:
+			del actions['delete_selected']
+		return actions
+
+	def has_add_permission(self, request):
+		return False
+
+
+
+	def has_delete_permission(self, request, obj=None):
+		return False
+
+	def has_update_permission(self, request, obj=None):
+		return False
+
+
+
+
+
+
 
 
 
@@ -59,11 +81,31 @@ class ProductAdmin(admin.ModelAdmin):
 class MenClothingAdmin(admin.ModelAdmin):
 	form = MenClothingForm
 
+	readonly_fields = ["show_image"]
+
+	def show_image(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url = obj.image.url,
+			width = 250,
+			height = 250,
+
+			))
+
 
 
 @admin.register(WomenClothing)
 class WomenClothingAdmin(admin.ModelAdmin):
 	form = WomenClothingForm
+
+	readonly_fields = ["show_image"]
+
+	def show_image(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url = obj.image.url,
+			width = 250,
+			height = 250,
+
+			))
 
 
 
@@ -84,6 +126,15 @@ class PantalonAdmin(admin.ModelAdmin):
 @admin.register(Culotte)
 class CulotteAdmin(admin.ModelAdmin):
 	form = CulotteForm
+	readonly_fields = ["show_image"]
+
+	def show_image(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url = obj.image.url,
+			width = 250,
+			height = 250,
+
+			))
 
 
 
@@ -91,7 +142,6 @@ class CulotteAdmin(admin.ModelAdmin):
 class JupeAdmin(admin.ModelAdmin):
 	form = JupeForm
 	readonly_fields = ["show_image"]
-	print("admin Jupe exécuté")
 
 	def show_image(self, obj):
 		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
@@ -107,36 +157,90 @@ class JupeAdmin(admin.ModelAdmin):
 @admin.register(MenShoes)
 class MenShoesAdmin(admin.ModelAdmin):
 	form = MenShoesForm
+	readonly_fields = ["show_image"]
+
+	def show_image(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url = obj.image.url,
+			width = 250,
+			height = 250,
+
+			))
 
 
 
 @admin.register(WomenShoes)
 class WomenShoesAdmin(admin.ModelAdmin):
 	form = WomenShoesForm
+	readonly_fields = ["show_image"]
+
+	def show_image(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url = obj.image.url,
+			width = 250,
+			height = 250,
+
+			))
 
 
 
 @admin.register(AccessoireClothng)
 class AccessoireClothngAdmin(admin.ModelAdmin):
 	form = AccessoireClothngForm
+	readonly_fields = ["show_image"]
+
+	def show_image(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url = obj.image.url,
+			width = 250,
+			height = 250,
+
+			))
 
 
 
 @admin.register(Computer)
 class ComputerAdmin(admin.ModelAdmin):
 	form = ComputerForm
+	readonly_fields = ["show_image"]
+
+	def show_image(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url = obj.image.url,
+			width = 250,
+			height = 250,
+
+			))
 
 
 
 @admin.register(AccessoireComputer)
 class AccessoireComputerAdmin(admin.ModelAdmin):
 	form = AccessoireComputerForm
+	readonly_fields = ["show_image"]
+
+	def show_image(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url = obj.image.url,
+			width = 250,
+			height = 250,
+
+			))
 
 
 
 @admin.register(Phone)
 class PhoneAdmin(admin.ModelAdmin):
 	form = PhoneForm
+	readonly_fields = ["show_image"]
+
+	def show_image(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url = obj.image.url,
+			width = 250,
+			height = 250,
+
+			))
 
 
 
@@ -144,11 +248,31 @@ class PhoneAdmin(admin.ModelAdmin):
 class TabletteAdmin(admin.ModelAdmin):
 	form = TabletteForm
 
+	readonly_fields = ["show_image"]
+
+	def show_image(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url = obj.image.url,
+			width = 250,
+			height = 250,
+
+			))
+
 
 
 @admin.register(AccessoirePhone)
 class AccessoirePhoneAdmin(admin.ModelAdmin):
 	form = AccessoirePhoneForm
+
+	readonly_fields = ["show_image"]
+
+	def show_image(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url = obj.image.url,
+			width = 250,
+			height = 250,
+
+			))
 
 
 
