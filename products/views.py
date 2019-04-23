@@ -17,6 +17,9 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+from django.db.models import Q
+
+
 
 
 #Local import
@@ -810,3 +813,228 @@ def accessoire_computer_detail(request, pk=None, slug=None):
 
 
 
+
+
+
+class SamsungMarqueListView(ListView):
+	template_name = "products/samsung_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(SamsungMarqueListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.marquelist("Samsung")
+
+
+class AdidasMarqueListView(ListView):
+	template_name = "products/adidas_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(SamsungMarqueListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.marquelist("Adidas")
+
+
+
+class LGMarqueListView(ListView):
+	template_name = "products/lg_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(SamsungMarqueListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.marquelist("LG")
+
+
+
+
+class AppleMarqueListView(ListView):
+	template_name = "products/apple_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(SamsungMarqueListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.marquelist("Apple")
+
+
+
+
+
+class NikeMarqueListView(ListView):
+	template_name = "products/nike_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(SamsungMarqueListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.marquelist("Nike")
+
+
+
+class SonyMarqueListView(ListView):
+	template_name = "products/sony_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(SamsungMarqueListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.marquelist("Sony")
+
+
+
+
+class ItelMarqueListView(ListView):
+	template_name = "products/itel_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(SamsungMarqueListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.marquelist("Itel")
+
+
+
+class TommyMarqueListView(ListView):
+	template_name = "products/tommy_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(SamsungMarqueListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.marquelist("Tommy")
+
+
+
+class WhirlPoolMarqueListView(ListView):
+	template_name = "products/whirlpool_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(SamsungMarqueListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.marquelist("Whirlpool")
+
+
+
+class AccentListView(ListView):
+	template_name = "products/accent_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(SamsungMarqueListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.marquelist("Accent")
+
+
+
+class LorealMarqueListView(ListView):
+	template_name = "products/loreal_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(SamsungMarqueListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.marquelist("Loreal")
+
+
+
+
+class OppoMarqueListView(ListView):
+	template_name = "products/oppo_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(SamsungMarqueListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.marquelist("oppo")
+
+
+
+class HuaweiMarqueListView(ListView):
+	template_name = "products/huawei_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(SamsungMarqueListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.marquelist("Huawei")

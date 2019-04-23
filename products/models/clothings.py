@@ -119,7 +119,7 @@ class MenClothing(ClothingAbstractModel):
 		(CLOTHING_SHIRT, "Chemise"),
 		(CLOTHING_TSHIRT, "T-Shirt"),
 		(CLOTHING_JACKET, "Jacket"),
-		(CLOTHING_BLUSON, "Bluson"),
+		(CLOTHING_BLUSON, "Blouson"),
 		(CLOTHING_PULL, "Pulls"),
 		(CLOTHING_POLO, "Polo"),
 		(CLOTHING_MAILLOT, "Maillot"),

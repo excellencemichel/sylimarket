@@ -164,6 +164,19 @@ class ProductQuerySet(models.query.QuerySet):
 		return self.filter(lookups)
 
 
+	def marquelist(self, marque):
+
+		lookups =( 
+				 Q(name__icontains=marque)|
+				 Q(slug__icontains=marque)|
+				 Q(description__icontains=marque)|
+				 Q(price__icontains=marque)|
+				 Q(tag__title__icontains=marque)
+				)
+		return self.filter(lookups)
+
+
+
 
 
 
@@ -283,6 +296,10 @@ class ProductManager(models.Manager):
 
 	def search(self, query):
 		return self.get_queryset().active().search(query)
+
+
+	def marquelist(self, marque):
+		return self.get_queryset().active().marquelist(marque)
 
 
 
