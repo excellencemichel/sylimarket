@@ -1,3 +1,5 @@
+import random
+
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
@@ -184,7 +186,7 @@ class ProductQuerySet(models.query.QuerySet):
 class ProductManager(models.Manager):
 
 	def get_queryset(self):
-		return ProductQuerySet(self.model, using=self._db).active()
+		return ProductQuerySet(self.model, using=self._db).active().order_by("?")
 
 
 	def all(self):

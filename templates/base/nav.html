@@ -71,7 +71,7 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-3 logo-holder"> 
           <!-- ============================================================= LOGO ============================================================= -->
-          <div class="logo"> <a href="{% url 'home' %}"> <img src="{% static 'images/logo/png/bigsyli.png' %}" alt="logo"> </a> </div>
+          <div class="logo"> <a href="{% url 'home' %}"> <img src="{% static 'images/logo/png/bigSyli.png' %}" alt="logo"> </a> </div>
           <!-- /.logo --> 
           <!-- ============================================================= LOGO : END ============================================================= --> </div>
         <!-- /.logo-holder -->
@@ -92,7 +92,7 @@
           <div class="dropdown dropdown-cart"> <a href="#" class="dropdown-toggle lnk-cart" data-toggle="dropdown">
             <div class="items-cart-inner">
               <div class="basket"> <i class="glyphicon glyphicon-shopping-cart"></i> </div>
-              <div class="basket-item-count"><span class="count navbar-cart-count ">{% if request.session.cart_items > 0 %}{{ request.session.cart_items }}{% else %}0{% endif %}</span></div>
+              <div class="basket-item-count"><span class="count navbar-cart-count ">{% if request.session.cart_items %}{{ request.session.cart_items }} {% else %} $ 0 {% endif %}</span></div>
               <div class="total-price-basket"> <span class="lbl">cart</span> <span class="total-price"> <span class="sign">$</span><span class="value cart-somme-total">{{ request.session.cart_total }}</span> </span> </div>
             </div>
             </a>
@@ -247,7 +247,7 @@
                               <li><a href="{% url 'products:accessoire_computer_list' %}">Memory (RAM)</a></li>
                               <li><a href="{% url 'products:accessoire_computer_list' %}">Motherboards</a></li>
                               <li><a href="{% url 'products:accessoire_computer_list' %}">Keyboards</a></li>
-                              <li><a href="{% url 'products:accessoire_computer_list' %}">Headphones</a></li>
+                              <li><a href="{% url 'products:accessoire_phone_list' %}">Headphones</a></li>
                             </ul>
                           </div>
                           <!-- /.col -->
@@ -255,11 +255,11 @@
                           <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
                             <h2 class="title">Cameras</h2>
                             <ul class="links">
-                              <li><a href="{% url 'products:accessoire_computer_list' %}">Accessories</a></li>
+                              <li><a href="{% url 'products:accessoire_phone_list' %}">Accessories</a></li>
                               <li><a href="{% url 'products:accessoire_computer_list' %}">Binoculars</a></li>
-                              <li><a href="{% url 'products:accessoire_computer_list' %}">Telescopes</a></li>
+                              <li><a href="{% url 'products:accessoire_phone_list' %}">Telescopes</a></li>
                               <li><a href="{% url 'products:accessoire_computer_list' %}">Camcorders</a></li>
-                              <li><a href="{% url 'products:accessoire_computer_list' %}">Digital</a></li>
+                              <li><a href="{% url 'products:accessoire_phone_list' %}">Digital</a></li>
                               <li><a href="{% url 'products:accessoire_computer_list' %}">Film Cameras</a></li>
                               <li><a href="{% url 'products:accessoire_computer_list' %}">Flashes</a></li>
                               <li><a href="{% url 'products:accessoire_computer_list' %}">Lenses</a></li>
@@ -278,9 +278,9 @@
                               <li><a href="{% url 'products:phone_list' %}">LeEco</a></li>
                               <li><a href="{% url 'products:phone_list' %}">Asus</a></li>
                               <li><a href="{% url 'products:phone_list' %}">Acer</a></li>
-                              <li><a href="{% url 'products:accessoire_computer_list' %}">Accessories</a></li>
-                              <li><a href="{% url 'products:accessoire_computer_list' %}">Headphones</a></li>
-                              <li><a href="{% url 'products:accessoire_computer_list' %}">Memory Cards</a></li>
+                              <li><a href="{% url 'products:accessoire_phone_list' %}">Accessories</a></li>
+                              <li><a href="{% url 'products:accessoire_phone_list' %}">Headphones</a></li>
+                              <li><a href="{% url 'products:accessoire_phone_list' %}">Memory Cards</a></li>
                             </ul>
                           </div>
                           <div class="col-xs-12 col-sm-12 col-md-4 col-menu custom-banner"> <a href="{% url 'products:phone_list' %}"><img alt="" src="{% static 'images/banners/banner-side.png' %}"></a> </div>
