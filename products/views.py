@@ -535,10 +535,6 @@ def women_clothing_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		views = None
 
-		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
-	else:
-		views = None
-
 
 	context = {
 		"cart": cart_obj,
