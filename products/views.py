@@ -453,7 +453,7 @@ class AccessoirePhoneListView(ListView):
 		
 
 
-def men_clothing_detail(request, pk=None, slug=None):
+def men_clothing_detail(request, pk=None, slug=None, *args, **kwargs):
 	print("Men clothing detail appélé")
 	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
@@ -468,10 +468,27 @@ def men_clothing_detail(request, pk=None, slug=None):
 	except:
 		print("Autre erreur non lié à la laison")
 
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
+
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+
+
 	context = {
 		"cart": cart_obj,
 		"product": product,
 		"men_clothing": men_clothing,
+		"views": views,
+		"quantite": quantite
+
 
 	}
 
@@ -482,7 +499,7 @@ def men_clothing_detail(request, pk=None, slug=None):
 
 
 
-def women_clothing_detail(request, pk=None, slug=None):
+def women_clothing_detail(request, pk=None, slug=None, *args, **kwargs):
 	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	try:
@@ -497,10 +514,26 @@ def women_clothing_detail(request, pk=None, slug=None):
 	except:
 		print("Autre erreur non liée à la laison")
 
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
+
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+
 	context = {
 		"cart": cart_obj,
 		"product": product,
-		"women_clothing" : women_clothing
+		"women_clothing" : women_clothing,
+		"quantite": quantite,
+		"views": views,
+
 	}
 
 
@@ -509,7 +542,7 @@ def women_clothing_detail(request, pk=None, slug=None):
 
 
 
-def accessoire_clothing_detail(request, pk=None, slug=None):
+def accessoire_clothing_detail(request, pk=None, slug=None, *args, **kwargs):
 	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	try:
@@ -523,10 +556,26 @@ def accessoire_clothing_detail(request, pk=None, slug=None):
 	except:
 		print("Autre erreur non liée à la laison")
 
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
+
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+
 	context = {
 		"cart": cart_obj,
 		"product": product,
-		"accessoire_clothing" : accessoire_clothing
+		"accessoire_clothing" : accessoire_clothing,
+		"quantite": quantite,
+		"views": views,
+
 	}
 
 
@@ -534,7 +583,9 @@ def accessoire_clothing_detail(request, pk=None, slug=None):
 
 
 
-def men_shoe_detail(request, pk=None, slug=None):
+
+
+def men_shoe_detail(request, pk=None, slug=None, *args, **kwargs):
 	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	try:
@@ -548,10 +599,26 @@ def men_shoe_detail(request, pk=None, slug=None):
 	except:
 		print("Autre erreur non liée à la laison")
 
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
+
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+
 	context = {
 		"cart": cart_obj,
 		"product": product,
-		"men_shoe": men_shoe
+		"men_shoe": men_shoe,
+		"quantite": quantite,
+		"views": views,
+
 	}
 
 
@@ -560,7 +627,7 @@ def men_shoe_detail(request, pk=None, slug=None):
 
 
 
-def women_shoe_detail(request, pk=None, slug=None):
+def women_shoe_detail(request, pk=None, slug=None, *args, **kwargs):
 	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	try:
@@ -574,10 +641,26 @@ def women_shoe_detail(request, pk=None, slug=None):
 	except:
 		print("Autre erreur non liée à la laison")
 
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
+
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+
 	context = {
 		"cart": cart_obj,
 		"product": product,
-		"women_sheo" : women_sheo
+		"women_sheo" : women_sheo,
+		"quantite": quantite,
+		"views": views,
+
 	}
 
 
@@ -587,7 +670,7 @@ def women_shoe_detail(request, pk=None, slug=None):
 
 
 
-def patalon_detail(request, pk=None, slug=None):
+def patalon_detail(request, pk=None, slug=None, *args, **kwargs):
 	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	try:
@@ -601,10 +684,26 @@ def patalon_detail(request, pk=None, slug=None):
 	except:
 		print("Autre erreur non liée à la laison")
 
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
+
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+
 	context = {
 		"cart": cart_obj,
 		"product": product,
-		"pantalon" : pantalon
+		"pantalon" : pantalon,
+		"quantite": quantite,
+		"views": views,
+
 	}
 
 
@@ -612,7 +711,7 @@ def patalon_detail(request, pk=None, slug=None):
 
 
 
-def culotte_detail(request, pk=None, slug=None):
+def culotte_detail(request, pk=None, slug=None, *args, **kwargs):
 	product = get_object_or_404(Product, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	quantite = None
@@ -626,14 +725,24 @@ def culotte_detail(request, pk=None, slug=None):
 	except:
 		print("Autre erreur non liée à la laison")
 
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
 	if product in cart_obj.products.all():
 		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
 
 	context = {
 		"cart": cart_obj,
 		"product": product,
 		"culotte" : culotte,
-		"quantite": quantite
+		"quantite": quantite,
+		"views": views,
 	}
 
 
@@ -641,7 +750,7 @@ def culotte_detail(request, pk=None, slug=None):
 
 
 
-def jupe_detail(request, pk=None, slug=None):
+def jupe_detail(request, pk=None, slug=None, *args, **kwargs):
 	product = Product.objects.get(pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	try:
@@ -652,11 +761,29 @@ def jupe_detail(request, pk=None, slug=None):
 		pass
 	except:
 		print("Autre erreur non liée à laison")
+
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+
+
+
+	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
 	print("Le panier", cart_obj.quantite)
 	context = {
 		"cart": cart_obj,
 		"product": product,
-		"jupe" :jupe
+		"jupe" :jupe,
+		"quantite" :quantite,
+		"views": views,
+
 	}
 
 
@@ -664,7 +791,7 @@ def jupe_detail(request, pk=None, slug=None):
 
 
 
-def phone_detail(request, pk=None, slug=None):
+def phone_detail(request, pk=None, slug=None, *args, **kwargs):
 	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	try:
@@ -679,10 +806,26 @@ def phone_detail(request, pk=None, slug=None):
 	except:
 		print("Autre erreur non liée à la laison")
 
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
+
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+
 	context = {
 		"cart": cart_obj,
 		"product": product,
-		"phone": phone
+		"phone": phone,
+		"quantite": quantite,
+		"views": views,
+
 	}
 
 
@@ -692,7 +835,7 @@ def phone_detail(request, pk=None, slug=None):
 
 
 
-def tablette_detail(request, pk=None, slug=None):
+def tablette_detail(request, pk=None, slug=None, *args, **kwargs):
 	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	try:
@@ -706,10 +849,26 @@ def tablette_detail(request, pk=None, slug=None):
 	except:
 		print("Autre erreur non lié à la laison")
 
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
+
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+
 	context = {
 		"cart": cart_obj,
 		"product": product,
-		"tablette" :tablette
+		"tablette" :tablette,
+		"quantite": quantite,
+		"views": views,
+
 	}
 
 
@@ -721,7 +880,7 @@ def tablette_detail(request, pk=None, slug=None):
 
 
 
-def accessoire_phone_detail(request, pk=None, slug=None):
+def accessoire_phone_detail(request, pk=None, slug=None, *args, **kwargs):
 	print("Phone accessoire detail appélé")
 	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
@@ -737,10 +896,26 @@ def accessoire_phone_detail(request, pk=None, slug=None):
 	except:
 		print("Autre erreur non liée à la laison")
 
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
+
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+
 	context = {
 		"cart": cart_obj,
 		"product": product,
-		"accessoire_phone" : accessoire_phone
+		"accessoire_phone" : accessoire_phone,
+		"quantite": quantite,
+		"views": views,
+
 	}
 
 
@@ -754,7 +929,7 @@ def accessoire_phone_detail(request, pk=None, slug=None):
 
 
 
-def computer_detail(request, pk=None, slug=None):
+def computer_detail(request, pk=None, slug=None, *args, **kwargs):
 	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	try:
@@ -769,10 +944,26 @@ def computer_detail(request, pk=None, slug=None):
 	except:
 		prin("Autre erreur non lié à la laison")
 
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
+
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+
 	context = {
 		"cart": cart_obj,
 		"product": product,
-		"computer": computer
+		"computer": computer,
+		"quantite": quantite,
+		"views": views,
+
 	}
 
 
@@ -786,7 +977,7 @@ def computer_detail(request, pk=None, slug=None):
 
 
 
-def accessoire_computer_detail(request, pk=None, slug=None):
+def accessoire_computer_detail(request, pk=None, slug=None, *args, **kwargs):
 	product = get_object_or_404(Product, pk=pk, slug=slug)
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	try:
@@ -801,10 +992,26 @@ def accessoire_computer_detail(request, pk=None, slug=None):
 	except:
 		print("Autre erreur non liée à la laison")
 
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
+
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+
 	context = {
 		"cart": cart_obj,
 		"product": product,
-		"accessoire_computer" :accessoire_computer
+		"accessoire_computer" :accessoire_computer,
+		"quantite": quantite,
+		"views": views,
+
 	}
 
 
