@@ -478,7 +478,12 @@ def men_clothing_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
-	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
 
 
 
@@ -524,7 +529,15 @@ def women_clothing_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
-	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
 
 
 	context = {
@@ -566,7 +579,12 @@ def accessoire_clothing_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
-	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
 
 
 	context = {
@@ -609,7 +627,12 @@ def men_shoe_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
-	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
 
 
 	context = {
@@ -651,7 +674,12 @@ def women_shoe_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
-	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
 
 
 	context = {
@@ -694,7 +722,12 @@ def patalon_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
-	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
 
 
 	context = {
@@ -734,7 +767,12 @@ def culotte_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
-	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
 
 
 	context = {
@@ -774,7 +812,11 @@ def jupe_detail(request, pk=None, slug=None, *args, **kwargs):
 
 
 
-	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
 
 	print("Le panier", cart_obj.quantite)
 	context = {
@@ -816,7 +858,12 @@ def phone_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
-	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
 
 
 	context = {
@@ -859,7 +906,12 @@ def tablette_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
-	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
 
 
 	context = {
@@ -906,7 +958,12 @@ def accessoire_phone_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
-	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
 
 
 	context = {
@@ -954,7 +1011,12 @@ def computer_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
-	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
 
 
 	context = {
@@ -1002,7 +1064,12 @@ def accessoire_computer_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
-	views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
 
 
 	context = {
