@@ -156,12 +156,14 @@
               var newCartItemRemove = hiddenCartRemoveForm.clone()
               newCartItemRemove.css("display", "block")
               newCartItemRemove.find(".cart-item-product-id").val(value.id)
-              cartBodyHome.prepend("<tr><td class='romove-item'>" + newCartItemRemove.html() + " <td class='cart-image'><a class='entry-thumbnail' href='" + value.url +"'><img src='" + value.image + "' alt=''></a></td><td class='cart-product-name-info'><h4 class='cart-product-description'><a href='" + value.url + "'>" + value.name + "</a></h4></td><td class='cart-product-edit'><a href='" + value.url + "'class='product-edit'>Edit</a></td><td class='cart-product-sub-total'><span class='cart-sub-total-price'>$" + value.price + "</span></td><td class=cart-product-grand-total><span class=cart-grand-total-price>$" + value.price + "</span></td></tr> " )
+              cartBodyHome.prepend("<tr><td class='romove-item'>" + newCartItemRemove.html() + " <td class='cart-image'><a class='entry-thumbnail' href='" + value.url +"'><img src='" + value.image + "' alt=''></a></td><td class='cart-product-name-info'><h4 class='cart-product-description'><a href='" + value.url + "'>" + value.name + "</a></h4></td><td class='cart-product-edit'><a href='" + value.url + "'class='product-edit'>Edit</a></td><td class='cart-product-quantity'><div class='cart-quantity'><div class='quant-input'><strong> X " + data.quantite[value.id]  + "</strong></div></div></td><td class='cart-product-sub-total'><span class='cart-sub-total-price'>$" + value.price + "</span></td><td class='cart-product-sub-total'><span class='cart-sub-total-price'>$" + value.taxe + "</span></td><td class=cart-product-grand-total><span class=cart-grand-total-price>$" + parseFloat(value.subtotal) * parseFloat(data.quantite[value.id])  + "</span></td></tr> " )
 
             })
 
             cartTableHomeSomme.find(".cart-subtotal-home-somme").text(data.subtotal)
+            cartTableHomeSomme.find(".cart-subtotal-home-taxe").text(data.taxe)
             cartTableHomeSomme.find(".cart-total-home-somme").text(data.total)
+
             console.log("Seperieur 0")
             totalText = cartBodyHome.find(".cart-total-home").text()
             console.log("Voici le total", data.total)
@@ -282,3 +284,19 @@
   })
 
 
+
+
+  var header = document.querySelector('.ui__header')
+
+  window.addEventListener('scroll' , function () {
+    var headerHeight = header.getBoundingClientRect().height ;
+    var scrollY = window.scrollY ;
+    console.log(headerHeight , scrollY) ;
+    if (scrollY > headerHeight) {
+      if (header.classList.contains('ui__fix__header')) { return ; }
+      header.classList.add('ui__fix__header') ;
+    }else {
+      if (!header.classList.contains('ui__fix__header')) { return ; }
+      header.classList.remove('ui__fix__header') 
+    }
+  })

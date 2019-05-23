@@ -1,4 +1,3 @@
-import random
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
@@ -18,6 +17,9 @@ from django.db.models.signals import pre_save, post_save
 #locales import
 from utils.files_utils import upload_file_location
 from utils.generator_utils import unique_slug_generator
+from utils.taxes import calcule_taxe
+
+
 
 
 
@@ -28,6 +30,9 @@ class PrototypeAbstract(models.Model):
 	name 				= models.CharField(max_length=250)
 	description 		= models.TextField()
 	price 				= models.DecimalField(max_digits=40, decimal_places=2)
+	taux_taxe			= models.PositiveIntegerField(default=0)
+	taxe 				= models.DecimalField(default=0.00, max_digits=100, decimal_places =2 )
+	subtotal 			= models.DecimalField(default=0.00, max_digits=100, decimal_places =2 )
 	stock 				= models.PositiveIntegerField()
 	featured			= models.BooleanField(default=False)
 	special 			= models.BooleanField(default=False)
@@ -427,4 +432,8 @@ def product_pre_save_receiver(sender, instance, *args, **kwargs):
 
 
 
+
+
 pre_save.connect(product_pre_save_receiver, sender=Product)
+
+

@@ -1,4 +1,10 @@
-from django.db.models.signals import pre_delete, post_delete
+from decimal import Decimal 
+
+from utils.decimal_utils import multiplier, diviser, TWOPLACES
+
+
+
+from django.db.models.signals import pre_delete, post_delete, pre_save
 
 
 from .products import Product 
@@ -22,6 +28,39 @@ from .phones import (Phone, Tablette, AccessoirePhone
 
 
 
+def pre_save_taxe(sender, instance, *args, **kwargs):
+	if instance:
+		taux = diviser(Decimal(instance.taux_taxe), 100)
+		instance.taxe = multiplier(instance.price, taux)
+
+	instance.subtotal = instance.price + instance.taxe
+
+
+pre_save.connect(pre_save_taxe, sender=Product)
+
+pre_save.connect(pre_save_taxe, sender=MenClothing)
+pre_save.connect(pre_save_taxe, sender=WomenClothing)
+pre_save.connect(pre_save_taxe, sender=Pantalon)
+pre_save.connect(pre_save_taxe, sender=Culotte)
+pre_save.connect(pre_save_taxe, sender=Jupe)
+pre_save.connect(pre_save_taxe, sender=MenShoes)
+pre_save.connect(pre_save_taxe, sender=WomenShoes)
+pre_save.connect(pre_save_taxe, sender=AccessoireClothng)
+
+
+
+
+pre_save.connect(pre_save_taxe, sender=Computer)
+pre_save.connect(pre_save_taxe, sender=AccessoireComputer)
+
+
+pre_save.connect(pre_save_taxe, sender=Phone)
+pre_save.connect(pre_save_taxe, sender=Tablette)
+pre_save.connect(pre_save_taxe, sender=AccessoirePhone)
+
+
+
+
 
 
 
@@ -35,6 +74,8 @@ def instance_post_delete_receiver(sender, instance, *args, **kwargs):
 		product.delete()
 	except Product.DoesNotExist:
 		print("Le produit a supprimer n'existe pas dans la table de produit")
+
+
 
 
 

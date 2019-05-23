@@ -1,3 +1,5 @@
+{% load static quantite_extras %}
+				
 				<div class='col-sm-6 col-md-7 product-info-block'>
 						<div class="product-info">
 							<h1 class="name">{{ product.name }}</h1>
@@ -41,7 +43,9 @@
 									<div class="col-sm-6">
 										<div class="price-box">
 											<span class="price">${{ product.price }}</span>
+											<span class="price">Taxe ${{ product.taxe }}</span>
 											<span class="price-strike">${{ product.price }}</span>
+
 										</div>
 									</div>
 

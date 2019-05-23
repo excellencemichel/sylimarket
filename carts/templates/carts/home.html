@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static quantite_extras %}
 
 
 {% block content %}
@@ -7,7 +7,7 @@
 	<div class="container">
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
-				<li><a href="#">Home</a></li>
+				<li><a href="{% url 'home' %}">Home</a></li>
 				<li class='active'>Cart home</li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
@@ -23,12 +23,14 @@
 		<table class="table cart-table-home">
 			<thead>
 				<tr>
-					<th class="cart-romove item">Remove</th>
+					<th class="cart-romove item">Suppression</th>
 					<th class="cart-description item">Image</th>
 					<th class="cart-product-name item">Product Name</th>
 					<th class="cart-edit item">Edit</th>
-					<th class="cart-sub-total item">Subtotal</th>
-					<th class="cart-total last-item">Grandtotal</th>
+					<th class="cart-qty item">Quantité</th>
+					<th class="cart-sub-total item">Prix</th>
+					<th class="cart-sub-total item">Taxe</th>
+					<th class="cart-total last-item">Somme totale</th>
 				</tr>
 			</thead><!-- /thead -->
 			<tfoot>
@@ -58,9 +60,17 @@
 						<h4 class='cart-product-description'><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h4>
 					</td>
 					<td class="cart-product-edit"><a href="{{ product.get_absolute_url }}" class="product-edit">Edit</a></td>
+					<td class="cart-product-quantity">
+						<div class="cart-quantity">
+							<div class="quant-input">
 
-					<td class="cart-product-sub-total">$<span class="cart-sub-total-price">{{ product.price }}</span></td>
-					<td class="cart-product-grand-total">$<span class="cart-grand-total-price">{{ product.price }}</span></td>
+				                <strong>{% quantite product cart %}</strong>
+			              </div>
+			            </div>
+		            </td>
+					<td class="cart-product-sub-total"><span class="cart-sub-total-price">${{ product.price }}</span></td>
+					<td class="cart-product-sub-total"><span class="cart-sub-total-price">${{ product.taxe }}</span></td>
+					<td class="cart-product-grand-total"><span class="cart-grand-total-price">${% taxe_p_prix product cart %}</span></td>
 				</tr>
 				{% endfor %}
 
@@ -82,7 +92,8 @@
 			<tr>
 				<th>
 					<div class="cart-sub-total ">
-						Subtotal<span class="inner-left-md">$<span class="cart-subtotal-home-somme">{{ cart.subtotal }}</span></span>
+						Subtotal<span class="inner-left-md">$<span class="cart-subtotal-home-somme">{{ cart.subtotal }}</span></span> <br>
+						Taxe <span class="inner-left-md">$<span class="cart-subtotal-home-taxe">{{ cart.taxe }}</span></span>
 					</div>
 					<div class="cart-grand-total">
 						Grand Total<span class="inner-left-md">$<span class="cart-total-home-somme">{{ cart.total }}</span></span>

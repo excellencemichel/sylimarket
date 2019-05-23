@@ -108,6 +108,7 @@ class Cart(models.Model):
 	products    = models.ManyToManyField(Product, blank=True)
 	quantite    = HStoreField(null=True, blank=True)
 	subtotal 	= models.DecimalField(default=0.00, max_digits=100, decimal_places =2 )
+	taxe 		= models.DecimalField(default=0.00, max_digits=100, decimal_places =2 )
 	total 		= models.DecimalField(default=0.00, max_digits=100, decimal_places =2 )
 
 	updated		= models.DateTimeField(auto_now=True)
@@ -128,12 +129,22 @@ def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
     if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
 	    products = instance.products.all()
 	    total = 0
-	    print(instance.quantite)
+	    taxe = 0
 	    for x in products:
+	    	print("L'Id de X", x.id)
+	    	if str(x.id) not in instance.quantite:
+	    		print("Il n'est pas dédans")
+	    		instance.quantite[str(x.id)] =1
 	    	total += (multiplier(x.price , Decimal(int(instance.quantite[str(x.id)])).quantize(TWOPLACES)))
+	    	taxe += (multiplier(x.taxe , Decimal(int(instance.quantite[str(x.id)])).quantize(TWOPLACES)))
+
 	    if instance.subtotal != total:
 	        instance.subtotal = total
 	        instance.save()
+	    if instance.taxe != taxe:
+	    	instance.taxe = taxe
+	    	instance.save()
+	    print(instance.quantite)
 
 
 
@@ -145,7 +156,9 @@ m2m_changed.connect(m2m_changed_cart_receiver, sender=Cart.products.through)
 
 def pre_save_cart_receiver(sender, instance,*args, **kwargs):
 	if instance.subtotal > 0:
-		instance.total = multiplier(instance.subtotal, Decimal(1.08).quantize(TWOPLACES))# + 1.3
+		instance.total = instance.subtotal + instance.taxe
+
+		# instance.total = multiplier(instance.subtotal, Decimal(1.08).quantize(TWOPLACES))# + 1.3
 	else:
 		instance.total = 0.00
 

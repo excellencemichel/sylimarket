@@ -652,6 +652,7 @@ def jupe_detail(request, pk=None, slug=None):
 		pass
 	except:
 		print("Autre erreur non liée à laison")
+	print("Le panier", cart_obj.quantite)
 	context = {
 		"cart": cart_obj,
 		"product": product,

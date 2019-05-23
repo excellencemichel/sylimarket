@@ -92,12 +92,14 @@ def cart_detail_api_view(request):
 			"url": x.get_absolute_url(),
 			"name": x.name,
 			 "price":x.price,
+			 "taxe": x.taxe,
+			 "subtotal": x.subtotal,
 			 "image": x.image.url
 			 } 
 			 for x in cart_obj.products.all()] # [<object>, <object>, <object>]
 
 	cart_data = {
-		"products": products, "subtotal":cart_obj.subtotal, "total": cart_obj.total
+		"products": products, "quantite": cart_obj.quantite, "subtotal":cart_obj.subtotal, "taxe": cart_obj.taxe, "total": cart_obj.total
 
 	}
 	return JsonResponse(cart_data)

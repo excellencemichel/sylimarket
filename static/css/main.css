@@ -1,35 +1,4 @@
 
-/*
-Theme Name: Flipmart
-Author: ThemesGround
-Description:  Flipmart HTML Template
-Version: 1.4
-License: GNU General Public License v2 or later
-Tags: two-columns, left-sidebar, fixed-layout, responsive-layout, custom-background, custom-colors, custom-header, custom-menu
-Text Domain:  Flipmart
-
-/* TABLE OF CONTENTS
-
-1.   Body
-2.   Layout
-3.   Header
-4.   Side menu
-5.   Slider
-6.   Top Banner Section	
-8.   Home Tabs
-9.   Products Grid 
-10.  Products List
-11.  Latest-Blog
-12.  Sidebar
-13.  Product View
-14.  Footer
-15.  Responsive
-16.  Testimonials
-
-/* */
-/*===================================================================================*/
-/*  Body
-/*===================================================================================*/
 .green-text {
   color: #abd07e !important;
 }
@@ -5862,3 +5831,15 @@ z-index:10000
     margin-top: 30px;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.08);
 	}
+
+
+
+
+.ui__fix__header {
+  position: fixed ;
+  top: 0 ;
+  left: 0 ; 
+  right: 0 ;
+  z-index: 12;
+
+}
