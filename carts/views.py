@@ -125,12 +125,9 @@ def update_cart(request):
 
 
 	added = False
-	removed = False
-	grow   = False
-	grow_show = False
-	quantited = False
+	removed = False #Pour savoir si produit a été supprimier du panier
+	quantited = False #Pour savoir si c'est dans la case de quantité qui utliser pour modifier la quantité dans le panier
 	stock_finish = False
-	quantite = None
 	minimum = False #Minimum de quantité à faire entrer
 	no_number_quantite = False #Donnée de quantité 
 
@@ -157,7 +154,6 @@ def update_cart(request):
 				cart_obj.products.remove(product_obj)
 				cart_obj.quantite.pop(str(product_obj.id))
 				cart_obj.save()
-				quantite = None
 				removed = True
 
 
@@ -181,7 +177,6 @@ def update_cart(request):
 							cart_obj.products.add(product_obj)
 
 						quantited = True
-						quantite = cart_obj.quantite[str(product_obj.id)]
 
 					else:
 						minimum = True
@@ -201,9 +196,7 @@ def update_cart(request):
 			json_data = {
 				"added": added,
 				"removed": removed,
-				"grow" : grow,
 				"quantited" : quantited,
-				"quantite": quantite,
 				"minimum": minimum,
 				"no_number_quantite": no_number_quantite,
 				"stock_finish": stock_finish,

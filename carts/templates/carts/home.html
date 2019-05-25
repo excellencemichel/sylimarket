@@ -7,7 +7,7 @@
 	<div class="container">
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
-				<li><a href="{% url 'home' %}">Home</a></li>
+				<li><a href="{% url 'home' %}">Accueil</a></li>
 				<li class='active'>Cart home</li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
@@ -25,8 +25,8 @@
 				<tr>
 					<th class="cart-romove item">Suppression</th>
 					<th class="cart-description item">Image</th>
-					<th class="cart-product-name item">Product Name</th>
-					<th class="cart-edit item">Edit</th>
+					<th class="cart-product-name item">Nom du produit</th>
+					<th class="cart-edit item">Editer</th>
 					<th class="cart-qty item">Quantité</th>
 					<th class="cart-sub-total item">Prix</th>
 					<th class="cart-sub-total item">Taxe</th>
@@ -38,8 +38,8 @@
 					<td colspan="7">
 						<div class="shopping-cart-btn">
 							<span class="">
-								<a href="{% url 'home' %}" class="btn btn-upper btn-primary outer-left-xs">Continue Shopping</a>
-								<a href="{% url 'carts:home' %}" class="btn btn-upper btn-primary pull-right outer-right-xs">Update shopping cart</a>
+								<a href="{% url 'home' %}" class="btn btn-upper btn-primary outer-left-xs">Continuer le Shopping</a>
+								<a href="{% url 'carts:home' %}" class="btn btn-upper btn-primary pull-right outer-right-xs">Mettre à jour le panier</a>
 							</span>
 						</div><!-- /.shopping-cart-btn -->
 					</td>
@@ -92,11 +92,11 @@
 			<tr>
 				<th>
 					<div class="cart-sub-total ">
-						Subtotal<span class="inner-left-md">$<span class="cart-subtotal-home-somme">{{ cart.subtotal }}</span></span> <br>
+						Total<span class="inner-left-md">$<span class="cart-subtotal-home-somme">{{ cart.subtotal }}</span></span> <br>
 						Taxe <span class="inner-left-md">$<span class="cart-subtotal-home-taxe">{{ cart.taxe }}</span></span>
 					</div>
 					<div class="cart-grand-total">
-						Grand Total<span class="inner-left-md">$<span class="cart-total-home-somme">{{ cart.total }}</span></span>
+						Somme finale<span class="inner-left-md">$<span class="cart-total-home-somme">{{ cart.total }}</span></span>
 					</div>
 				</th>
 			</tr>

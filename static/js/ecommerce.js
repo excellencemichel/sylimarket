@@ -63,9 +63,17 @@
                   if(!data.stock_finish){
                     if (data.added){
                       submitSpan.html('<input type="hidden" name="for_remove_product" value="removed"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Enlever</button>')
+                      console.log("Nous sommes dans l'ajout")
                     } 
                   else {
                     submitSpan.html('<input type="hidden" name="for_add_product" value="added"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Add to cart</button>')
+                    console.log("Nous sommes dans l'effacement")
+                    if (data.removed){
+                      
+                    var quantiteCount = $(".product-qty-input")
+                    quantiteCount.val("1")
+                    }
+
                       }
 
                   if(data.quantited){
