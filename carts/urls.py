@@ -12,6 +12,8 @@ from .views import (
 			 payement_method,
 			 checkout_mobile,
 
+			 demo_ajax,
+
 			)
 
 
@@ -34,6 +36,10 @@ urlpatterns = [
 		path("payement-method/choices", payement_method, name="payement_method"),
 		path("checkout-mobile", checkout_mobile, name="checkout_mobile"),
 		path("checkout", checkout_card, name="checkout"),
+
+		#demo ajax
+		path("demo", demo_ajax, name="demo_ajax"),
+
 
 
 		re_path(r'^checkout/success$', checkout_done_view, name="success"),

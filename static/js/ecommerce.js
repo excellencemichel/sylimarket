@@ -41,10 +41,44 @@
     }, 1000)
   }
 
+  //Test demo ajax
+
+  var toggleVar = $(".toggle-item")
+  console.log("Mon toggleVar",toggleVar.length)
+  var inputQty = $("#product-qty-input")
+  console.log("La quantité", inputQty)
+  toggleVar.click(function(event){
+    event.preventDefault()
+    thisInput = $(this)
+    console.log("L'evenement", event)
+
+    var qtyUrl = "/cart/demo"
+    var qtyMethod = "POST"
+    var data = thisInput.text()
+    $.ajax({
+      url: qtyUrl,
+      data: data,
+
+      success: function(data){
+        console.log("La fonction ajax avec input s'est exécuté")
+        console.log(data)
+      },
+
+      error: function(errorData){
+        $.alert({
+          title: "oops !",
+          content: "Une erreur s'est occasionée",
+          theme: "modern",
+        })
+      }
+    })
+  })
+
 
         // Start add product to cart
       var productFormAdd = $(".form-product-ajax")
       var forQty = $(".for-qty")
+
       productFormAdd.submit(function(event){
           event.preventDefault()
           var thisForm = $(this)
@@ -59,15 +93,12 @@
             success: function(data){
               var submitSpan = thisForm.find(".submit-span")
                 var spnQty = forQty.find(".submit-for-qty")
-                console.log("minimum", data.minimum)
                   if(!data.stock_finish){
                     if (data.added){
                       submitSpan.html('<input type="hidden" name="for_remove_product" value="removed"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Enlever</button>')
-                      console.log("Nous sommes dans l'ajout")
                     } 
                   else {
                     submitSpan.html('<input type="hidden" name="for_add_product" value="added"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Add to cart</button>')
-                    console.log("Nous sommes dans l'effacement")
                     if (data.removed){
                       
                     var quantiteCount = $(".product-qty-input")
@@ -122,7 +153,6 @@
               var navBarCount = $(".navbar-cart-count")
               var navBarCartSommeTotal = $(".cart-somme-total")
               navBarCount.text(data.cartItemCount)
-              console.log("Item du panier est : " ,navBarCount.text())
               navBarCartSommeTotal.text(data.cartTotal)
             },
 
@@ -137,6 +167,19 @@
       })
 
       // End add product to cart
+
+
+      function qtyChange(qtyForm) {
+        // Pour le traitement de la quantité
+
+        var actionEndpoint = qtyForm.attr("data-endpoint")
+        var httpMethod = qtyForm.attr("method")
+        var formData = qtyForm.serialize();
+        var qtyContent = qtyForm.find("#product-qty-input")
+
+
+
+      }
 
 
 
@@ -172,18 +215,13 @@
             cartTableHomeSomme.find(".cart-subtotal-home-taxe").text(data.taxe)
             cartTableHomeSomme.find(".cart-total-home-somme").text(data.total)
 
-            console.log("Seperieur 0")
             totalText = cartBodyHome.find(".cart-total-home").text()
-            console.log("Voici le total", data.total)
 
             }
             else{
               window.location.href = currentUrl
-              console.log("inferieur à 0")
             }
-            console.log("success")
 
-            console.log(data)
 
           },
 
@@ -294,17 +332,17 @@
 
 
 
-  var header = document.querySelector('.ui__header')
+  // var header = document.querySelector('.ui__header')
 
-  window.addEventListener('scroll' , function () {
-    var headerHeight = header.getBoundingClientRect().height ;
-    var scrollY = window.scrollY ;
-    console.log(headerHeight , scrollY) ;
-    if (scrollY > headerHeight) {
-      if (header.classList.contains('ui__fix__header')) { return ; }
-      header.classList.add('ui__fix__header') ;
-    }else {
-      if (!header.classList.contains('ui__fix__header')) { return ; }
-      header.classList.remove('ui__fix__header') 
-    }
-  })
+  // window.addEventListener('scroll' , function () {
+  //   var headerHeight = header.getBoundingClientRect().height ;
+  //   var scrollY = window.scrollY ;
+  //   console.log(headerHeight , scrollY) ;
+  //   if (scrollY > headerHeight) {
+  //     if (header.classList.contains('ui__fix__header')) { return ; }
+  //     header.classList.add('ui__fix__header') ;
+  //   }else {
+  //     if (!header.classList.contains('ui__fix__header')) { return ; }
+  //     header.classList.remove('ui__fix__header') 
+  //   }
+  // })

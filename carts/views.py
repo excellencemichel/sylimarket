@@ -115,6 +115,7 @@ def cart_home(request):
 
 
 def update_cart(request):
+	print("Qty changed")
 	product_id = request.POST.get("product_id")
 	for_add_product = request.POST.get("for_add_product")
 	for_remove_product = request.POST.get("for_remove_product")
@@ -124,18 +125,20 @@ def update_cart(request):
 
 
 
-	added = False
+	added = False #Pour savoir si le produit a été ajouté au panier
 	removed = False #Pour savoir si produit a été supprimier du panier
 	quantited = False #Pour savoir si c'est dans la case de quantité qui utliser pour modifier la quantité dans le panier
-	stock_finish = False
+	stock_finish = False #Pour savoir si le stock ne dépasse pas 
 	minimum = False #Minimum de quantité à faire entrer
 	no_number_quantite = False #Donnée de quantité 
 
 	if product_id is not None:
+		"""
+		Si l'id stocké dans le input est valide
+		"""
 		try:
-			product_obj = Product.objects.get(id=product_id)
+			product_obj = Product.objects.get(id=product_id) #On recupère le produit dont l'id a été passé
 		except Product.DoesNotExist:
-			# print("Show message to user, product is gone ?")
 			messages.success(request, _("Désolé Mme M {user} le produit vient de finir dans le dépôt nous revenons dans sous peu".format(user=request.user)))
 			stock_finish = True
 			return redirect(reverse("carts:home"))
@@ -205,6 +208,18 @@ def update_cart(request):
 
 			}
 			return JsonResponse(json_data, status=200)
+	return redirect("carts:home")
+
+
+def demo_ajax(request):
+	qty_content = request.POST.get("product_quantite")
+
+	print("Il a été exécuté avec", qty_content)
+	json_data = {"test":"Le test de marche d'ajax sans formulaire"}
+	if request.is_ajax():
+		print("Ca marche")
+		return JsonResponse(json_data, status=200)
+
 	return redirect("carts:home")
 
 
@@ -425,3 +440,5 @@ def checkout_mobile(request):
 def checkout_done_view(request):
 	context = {}
 	return render(request, "carts/checkout_done.html", context)
+
+

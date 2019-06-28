@@ -120,6 +120,9 @@ class Cart(models.Model):
 
 
 
+
+
+
 	def __str__(self):
 		return ("Panier de:  {user} coûte : {total}".format(user=self.user, total=self.total))
 
