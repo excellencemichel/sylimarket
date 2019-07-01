@@ -801,11 +801,11 @@ def jupe_detail(request, pk=None, slug=None, *args, **kwargs):
 
 	if product in cart_obj.products.all():
 		quantite = cart_obj.quantite[str(product.id)]
-		stock_list = range(product.stock)
 
 	else:
 		quantite = "1"
-		stock_list = range(1)
+	
+	stock_list = range(product.stock)
 
 
 
@@ -818,6 +818,7 @@ def jupe_detail(request, pk=None, slug=None, *args, **kwargs):
 
 
 	print("Le panier", cart_obj.quantite)
+	print("Stock :", stock_list)
 	context = {
 		"cart": cart_obj,
 		"product": product,
@@ -825,6 +826,7 @@ def jupe_detail(request, pk=None, slug=None, *args, **kwargs):
 		"quantite" :quantite,
 		"views": views,
 		"stock_list": stock_list,
+		"detail": True,
 
 	}
 

@@ -112,9 +112,62 @@ def cart_home(request):
 	}
 	return render(request, "carts/home.html", context)
 
-
-
 def update_cart(request):
+	product_id = request.POST.get("product_id")
+	product_quantite = request.POST.get("product_quantite")
+
+	if product_id is not None:
+		try:
+			product_obj = Product.objects.get(id=product_id)
+		except Product.DoesNotExist:
+			messages.info(request, _("Désolé Mme M {user} le produit vient de finir dans le dépôt nous revenons dans sous peu".format(user=request.user)))
+			return redirect(reverse("carts:home"))
+
+		cart_obj, new_obj = Cart.objects.new_or_get(request)
+		if product_obj in cart_obj.products.all():
+			cart_obj.products.remove(product_obj)
+			cart_obj.quantite.pop(str(product_obj.id))
+
+
+			added = False
+			print("Enlevé")
+			print("Quantité enlevée :", product_quantite)
+		else:
+			cart_obj.products.add(product_obj)
+			added = True
+			try:
+				cart_obj.quantite.get(str(product_obj.id)).update(product_quantite) #Une mise à jour du tableau des quantits
+				cart_obj.products.remove(product_obj)
+				cart_obj.quantite.get(str(product_obj.id)).update(product_quantite)
+				cart_obj.products.add(product_obj)
+			except AttributeError:
+				cart_obj.products.remove(product_obj)
+				cart_obj.quantite[str(product_obj.id)] = product_quantite
+				cart_obj.products.add(product_obj)
+			print("ajouté")
+			print("Quantité ajoutée :", product_quantite)
+
+
+
+		request.session["cart_items"] = cart_obj.products.count()
+		request.session["cart_total"] = str(Decimal(cart_obj.total).quantize(Decimal('1.00')))
+
+
+		if request.is_ajax():
+			json_data = {
+				"added": added,
+				"removed": not added,
+
+				"cartItemCount": cart_obj.products.count(),
+				"cartTotal": str(Decimal(cart_obj.total).quantize(Decimal('1.00'))),
+
+			}
+			return JsonResponse(json_data, status=200)
+	return redirect("carts:home")
+
+
+
+def update_cart_old(request):
 	print("Qty changed")
 	product_id = request.POST.get("product_id")
 	for_add_product = request.POST.get("for_add_product")

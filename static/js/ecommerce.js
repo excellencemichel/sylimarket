@@ -86,84 +86,117 @@
           var actionEndpoint = thisForm.attr("data-endpoint")
           var httpMethod = thisForm.attr("method")
           var formData = thisForm.serialize();
-          $.ajax({
-            url: actionEndpoint,
-            method: httpMethod,
-            data: formData,
-            success: function(data){
-              var submitSpan = thisForm.find(".submit-span")
-                var spnQty = forQty.find(".submit-for-qty")
-                  if(!data.stock_finish){
-                    if (data.added){
-                      submitSpan.html('<input type="hidden" name="for_remove_product" value="removed"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Enlever</button>')
-                    } 
-                  else {
-                    submitSpan.html('<input type="hidden" name="for_add_product" value="added"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Add to cart</button>')
-                    if (data.removed){
+              $.ajax({
+                url : actionEndpoint,
+                method: httpMethod,
+                data: formData,
+                success: function(data){
+                var submitSpan = thisForm.find(".submit-span")
+                if (data.added){
+                  submitSpan.html('<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;"><i class="fa fa-times"></i></span> Enlever du panier</button>')
+                } else {
+                  submitSpan.html('<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;"><span><i class="fa fa-plus-circle"></i></span> Ajouter au panier</button>')
+                }
+
+                var navbarCount = $(".navbar-cart-count")
+                navbarCount.text(data.cartItemCount)
+
+
+                currentPath = window.location.href
+
+                if (currentPath.indexOf("cart") != -1){
+                  refreshCart()
+                }
+                },
+
+                error: function(errorData){
+                  $.alert({
+                    title:"Oops !",
+                    content:
+                    "An error occured",
+                    theme: "modern"})
+                  
+                }
+              })
+
+          // $.ajax({
+          //   url: actionEndpoint,
+          //   method: httpMethod,
+          //   data: formData,
+          //   success: function(data){
+          //     var submitSpan = thisForm.find(".submit-span")
+          //       var spnQty = forQty.find(".submit-for-qty")
+          //         if(!data.stock_finish){
+          //           if (data.added){
+          //             submitSpan.html('<input type="hidden" name="for_remove_product" value="removed"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Enlever</button>')
+          //           } 
+          //         else {
+          //           submitSpan.html('<input type="hidden" name="for_add_product" value="added"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Add to cart</button>')
+          //           if (data.removed){
                       
-                    var quantiteCount = $(".product-qty-input")
-                    quantiteCount.val("1")
-                    }
+          //           var quantiteCount = $(".product-qty-input")
+          //           quantiteCount.val("1")
+          //           }
 
-                      }
+          //             }
 
-                  if(data.quantited){
-                      spnQty.html('<input type="hidden" name="for_remove_product" value="removed"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Enlever</button>')
-                  }
+          //         if(data.quantited){
+          //             spnQty.html('<input type="hidden" name="for_remove_product" value="removed"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Enlever</button>')
+          //         }
 
-                  if(data.minimum){
-                      $.alert({
-                        title: "Erreur d'entrée de quantité",
-                        content: "La quantité du produit entrée ne doit pas être inferieur à 1",
-                        theme: "modern",
-                        })
+          //         if(data.minimum){
+          //             $.alert({
+          //               title: "Erreur d'entrée de quantité",
+          //               content: "La quantité du produit entrée ne doit pas être inferieur à 1",
+          //               theme: "modern",
+          //               })
 
-                    } 
+          //           } 
 
-                  if(data.no_number_quantite){
-                      spnQty.html('<input type="hidden" name="for_add_product" value="added"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Add to cart</button>')
-                      $.alert({
-                        title: "Erreur d'entrée de quantité",
-                        content: "La quantité du produit entrée doit être un nombre et superieur ou égale à 1",
-                        theme: "modern",
-                        })
+          //         if(data.no_number_quantite){
+          //             spnQty.html('<input type="hidden" name="for_add_product" value="added"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Add to cart</button>')
+          //             $.alert({
+          //               title: "Erreur d'entrée de quantité",
+          //               content: "La quantité du produit entrée doit être un nombre et superieur ou égale à 1",
+          //               theme: "modern",
+          //               })
 
-                    } 
-
-
-                }
-                else{
-                   $.alert({
-                title: "oops !",
-                content: "Votre commande dépasse notre stock nous vous conseillons de la completer avec soit le même produit mais de couleur/marque différentes. Au plaisir nous allons faire un réapprovisionnement dans sous peu. Merci",
-                theme: "modern",
-              })
-                }
+          //           } 
 
 
-
-               currentPath = window.location.href
-
-              if (currentPath.indexOf("cart") != -1){
-                refreshCart()
-               }
+          //       }
+          //       else{
+          //          $.alert({
+          //       title: "oops !",
+          //       content: "Votre commande dépasse notre stock nous vous conseillons de la completer avec soit le même produit mais de couleur/marque différentes. Au plaisir nous allons faire un réapprovisionnement dans sous peu. Merci",
+          //       theme: "modern",
+          //     })
+          //       }
 
 
 
-              var navBarCount = $(".navbar-cart-count")
-              var navBarCartSommeTotal = $(".cart-somme-total")
-              navBarCount.text(data.cartItemCount)
-              navBarCartSommeTotal.text(data.cartTotal)
-            },
+          //      currentPath = window.location.href
 
-            error: function(errorData){
-              $.alert({
-                title: "oops !",
-                content: "Une erreur s'est occasionée",
-                theme: "modern",
-              })
-            }
-          })
+          //     if (currentPath.indexOf("cart") != -1){
+          //       refreshCart()
+          //      }
+
+
+
+          //     var navBarCount = $(".navbar-cart-count")
+          //     var navBarCartSommeTotal = $(".cart-somme-total")
+          //     navBarCount.text(data.cartItemCount)
+          //     navBarCartSommeTotal.text(data.cartTotal)
+          //   },
+
+          //   error: function(errorData){
+          //     $.alert({
+          //       title: "oops !",
+          //       content: "Une erreur s'est occasionée",
+          //       theme: "modern",
+          //     })
+          //   }
+          // })
       })
 
       // End add product to cart

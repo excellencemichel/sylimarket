@@ -1,0 +1,174 @@
+<style type="text/css">
+
+.quantity-container > .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toggler {
+    position: relative;
+    font-weight: 600;
+    min-width: 80px;
+}
+
+.toggler .toggler-visible {
+  height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+}
+
+.toggler-label {
+    width: 100%;
+    position: relative;
+    text-align: center;
+    padding-right: 11px;
+}
+
+.toggler-label .icon {
+  position: absolute;
+  top: 0;
+    bottom: 0;
+    right: 0;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-dropdown {
+    height: 100px;
+    border: 1px solid #e0e0e0;
+    border-top: 0;
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 25px;
+    z-index: 1;
+    background-color: #fff;
+    overflow-y: scroll;
+}
+
+.toggle-items .toggle-item {
+    padding: 3px 0;
+    text-align: center;
+    padding-right: 11px;
+    cursor: pointer;
+}
+
+.toggle-items .toggle-item:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+
+.toggle-items .toggle-item.active {
+  background-color: rgba(0,0,0,0.1);
+}
+
+.toggler.show-dropdown .toggle-dropdown {
+  display: block;
+}
+
+</style>
+
+
+
+
+<div class="quantity-container info-container">
+
+
+	<form class="form form-product-ajax" method="POST" action="{% url 'carts:update_cart' %}" data-endpoint="{% url 'carts:update_cart' %}" style="display: inline-block;">
+	 {% csrf_token %}
+		<input class="cart-item-product-id" type="hidden" name="product_id" value="{{ product.id }}">
+	<!-- 
+		<input class="product-qty-input" id="product-qty-input" name="product_quantite" type="hidden" value="{% if quantite %} {{ quantite }} {% else %} 1 {% endif %}"> -->
+		<div class="row">
+
+				{% if detail %}
+					<div class="col-sm-2">
+						<span class="label">Qty :</span>
+						</div>
+												
+						<div class="col-sm-2">
+						    <div class="toggler">
+						      <div class="toggler-visible">
+						        <div class="toggler-label">
+						          <span class="toggle-value">{% if quantite %} {{ quantite }} {% else %} 1 {% endif %}</span>
+						          <span class="icon"><i class="icon fa fa-sort-desc"></i></span>
+						        </div>
+						      </div>
+						      <div class="toggle-dropdown">
+						        <ul class="toggle-items">
+						          {% for product in stock_list %}
+
+						          {% if forloop.first %}
+						            <li class="toggle-item active" data-value="{{ forloop.counter }}">{{ forloop.counter }}
+
+						          {% else %}
+						            <li class="toggle-item" data-value="{{ forloop.counter }}">{{ forloop.counter }}
+						          {% endif %}
+						          </li>
+						          {% endfor %}
+						          </li>
+
+						        </ul>
+						      </div>
+						    </div>
+			    		<input class="product-qty-input" id="product-qty-input" name="product_quantite" type="hidden" value="{% if quantite %} {{ quantite }} {% else %} 1 {% endif %}">
+						</div>
+
+				{% endif %}
+				
+				<div class="col-sm-6">
+			    <span class='submit-span'>
+				    {% if product in cart.products.all %}
+						<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;"><i class="fa fa-times"></i></span> Enlever du panier</button>
+				<!--         <div class='btn-group'> <a class='btn btn-link' href='/cart/'>In cart</a> <button type='submit' class='btn btn-link'>Remove?</button></div> -->
+				    {% else %}
+						<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;"><span><i class="fa fa-plus-circle"></i></span> Ajouter au panier</button>
+				        <!-- <button type='submit'  class='btn btn-success'>Add to cart</button> -->
+				    {% endif %}
+				    </span>
+				</div>
+		</div>
+	</form>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+
+  var productQuantityInput = document.querySelector('#product-qty-input');
+  
+  var toggler = document.querySelector('.toggler'); 
+  var toggleLabel = document.querySelector('.toggler-label'); 
+  var toggleValue = document.querySelector('.toggle-value'); 
+  var toggleItems = document.querySelectorAll('.toggle-item');
+
+  toggleLabel.addEventListener('click', (e) => {
+    toggler.classList.toggle('show-dropdown');
+  });
+
+  toggleItems.forEach((toggleItem) => {
+    toggleItem.addEventListener('click', (e) => {
+      toggleValue.innerText = e.target.dataset.value;
+
+      // Change product quantity in input field
+      productQuantityInput.value = Number(e.target.dataset.value);
+
+
+      var activeToggleItem = document.querySelector('.toggle-item.active'); 
+      if (activeToggleItem) {
+        activeToggleItem.classList.remove('active');
+      }
+
+      e.target.classList.add('active');
+      toggler.classList.remove('show-dropdown');
+
+    });
+  }); 
+
+</script>
