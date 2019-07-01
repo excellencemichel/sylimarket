@@ -112,7 +112,7 @@ def cart_home(request):
 	}
 	return render(request, "carts/home.html", context)
 
-def update_cart(request):
+def update_cart_old(request):
 	product_id = request.POST.get("product_id")
 	product_quantite = request.POST.get("product_quantite")
 
@@ -167,7 +167,7 @@ def update_cart(request):
 
 
 
-def update_cart_old(request):
+def update_cart(request):
 	print("Qty changed")
 	product_id = request.POST.get("product_id")
 	for_add_product = request.POST.get("for_add_product")
