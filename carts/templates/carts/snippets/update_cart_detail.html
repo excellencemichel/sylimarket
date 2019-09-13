@@ -38,7 +38,7 @@
 }
 
 .toggle-dropdown {
-    height: 100px;
+    height: 50px;
     border: 1px solid #e0e0e0;
     border-top: 0;
     display: none;
@@ -73,33 +73,60 @@
 </style>
 
 
-<div class="col-sm-2">
-    <div class="toggler">
-      <div class="toggler-visible">
-        <div class="toggler-label">
-          <span class="toggle-value">{% if quantite %} {{ quantite }} {% else %} 1 {% endif %}</span>
-          <span class="icon"><i class="icon fa fa-sort-desc"></i></span>
+
+
+<form class="form form-product-ajax"  id="form-product-ajax" method="POST" action="{% url 'carts:update_cart' %}" data-endpoint="{% url 'carts:update_cart' %}">
+      {% csrf_token %}
+  <div class="quantity-container info-container">
+    <div class="row">
+                          
+        <div class="col-sm-2">
+          <span class="label">Qty :</span>
         </div>
-      </div>
-      <div class="toggle-dropdown">
-        <ul class="toggle-items">
-          {% for product in stock_list %}
+        <div class="toggler">
+          <div class="toggler-visible">
+            <div class="toggler-label">
+              <span class="toggle-value">{% if quantite %} {{ quantite }} {% else %} 1 {% endif %}</span>
+              <span class="icon"><i class="icon fa fa-sort-desc"></i></span>
+            </div>
+          </div>
+          <div class="toggle-dropdown">
+            <ul class="toggle-items">
+              {% for product in stock_list %}
 
-          {% if forloop.first %}
-            <li class="toggle-item active" data-value="{{ forloop.counter }}">{{ forloop.counter }}
+              {% if forloop.first %}
+                <li class="toggle-item active" data-value="{{ forloop.counter }}">{{ forloop.counter }}
 
-          {% else %}
-            <li class="toggle-item" data-value="{{ forloop.counter }}">{{ forloop.counter }}
-          {% endif %}
-          </li>
-          {% endfor %}
-          </li>
+              {% else %}
+                <li class="toggle-item" data-value="{{ forloop.counter }}">{{ forloop.counter }}
+              {% endif %}
+              </li>
+              {% endfor %}
+              </li>
 
-        </ul>
-      </div>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-6">
+        <input class="cart-item-product-id" type="hidden" name="product_id" value="{{ product.id }}">
+        <input class="product-qty-input" id="product-qty-input" name="product_quantite" type="hidden" value="{% if quantite %} {{ quantite }} {% else %} 1 {% endif %}">
+
+
+
+          <span class="submit-span submit-for-qty">
+            {% if product in cart.products.all %}
+              <button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;"><span><i class="fa fa-times"></i></span> Enlever du panier</button>
+
+            {% else %}
+              <button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;"><span><i class="fa fa-plus-circle"></i></span> Ajouter dans le panier</button>
+            {% endif %}
+          </span>
+        </div>
+
     </div>
-    <input class="product-qty-input" id="product-qty-input" name="product_quantite" type="hidden" value="{% if quantite %} {{ quantite }} {% else %} 1 {% endif %}">
-</div>
+  </div>
+</form>
+
 
 <script type="text/javascript">
 

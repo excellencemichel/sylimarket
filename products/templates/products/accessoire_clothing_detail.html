@@ -174,19 +174,7 @@
 									<div class="product-tag">
 										
 										<h4 class="title">Product Tags</h4>
-										<form role="form" class="form-inline form-cnt">
-											<div class="form-container">
-									
-												<div class="form-group">
-													<label for="exampleInputTag">Add Your Tags: </label>
-													<input type="email" id="exampleInputTag" class="form-control txt">
-													
-
-												</div>
-
-												<button class="btn btn-upper btn-primary" type="submit">ADD TAGS</button>
-											</div><!-- /.form-container -->
-										</form><!-- /.form-cnt -->
+											{% include "tags/snippets/update_tag_form.html" with product=product %}
 
 										<form role="form" class="form-inline form-cnt">
 											<div class="form-group">

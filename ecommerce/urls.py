@@ -67,6 +67,11 @@ urlpatterns = [
     path('billing/', include("billing.urls", namespace="billing")),
     path('marketing/', include("marketing.urls", namespace="marketing")),
     path('orders/', include("orders.urls", namespace="orders")),
+    path('tags/', include("tags.urls", namespace="tags")),
+
+
+    path('wishs/', include("wishs.urls", namespace="wishs")),
+
 
 
 

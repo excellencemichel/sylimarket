@@ -1,0 +1,6 @@
+<form class="form form-product-ajax" method="POST" action="{% url 'carts:update_cart' %}" data-endpoint="{% url 'carts:update_cart' %}" style="display: inline-block;">
+	{% csrf_token %}
+     <input class="cart-item-product-id" type="hidden" name="product_id" value="{{ product.id }}">
+	 <input class="product-qty-input" id="product-qty-input" name="product_quantite" type="hidden" value="{% if quantite %} {{ quantite }} {% else %} 1 {% endif %}">
+	<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;"><span><i class="fas fa-trash-alt"></i></span> Enlever</button>
+</form>

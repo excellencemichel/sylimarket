@@ -60,7 +60,6 @@ def marketing_pref_update_receiver(sender, instance, *args, **kwargs):
 			instance.mailchimp_subscribed = False
 			instance.mailchimp_msg = response_data
 
-
 pre_save.connect(marketing_pref_update_receiver, sender=MarketingPreference)
 
 

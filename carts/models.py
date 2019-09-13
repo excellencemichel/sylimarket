@@ -134,9 +134,7 @@ def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
 	    total = 0
 	    taxe = 0
 	    for x in products:
-	    	print("L'Id de X", x.id)
 	    	if str(x.id) not in instance.quantite:
-	    		print("Il n'est pas dédans")
 	    		instance.quantite[str(x.id)] =1
 	    	total += (multiplier(x.price , Decimal(int(instance.quantite[str(x.id)])).quantize(TWOPLACES)))
 	    	taxe += (multiplier(x.taxe , Decimal(int(instance.quantite[str(x.id)])).quantize(TWOPLACES)))
@@ -147,7 +145,6 @@ def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
 	    if instance.taxe != taxe:
 	    	instance.taxe = taxe
 	    	instance.save()
-	    print(instance.quantite)
 
 
 

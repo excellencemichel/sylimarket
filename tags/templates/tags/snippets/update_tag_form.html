@@ -1,0 +1,15 @@
+
+<form role="form" class="form-inline form-cnt form-tag-ajax" id="form-tag-ajax" method="POST" action="{% url 'tags:update_tag' %}" data-endpoint="{% url 'tags:update_tag' %}">
+    {% csrf_token %}
+	<div class="form-container">
+
+		<div class="form-group">
+			<label for="exampleInputTag">Add Your Tags: </label>
+			<input type="text" id="exampleInputTag" name="input_tag" class="form-control txt">
+        	<input class="tag-product-id" type="hidden" name="product_id" value="{{ product.id }}">
+        	
+		</div>
+
+		<button class="btn btn-upper btn-primary" type="submit">ADD TAGS</button>
+	</div><!-- /.form-container -->
+</form><!-- /.form-cnt -->

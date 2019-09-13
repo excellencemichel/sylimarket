@@ -11,9 +11,21 @@
 			<div class="product-image">
 				<div class="image">
 					<a href="{{ product.get_absolute_url }}"><img  src="{{ product.image.url }}" alt=""></a>
-				</div><!-- /.image -->			
+				</div><!-- /.image -->	
+					{% if product.solde %}		
+				        <div class="tag sale new"><span>sale</span></div>
+				    {% elif product.special %}     
+                        <div class="tag hot"><span>hot</span></div>
+				    {% elif product.featured %}     
+                        <div class="tag new"><span>new</span></div>
+                    {% else %}
+                        <div class="tag hot"><span>hot</span></div>
+                    {% endif %}
 
-				            <div class="tag sale"><span>sale</span></div>            		   
+
+
+
+
 			</div><!-- /.product-image -->
 				
 			

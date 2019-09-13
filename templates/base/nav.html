@@ -21,7 +21,7 @@
       <div class="header-top-inner">
         <div class="cnt-account">
           <ul class="list-unstyled">
-            <li><a href="#"><i class="icon fa fa-heart"></i>Favories</a></li>
+            <li><a href="{% url 'wishs:home' %}"><i class="icon fa fa-heart"></i>Favories</a></li>
             <li><a href="{{ cart_home_url }}"><i class="icon fa fa-shopping-cart"></i>Mon panier</a></li>
             <li><a href="{% url 'carts:payement_method' %}"><i class="icon fa fa-check"></i>La caisse</a></li>
             {% if request.user.is_authenticated %}
@@ -93,7 +93,7 @@
             <div class="items-cart-inner">
               <div class="basket"> <i class="glyphicon glyphicon-shopping-cart"></i> </div>
               <div class="basket-item-count"><span class="count navbar-cart-count ">{% if request.session.cart_items %}{{ request.session.cart_items }} {% else %} 0 {% endif %}</span></div>
-              <div class="total-price-basket"> <span class="lbl">cart</span> <span class="total-price"> <span class="sign">$</span><span class="value cart-somme-total">{{ request.session.cart_total }}</span> </span> </div>
+              <div class="total-price-basket"> <span class="lbl">cart</span> <span class="total-price"> <span class="sign">GNF</span><span class="value cart-somme-total">{{ request.session.cart_total }}</span> </span> </div>
             </div>
             </a>
             <ul class="dropdown-menu">
@@ -104,7 +104,7 @@
               <div class="clearfix cart-total">
                 <div class="pull-right">
                   
-                    <span class="text">Sub Total :</span><span class='price cart-somme-total'>${{ request.session.cart_total }}</span>
+                    <span class="text">Sub Total :</span><span class='price cart-somme-total'>{{ request.session.cart_total }} GNF</span>
                     
                 </div>
                 <div class="clearfix"></div>

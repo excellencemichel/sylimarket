@@ -268,13 +268,22 @@ if (jQuery('.price-slider').length > 0) {
         max: 700,
         step: 10,
         value: [200, 500],
-        handle: "square"
+        handle: "square",
+        change: function (event, ui) {
+            console.log(event, ui);
+            alert("Michel")
+        },
+        slide: function (event, ui) {
+            console.log(event, ui);
+        },
 
     });
+
 
 }
 
 });
+
 
 
 /*===================================================================================*/

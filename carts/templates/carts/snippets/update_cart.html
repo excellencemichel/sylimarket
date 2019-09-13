@@ -4,15 +4,14 @@
 
 	{% csrf_token %}
 	<input class="cart-item-product-id" type="hidden" name="product_id" value="{{ product.id }}">
+	<input class="product-qty-input" id="product-qty-input" name="product_quantite" type="hidden" value="1">
 
 		<span class="submit-span submit-for-qty">
 			{% if product in cart.products.all %}
-				<input type="hidden" name="for_remove_product" value="removed">
-				<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Enlever du panier</button>
+				<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;"><span><i class="fa fa-times"></i></span> Enlever du panier</button>
 
 			{% else %}
-				<input type="hidden" name="for_add_product" value="added">
-				<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Ajouter dans le panier</button>
+				<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;"><span><i class="fa fa-plus-circle"></i></span> Ajouter dans le panier</button>
 			{% endif %}
 		</span>
 

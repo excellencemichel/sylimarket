@@ -1,0 +1,23 @@
+
+	<form class="form form-wish-ajax" method="POST" action="{% url 'wishs:update_wish' %}" data-endpoint="{% url 'wishs:update_wish' %}" style="display: inline-block;">
+
+		{% csrf_token %}
+		<input class="wish-item-product-id" type="hidden" name="product_id" value="{{ product.id }}">
+
+			<span class="submit-span">
+				{% if product in wish.products.all %}
+				<button type="submit" style="color: #0f6bb2; background-color: #0f6bb2; border: none;">
+					<a data-toggle="tooltip" class="add-to-cart" href="#" title="Déjà dans la liste de souhaits"><i class="icon fa fa-heart" style="color: red;"></i></a>
+				</button>
+
+				{% else %}
+				<button type="submit" style="color: #0f6bb2; background-color: #0f6bb2; border: none;">
+					<a data-toggle="tooltip" class="add-to-cart" href="#" title="Pas encore dans liste de souhaits"> <i class="icon fa fa-heart"></i> </a>
+				</button>
+				{% endif %}
+			</span>
+
+	</form>
+
+
+

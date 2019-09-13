@@ -94,7 +94,8 @@ def cart_detail_api_view(request):
 			 "price":x.price,
 			 "taxe": x.taxe,
 			 "subtotal": x.subtotal,
-			 "image": x.image.url
+			 "image": x.image.url,
+			 "quantite": cart_obj.quantite[str(x.id)]
 			 } 
 			 for x in cart_obj.products.all()] # [<object>, <object>, <object>]
 
@@ -112,11 +113,12 @@ def cart_home(request):
 	}
 	return render(request, "carts/home.html", context)
 
-def update_cart_old(request):
+def update_cart(request):
 	product_id = request.POST.get("product_id")
 	product_quantite = request.POST.get("product_quantite")
+	print("La quantité est:", product_quantite)
 
-	if product_id is not None:
+	if product_id and product_quantite is not None:
 		try:
 			product_obj = Product.objects.get(id=product_id)
 		except Product.DoesNotExist:
@@ -128,10 +130,8 @@ def update_cart_old(request):
 			cart_obj.products.remove(product_obj)
 			cart_obj.quantite.pop(str(product_obj.id))
 
-
 			added = False
-			print("Enlevé")
-			print("Quantité enlevée :", product_quantite)
+
 		else:
 			cart_obj.products.add(product_obj)
 			added = True
@@ -144,8 +144,8 @@ def update_cart_old(request):
 				cart_obj.products.remove(product_obj)
 				cart_obj.quantite[str(product_obj.id)] = product_quantite
 				cart_obj.products.add(product_obj)
-			print("ajouté")
-			print("Quantité ajoutée :", product_quantite)
+
+		print("La quantité dans le panier: ", cart_obj.quantite)
 
 
 
@@ -167,8 +167,7 @@ def update_cart_old(request):
 
 
 
-def update_cart(request):
-	print("Qty changed")
+def update_cart_old(request):
 	product_id = request.POST.get("product_id")
 	for_add_product = request.POST.get("for_add_product")
 	for_remove_product = request.POST.get("for_remove_product")

@@ -26,6 +26,8 @@ from products.models import (  Product,
 					)
 
 from carts.models import Cart
+from wishs.models import Wish
+
 
 
 
@@ -42,6 +44,8 @@ from .forms import (
 
 def home(request):
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	wish_obj, new_obj = Wish.objects.new_or_get(request)
+
 	products =  Product.objects.all()
 	news_products = Product.objects.featured()
 
@@ -98,8 +102,9 @@ def home(request):
 		Q(product_type=Product.COMPUTER_ACCESSOIRE)
 		)
 
-	day_products = products.day_products()
+	good_deal = products.good_deal()
 	special_products = products.special_products()
+	today_deal = products.today_deal()
 	best_sellers  = products.best_seller()
 
 
@@ -125,6 +130,8 @@ def home(request):
 
 	context = {
 		"cart": cart_obj,
+		"wish": wish_obj,
+
 		"products": products,
 		"best_sellers" : best_sellers,
 		"news_products": news_products,
@@ -134,8 +141,9 @@ def home(request):
 
 
 
-		"day_products" : day_products,
+		"good_deal" : good_deal,
 		"special_products": special_products,
+		"today_deal": today_deal,
 
 
 		"clothings": clothings,

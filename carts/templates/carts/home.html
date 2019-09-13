@@ -49,7 +49,7 @@
 				{% for product in cart.products.all %}
 				<tr class="cart-product-home">
 					<td class="romove-item"> 
-					   {% include "carts/snippets/remove_product.html" with product_id=product.id %}
+					   {% include "carts/snippets/new_remove_product.html" with product=product %}
 					</td>
 					<td class="cart-image">
 						<a class="entry-thumbnail" href="{{ product.get_absolute_url }}">
@@ -68,9 +68,9 @@
 			              </div>
 			            </div>
 		            </td>
-					<td class="cart-product-sub-total"><span class="cart-sub-total-price">${{ product.price }}</span></td>
-					<td class="cart-product-sub-total"><span class="cart-sub-total-price">${{ product.taxe }}</span></td>
-					<td class="cart-product-grand-total"><span class="cart-grand-total-price">${% taxe_p_prix product cart %}</span></td>
+					<td class="cart-product-sub-total"><span class="cart-sub-total-price">{{ product.price }}GNF</span></td>
+					<td class="cart-product-sub-total"><span class="cart-sub-total-price">{{ product.taxe }}GNF</span></td>
+					<td class="cart-product-grand-total"><span class="cart-grand-total-price">{% taxe_p_prix product cart %}GNF</span></td>
 				</tr>
 				{% endfor %}
 
@@ -79,7 +79,7 @@
 
 		<!-- Hidden content -->
 		<div class="cart-item-remove-form" style="display: none;">
-			{% include "carts/snippets/remove_product.html" %}
+			{% include "carts/snippets/new_remove_product.html" %}
 		</div>
 
 	</div>
@@ -92,11 +92,11 @@
 			<tr>
 				<th>
 					<div class="cart-sub-total ">
-						Total<span class="inner-left-md">$<span class="cart-subtotal-home-somme">{{ cart.subtotal }}</span></span> <br>
-						Taxe <span class="inner-left-md">$<span class="cart-subtotal-home-taxe">{{ cart.taxe }}</span></span>
+						Total<span class="inner-left-md"><span class="cart-subtotal-home-somme">{{ cart.subtotal }}GNF</span></span> <br>
+						Taxe <span class="inner-left-md"><span class="cart-subtotal-home-taxe">{{ cart.taxe }} GNF</span></span>
 					</div>
 					<div class="cart-grand-total">
-						Somme finale<span class="inner-left-md">$<span class="cart-total-home-somme">{{ cart.total }}</span></span>
+						Somme finale<span class="inner-left-md"><span class="cart-total-home-somme">{{ cart.total }} GNF</span></span>
 					</div>
 				</th>
 			</tr>

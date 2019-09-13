@@ -478,6 +478,9 @@ def men_clothing_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
+	stock_list = range(product.stock)
+
+
 
 	if request.user.is_authenticated:
 		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
@@ -492,7 +495,9 @@ def men_clothing_detail(request, pk=None, slug=None, *args, **kwargs):
 		"product": product,
 		"men_clothing": men_clothing,
 		"views": views,
-		"quantite": quantite
+		"quantite": quantite,
+		"stock_list": stock_list,
+
 
 
 	}
@@ -529,6 +534,9 @@ def women_clothing_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
+	stock_list = range(product.stock)
+
+
 
 	if request.user.is_authenticated:
 		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
@@ -541,6 +549,8 @@ def women_clothing_detail(request, pk=None, slug=None, *args, **kwargs):
 		"product": product,
 		"women_clothing" : women_clothing,
 		"quantite": quantite,
+		"stock_list": stock_list,
+
 		"views": views,
 
 	}
@@ -575,6 +585,9 @@ def accessoire_clothing_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
+	stock_list = range(product.stock)
+
+
 
 	if request.user.is_authenticated:
 		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
@@ -588,6 +601,8 @@ def accessoire_clothing_detail(request, pk=None, slug=None, *args, **kwargs):
 		"product": product,
 		"accessoire_clothing" : accessoire_clothing,
 		"quantite": quantite,
+		"stock_list": stock_list,
+
 		"views": views,
 
 	}
@@ -623,6 +638,9 @@ def men_shoe_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
+	stock_list = range(product.stock)
+
+
 
 	if request.user.is_authenticated:
 		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
@@ -636,6 +654,8 @@ def men_shoe_detail(request, pk=None, slug=None, *args, **kwargs):
 		"product": product,
 		"men_shoe": men_shoe,
 		"quantite": quantite,
+		"stock_list": stock_list,
+
 		"views": views,
 
 	}
@@ -670,6 +690,9 @@ def women_shoe_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
+	stock_list = range(product.stock)
+
+
 
 	if request.user.is_authenticated:
 		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
@@ -683,6 +706,8 @@ def women_shoe_detail(request, pk=None, slug=None, *args, **kwargs):
 		"product": product,
 		"women_sheo" : women_sheo,
 		"quantite": quantite,
+		"stock_list": stock_list,
+
 		"views": views,
 
 	}
@@ -718,6 +743,9 @@ def patalon_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
+	stock_list = range(product.stock)
+
+
 
 	if request.user.is_authenticated:
 		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
@@ -731,6 +759,8 @@ def patalon_detail(request, pk=None, slug=None, *args, **kwargs):
 		"product": product,
 		"pantalon" : pantalon,
 		"quantite": quantite,
+		"stock_list": stock_list,
+
 		"views": views,
 
 	}
@@ -763,6 +793,9 @@ def culotte_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
+	stock_list = range(product.stock)
+
+
 
 	if request.user.is_authenticated:
 		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
@@ -776,6 +809,8 @@ def culotte_detail(request, pk=None, slug=None, *args, **kwargs):
 		"product": product,
 		"culotte" : culotte,
 		"quantite": quantite,
+		"stock_list": stock_list,
+
 		"views": views,
 	}
 
@@ -826,7 +861,6 @@ def jupe_detail(request, pk=None, slug=None, *args, **kwargs):
 		"quantite" :quantite,
 		"views": views,
 		"stock_list": stock_list,
-		"detail": True,
 
 	}
 
@@ -860,6 +894,9 @@ def phone_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
+	stock_list = range(product.stock)
+
+
 
 	if request.user.is_authenticated:
 		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
@@ -873,6 +910,7 @@ def phone_detail(request, pk=None, slug=None, *args, **kwargs):
 		"product": product,
 		"phone": phone,
 		"quantite": quantite,
+		"stock_list": stock_list,
 		"views": views,
 
 	}
@@ -908,6 +946,9 @@ def tablette_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
+	stock_list = range(product.stock)
+
+
 
 	if request.user.is_authenticated:
 		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
@@ -921,6 +962,7 @@ def tablette_detail(request, pk=None, slug=None, *args, **kwargs):
 		"product": product,
 		"tablette" :tablette,
 		"quantite": quantite,
+		"stock_list": stock_list,
 		"views": views,
 
 	}
@@ -960,6 +1002,9 @@ def accessoire_phone_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
+	stock_list = range(product.stock)
+
+
 
 	if request.user.is_authenticated:
 		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
@@ -973,6 +1018,7 @@ def accessoire_phone_detail(request, pk=None, slug=None, *args, **kwargs):
 		"product": product,
 		"accessoire_phone" : accessoire_phone,
 		"quantite": quantite,
+		"stock_list": stock_list,
 		"views": views,
 
 	}
@@ -1013,6 +1059,9 @@ def computer_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
+	stock_list = range(product.stock)
+
+
 
 	if request.user.is_authenticated:
 		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
@@ -1026,6 +1075,7 @@ def computer_detail(request, pk=None, slug=None, *args, **kwargs):
 		"product": product,
 		"computer": computer,
 		"quantite": quantite,
+		"stock_list": stock_list,
 		"views": views,
 
 	}
@@ -1066,6 +1116,9 @@ def accessoire_computer_detail(request, pk=None, slug=None, *args, **kwargs):
 	else:
 		quantite = "1"
 
+	stock_list = range(product.stock)
+
+
 
 	if request.user.is_authenticated:
 		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
@@ -1079,6 +1132,7 @@ def accessoire_computer_detail(request, pk=None, slug=None, *args, **kwargs):
 		"product": product,
 		"accessoire_computer" :accessoire_computer,
 		"quantite": quantite,
+		"stock_list": stock_list,
 		"views": views,
 
 	}

@@ -46,7 +46,8 @@ class Mailchimp(object):
 
 
 	def get_members_endpoint(self):
-		return self.list_endpoint + "/members"
+		endpoint = '{list_endpoint}/members'.format(list_endpoint=self.list_endpoint)
+		return endpoint
 
 
 
@@ -67,6 +68,7 @@ class Mailchimp(object):
 	def check_subscription_status(self, email):
 
 		hashed_email = get_subscriber_hash(email)
+		print("Le hash est :", hashed_email)
 		endpoint = self.get_members_endpoint() + "/" + hashed_email
 		r = requests.get(endpoint, auth=("", self.key))
 		return r.status_code, r.json()

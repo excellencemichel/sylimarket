@@ -54,15 +54,23 @@ class ProductQuerySet(models.query.QuerySet):
 
 	def special_products(self):
 		return self.filter(
+			Q(solde=True) &
 			Q(special=True) &
-			Q(pourcentage__gte=40)
+			Q(pourcentage__gte=50)
 			)
 
-	def day_products(self):
+	def good_deal(self):
 		return self.filter(
-			Q(special=True) &
+			Q(solde=True) &
 			Q(pourcentage__lt=40) &
 			Q(pourcentage__gt=0)
+			)
+
+	def today_deal(self):
+		return self.filter(
+			Q(solde=True) &
+			Q(pourcentage__lt=50) &
+			Q(pourcentage__gte=40)
 			)
 
 
@@ -200,8 +208,11 @@ class ProductManager(models.Manager):
 	def special_products(self):
 		return self.get_queryset().special_products()
 
-	def day_products(self):
-		return self.get_queryset().day_products()
+	def good_deal(self):
+		return self.get_queryset().good_deal()
+
+	def today_deal(self):
+		return self.get_queryset().today_deal()
 
 	def best_seller(self):
 		return self.get_queryset().best_seller()
