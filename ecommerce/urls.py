@@ -33,12 +33,15 @@ from .views import  (
 
 from orders.views import LibraryView
 
+from products.admin import product_admin_site
+
 
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("admin-produit/", product_admin_site.urls),
 
     path("", home, name="home"),
 
@@ -95,4 +98,4 @@ if settings.DEBUG:
 
 admin.site.site_header = "SyliMarket Admin"
 admin.site.site_title = "SyliMarket Admin Portail"
-admin.site.index_title = "Bienvenue dans le Portail de Recherche de SyliMarket "
+admin.site.index_title = "SyliMarket "

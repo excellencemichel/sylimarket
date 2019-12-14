@@ -388,6 +388,11 @@ class Product(PrototypeAbstract):
 		return "Produit :{name}, coute : {price}".format(name=self.name, price=self.price)
 
 
+	class Meta:
+		verbose_name = "Produit"
+		verbose_name_plural ="Produits"
+
+
 
 
 	def get_absolute_url(self):

@@ -134,6 +134,11 @@ class MenClothing(ClothingAbstractModel):
 		return self.name
 
 
+	class Meta:
+		verbose_name ="Vêtement hommes"
+		verbose_name_plural = "Vêtement hommes "
+
+
 
 
 
@@ -186,6 +191,12 @@ class WomenClothing(ClothingAbstractModel):
 
 
 
+	class Meta:
+		verbose_name = "Vêtement femmes"
+		verbose_name_plural = "Vêtements femmes"
+
+
+
 
 #Pants
 
@@ -228,6 +239,10 @@ class Pantalon(PantsAbstractModel):
 	def __str__(self):
 		return self.name
 
+	class Meta:
+		verbose_name = "Pantalon"
+		verbose_name_plural = "Pantalons"
+
 
 
 
@@ -257,6 +272,12 @@ class Culotte(PantsAbstractModel):
 
 
 
+	class Meta:
+		verbose_name = "Culotte"
+		verbose_name_plural = "Culottes"
+
+
+
 
 
 
@@ -283,6 +304,11 @@ class Jupe(ClothingAbstractModel):
 
 	def __str__(self):
 		return self.name
+
+
+	class Meta:
+		verbose_name = "Jupe"
+		verbose_name_plural = "Jupes"
 
 
 
@@ -339,6 +365,12 @@ class MenShoes(ShoesAbstractModel):
 
 
 
+	class Meta:
+		verbose_name = "Chaussure hommes"
+		verbose_name_plural = "Chaussures hommes"
+
+
+
 
 
 
@@ -375,6 +407,11 @@ class WomenShoes(ShoesAbstractModel):
 
 	def __str__(self):
 		return self.name
+
+
+	class Meta:
+		verbose_name ="Chaussure femmes"
+		verbose_name_plural = "Chaussures femmes"
 
 
 
@@ -420,6 +457,11 @@ class AccessoireClothng(PrototypeAbstract):
 
 	def __str__(self):
 		return self.name
+
+
+	class Meta:
+		verbose_name ="Accessoire vêtements"
+		verbose_name_plural = "Accessoires vêtements"
 
 
 

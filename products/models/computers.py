@@ -68,6 +68,11 @@ class Computer(PrototypeAbstract):
 		return self.name
 
 
+	class Meta:
+		verbose_name = "Ordinateur"
+		verbose_name_plural ="Ordinateurs"
+
+
 
 
 
@@ -98,3 +103,8 @@ class AccessoireComputer(PrototypeAbstract):
 
 	def __str__(self):
 		return self.name
+
+
+	class Meta:
+		verbose_name = "Accessoire ordinateur"
+		verbose_name_plural ="Accessoires ordinateur"

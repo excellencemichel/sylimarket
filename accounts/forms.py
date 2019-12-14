@@ -1,3 +1,7 @@
+from re import match
+
+
+
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.sites.shortcuts import get_current_site
@@ -31,19 +35,34 @@ User =get_user_model()
 
 
 class UserDetailUpdateForm(forms.ModelForm):
-    first_name = forms.CharField(label=_("First name"), required=False, widget=forms.TextInput(attrs = {"class": "form-control input-xs",}) )
-    last_name = forms.CharField(label=_("Last name"), required=False, widget=forms.TextInput(attrs = {"class": "form-control input-xs",}))
-    mobile  = forms.CharField(label=_("Phone number"), required=True, widget=forms.TextInput(attrs = {"class": "form-control input-xs",}))
+    first_name = forms.CharField(label=_("Prénom"), required=False, widget=forms.TextInput(attrs = {"class": "form-control input-xs",}) )
+    last_name = forms.CharField(label=_("Nom"), required=False, widget=forms.TextInput(attrs = {"class": "form-control input-xs",}))
+    mobile  = forms.CharField(label=_("Numéro de téléphone"), required=True, widget=forms.TextInput(attrs = {"class": "form-control input-xs",}))
 
     class Meta:
         model = User
         fields = ["first_name", "last_name", "mobile"]
 
+
+
+    def clean_mobile(self):
+        mobile = self.cleaned_data["mobile"]
+        controle = r"^6[2-9][0-9]([ .-]?[0-9]{2}){3}$"
+
+        if match(controle, mobile):
+            return mobile
+        else:
+            raise forms.ValidationError(_("Votre numéro de téléphone ne correspond pas à un numéro de téléphone guinéen"))
+
+
+
 class UserAdminCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
-    password1 = forms.CharField(label= _("Password"), widget=forms.PasswordInput)
-    password2 = forms.CharField(label=_('Password confirmation'), widget=forms.PasswordInput)
+    password1 = forms.CharField(label= _("Mot de passe"), widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_('Confirmation mot de passe'), widget=forms.PasswordInput)
+    mobile  = forms.CharField(label=_("Numéro de téléphone"), required=True, widget=forms.TextInput(attrs = {"class": "form-control input-xs",}))
+
 
     class Meta:
         model = User
@@ -54,8 +73,18 @@ class UserAdminCreationForm(forms.ModelForm):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError(_("Passwords don't match"))
+            raise forms.ValidationError(_("Les mots de passe ne correspondent pas"))
         return password2
+
+    def clean_mobile(self):
+        mobile = self.cleaned_data["mobile"]
+        controle = r"^6[2-9][0-9]([ .-]?[0-9]{2}){3}$"
+
+        if match(controle, mobile):
+            return mobile
+        else:
+            raise forms.ValidationError(_("Votre numéro de téléphone ne correspond pas à un numéro de téléphone guinéen"))
+
 
     def save(self, commit=True):
         # Save the provided password in hashed format
@@ -109,8 +138,8 @@ class GuestForm(forms.ModelForm):
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(label = _("Email address"), widget=forms.TextInput(attrs = {"class": "form-control input-xs",}))
-    password = forms.CharField(label = _("Password"), widget=forms.PasswordInput(attrs = {"class": "form-control input-xs",}))
+    email = forms.EmailField(label = _("Adresse émail"), widget=forms.TextInput(attrs = {"class": "form-control input-xs",}))
+    password = forms.CharField(label = _("Mot de passe"), widget=forms.PasswordInput(attrs = {"class": "form-control input-xs",}))
 
     def __init__(self, request, *args, **kwargs):
         self.request = request
@@ -135,30 +164,30 @@ class LoginForm(forms.Form):
                 ## not active, check email activation
                 link = reverse("accounts:resend_activation")
 
-                reconfirm_msg = """ Go here to
-                            <a href="{resend_link}"> resend confirmation email</a>
-                            """.format(resend_link = link)
+                reconfirm_msg = mark_safe(""" Allez-y ici pour 
+                            <a href="{resend_link}" style="color:blue;"> renvoyer la confirmation de l'adresse émail</a>
+                            """.format(resend_link = link))
 
 
                 confirm_email = EmailActivation.objects.filter(email=email)
                 is_confirmable = confirm_email.confirmable().exists()
                 if is_confirmable:
-                    msg1 = "Please check your email to confirm your account or" + reconfirm_msg.lower()
+                    msg1 = "S'il vous plaît vérifiez votre adresse émail pour confirmer votre compte ou" + reconfirm_msg.lower()
                     raise forms.ValidationError(mark_safe(_(msg1)))
 
                 email_confirm_exists = EmailActivation.objects.email_exists(email).exists()
                 if email_confirm_exists:
-                    msg2 = "Email not confirmed" + reconfirm_msg
+                    msg2 = "Adresse émail non confirmée" + reconfirm_msg
                     raise forms.ValidationError(mark_safe(_(msg2)))
 
                 if not is_confirmable and not email_confirm_exists:
-                    msg3 = "This user is inactive" + reconfirm_msg
+                    msg3 = "Cette adresse émail est désactivée" + reconfirm_msg
                     raise forms.ValidationError(mark_safe(msg3))
 
 
         user = authenticate(request, username=email, password=password)
         if user is None:
-            raise forms.ValidationError("Invalide credentials")
+            raise forms.ValidationError("Données invalides")
 
         login(request, user)
         self.user = user
@@ -185,7 +214,7 @@ class ReactivateEmailForm(forms.Form):
         qs = EmailActivation.objects.email_exists(email)
         if not qs.exists():
             register_link = reverse("accounts:register")
-            msg = _(""" This email does not exists, would you like to <a href="{link}">register</a>""".format(link=register_link))
+            msg = _(""" Cette adresse email n'existe pas chez nous ! Pouvez-vous vous rendre <a href="{link}">ici pour vous enregister</a>""".format(link=register_link))
             raise forms.ValidationError(mark_safe(msg))
 
         return email
@@ -198,10 +227,10 @@ class ReactivateEmailForm(forms.Form):
 class RegisterForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
-    email = forms.EmailField(label = _("Email address"), widget=forms.TextInput(attrs = {"class": "form-control input-xs",}))
-    mobile  = forms.CharField(label=_("Phone number"), required=True, widget=forms.TextInput(attrs = {"class": "form-control input-xs",}))
-    password1 = forms.CharField(label= _("Password"), widget=forms.PasswordInput(attrs = {"class": "form-control input-xs","id": "controleMdpSaisi"}))
-    password2 = forms.CharField(label=_('Password confirmation'), widget=forms.PasswordInput(attrs = {"class": "form-control input-xs"}))
+    email = forms.EmailField(label = _("Adresse email"), widget=forms.TextInput(attrs = {"class": "form-control input-xs",}))
+    mobile  = forms.CharField(label=_("Numéro de téléphone"), required=True, widget=forms.TextInput(attrs = {"class": "form-control input-xs",}))
+    password1 = forms.CharField(label= _("Mot de passe"), widget=forms.PasswordInput(attrs = {"class": "form-control input-xs","id": "controleMdpSaisi"}))
+    password2 = forms.CharField(label=_('Confirmation mot de passe'), widget=forms.PasswordInput(attrs = {"class": "form-control input-xs"}))
 
     class Meta:
         model = User
@@ -212,8 +241,19 @@ class RegisterForm(forms.ModelForm):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError(_("Passwords don't match"))
+            raise forms.ValidationError(_("Les deux mots de passe ne correspondent pas !"))
         return password2
+
+
+    def clean_mobile(self):
+        mobile = self.cleaned_data["mobile"]
+        controle = r"^6[2-9][0-9]([ .-]?[0-9]{2}){3}$"
+
+        if match(controle, mobile):
+            return mobile
+        else:
+            raise forms.ValidationError(_("Votre numéro de téléphone ne correspond pas à un numéro de téléphone guinéen"))
+
 
     def save(self, commit=True):
         # Save the provided password in hashed format
@@ -233,7 +273,7 @@ class RegisterForm(forms.ModelForm):
 
 
 class PasswordResetForm(forms.Form):
-    email = forms.EmailField(label=_("Email"), max_length=254)
+    email = forms.EmailField(label=_("Adresse email"), max_length=254)
 
     def send_mail(self, subject_template_name, email_template_name,
                   context, from_email, to_email, html_email_template_name=None):
@@ -306,16 +346,16 @@ class SetPasswordForm(forms.Form):
     password
     """
     error_messages = {
-        'password_mismatch': _("The two password fields didn't match."),
+        'password_mismatch': _("Les deux mots de passe ne correspondent !"),
     }
     new_password1 = forms.CharField(
-        label=_("New password"),
+        label=_("Nouveau mot de passe"),
         widget=forms.PasswordInput,
         strip=False,
         help_text=password_validation.password_validators_help_text_html(),
     )
     new_password2 = forms.CharField(
-        label=_("New password confirmation"),
+        label=_("Confirmation du nouveau mot de passe"),
         strip=False,
         widget=forms.PasswordInput,
     )
@@ -350,7 +390,7 @@ class PasswordChangeForm(SetPasswordForm):
     password.
     """
     error_messages = dict(SetPasswordForm.error_messages, **{
-        'password_incorrect': _("Your old password was entered incorrectly. Please enter it again."),
+        'password_incorrect': _("Votre ancien mot de passe que vous avez entré est incorrecte. S'il vous plaît, veillez reprendre avec le bon mot de passe."),
     })
     old_password = forms.CharField(
         label=_("Old password"),

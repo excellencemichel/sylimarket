@@ -39,13 +39,13 @@ DEFAULT_ACTIVATION_DAYS = getattr(settings, "DEFAULT_ACTIVATION_DAYS", 7)
 class UserManager(BaseUserManager):
 	def create_user(self, email, mobile, password=None, is_active=True, is_staff=False, is_admin=False):
 		if not email:
-			raise ValueError("Users must have an email address")
+			raise ValueError("Les utilisateurs doivent avoir d'adresse émail")
 
 		if not password:
-			raise ValueError("Users must have a password")
+			raise ValueError("Les utilisateurs doivent avoir de mot de passe")
 
 		if not mobile:
-			raise (_("Users must be have a mobile number"))
+			raise (_("Les utilisateurs doivent avoir de mot de passe"))
 		user_obj	= self.model(
 				email = self.normalize_email(email),
 				mobile = mobile
@@ -79,15 +79,17 @@ class UserManager(BaseUserManager):
 		return user
 
 class User(AbstractBaseUser):
-	email 	= models.EmailField(max_length=255, unique=True)
+	email 		= models.EmailField(max_length=255, unique=True, 		error_messages={
+		"unique": _("Un utilisateur avec ce mếme émail existe déjà. Veillez vérifier si c'est pas vous ou bien modifiez ces informations."),
+		},)
 	is_active	= models.BooleanField(default=True) #Can login
 	is_staff 	= models.BooleanField(default=False) #staff user non superuser but can access at administrator
-	admin 	= models.BooleanField(default=False) #superuser
+	admin 		= models.BooleanField(default=False) #superuser
 	timestamp	= models.DateTimeField(auto_now_add=True)
 
-	first_name = models.CharField(_("first name"), max_length=250, blank=True)
-	last_name = models.CharField(_("last name"), max_length=250, blank=True)
-	mobile	= models.CharField(max_length=250)
+	first_name 	= models.CharField(_("first name"), max_length=250, blank=True)
+	last_name 	= models.CharField(_("last name"), max_length=250, blank=True)
+	mobile		= models.CharField(max_length=250)
 
 
 	USERNAME_FIELD = "email" #username
@@ -233,7 +235,7 @@ class EmailActivation(models.Model):
 				}
 				txt_ = get_template("accounts/emails/verify.txt").render(context)
 				html_ = get_template("accounts/emails/verify.html").render(context)
-				subject = _("For activate your account in Sylimarket place")
+				subject = _("Pour l'activation de votre compte sur Sylimarket place")
 				from_email = settings.DEFAULT_FROM_EMAIL
 				recipient_list = [self.email]
 				print("Dans la fonction d'envoi")

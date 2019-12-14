@@ -23,11 +23,15 @@
 				});
 	    	</script>
 
-		{% endblock javascript %}
+{% endblock javascript %}
 
 
 
 {% block content %}
+
+
+
+
 <div class="container">
 	
       <div class="row centered-form">
@@ -113,4 +117,27 @@
 
 
 </div>
+
+
+<script type="text/javascript">
+		    		
+	//Vérification de la longueur du mot de passe saisi
+	document.getElementById("controleMdpSaisi").addEventListener("input", function(e){
+		var mdp = e.target.value;//Valeur saisie dans le champ mdp
+		var longueurMdp = "faible";
+		var couleurmsg = "red";//Longueur faible=>couleur rouge
+		if(mdp.length>=8){
+			longueurMdp = "Suffisante";
+			couleurmsg="green";//Longueur suffisante=>couleurmsg verte
+		}
+		else if(mdp.length>=4){
+			longueurMdp = "moyenne";
+			couleurmsg = "orange";//Longueur moyenne=>couleurmsg orange
+		}
+
+		var aideMdpElt = document.getElementById("aideMdp");
+		aideMdp.textContent="Longueur : " + longueurMdp; //Texte de l'aide
+		aideMdp.style.color = couleurmsg;//Couleur du texte de l'aide
+	});
+</script>
 {% endblock content %}

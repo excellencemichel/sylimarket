@@ -89,6 +89,11 @@ class Phone(PhoneAbstractModel):
 		return self.name
 
 
+	class Meta:
+		verbose_name = "Téléphone portable"
+		verbose_name_plural ="Téléphones portable"
+
+
 
 
 
@@ -107,6 +112,12 @@ class Tablette(PhoneAbstractModel):
 
 	def __str__(self):
 		return self.name
+
+
+
+	class Meta:
+		verbose_name ="Tablette"
+		verbose_name_plural = "Tablettes"
 
 
 
@@ -142,6 +153,11 @@ class AccessoirePhone(PrototypeAbstract):
 
 	def __str__(self):
 		return self.name
+
+
+	class Meta:
+		verbose_name = "Accessoire téléphone"
+		verbose_name_plural ="Accessoires téléphone"
 
 
 
