@@ -656,7 +656,7 @@
         
         <!-- ============================================== Testimonials: END ============================================== -->
         
-        <div class="home-banner"> <img src="{% static 'images/banners/sm.png' %}" alt="Image"> </div>
+<!--         <div class="home-banner"> <img src="{% static 'images/banners/sm.png' %}" alt="Image"> </div> -->
       </div>
       <!-- /.sidemenu-holder --> 
       <!-- ============================================== SIDEBAR : END ============================================== --> 
@@ -667,13 +667,13 @@
         
         <div id="hero">
           <div id="owl-main" class="owl-carousel owl-inner-nav owl-ui-sm">
-            <div class="item" style="background-image: url({% static 'images/sliders/01.jpg' %});">
+            <div class="item" style="background-image: url({% static 'images/sliders/slide1.jpg' %});">
               <div class="container-fluid">
                 <div class="caption bg-color vertical-center text-left">
-                  <div class="slider-header fadeInDown-1">Top marques</div>
-                  <div class="big-text fadeInDown-1"> Nouvelles Collections </div>
-                  <div class="excerpt fadeInDown-2 hidden-xs"> <span>Et cela passe comme l'éclair, si on veut prendre tout son temps.</span> </div>
-                  <div class="button-holder fadeInDown-3"> <a href="index6c11.html?page=single-product" class="btn-lg btn btn-uppercase btn-primary shop-now-button">Payez maintenant</a> </div>
+                  <div class="slider-header fadeInDown-1"></div>
+                  <div class="big-text fadeInDown-1"> </div>
+                  <div class="excerpt fadeInDown-2 hidden-xs"> <span></span> </div>
+                  <div class="button-holder fadeInDown-3"> <a href="" class="btn-lg btn btn-uppercase btn-primary shop-now-button">Payez maintenant</a> </div>
                 </div>
                 <!-- /.caption --> 
               </div>
@@ -681,13 +681,13 @@
             </div>
             <!-- /.item -->
 
-            <div class="item" style="background-image: url({% static 'images/sliders/01.jpg' %});">
+            <div class="item" style="background-image: url({% static 'images/sliders/slide2.jpg' %});">
               <div class="container-fluid">
                 <div class="caption bg-color vertical-center text-left">
-                  <div class="slider-header fadeInDown-1">Top marques</div>
-                  <div class="big-text fadeInDown-1"> New Collections </div>
-                  <div class="excerpt fadeInDown-2 hidden-xs"> <span>Profitez en pour ne pas laisser l'occasion au autres.</span> </div>
-                  <div class="button-holder fadeInDown-3"> <a href="index6c11.html?page=single-product" class="btn-lg btn btn-uppercase btn-primary shop-now-button">Shop Now</a> </div>
+                  <div class="slider-header fadeInDown-1"></div>
+                  <div class="big-text fadeInDown-1"> </div>
+                  <div class="excerpt fadeInDown-2 hidden-xs"> <span></span> </div>
+                  <div class="button-holder fadeInDown-3"> <a href="#" class="btn-lg btn btn-uppercase btn-primary shop-now-button">Payez maintenant</a> </div>
                 </div>
                 <!-- /.caption --> 
               </div>
@@ -696,13 +696,13 @@
             <!-- /.item -->
 
 
-            <div class="item" style="background-image: url({% static 'images/sliders/01.jpg' %});">
+            <div class="item" style="background-image: url({% static 'images/sliders/slide3.jpg' %});">
               <div class="container-fluid">
                 <div class="caption bg-color vertical-center text-left">
-                  <div class="slider-header fadeInDown-1">Marques Top</div>
-                  <div class="big-text fadeInDown-1"> New Collections </div>
-                  <div class="excerpt fadeInDown-2 hidden-xs"> <span>La garantie suit la performance.</span> </div>
-                  <div class="button-holder fadeInDown-3"> <a href="index6c11.html?page=single-product" class="btn-lg btn btn-uppercase btn-primary shop-now-button">Shop Now</a> </div>
+                  <div class="slider-header fadeInDown-1"></div>
+                  <div class="big-text fadeInDown-1"></div>
+                  <div class="excerpt fadeInDown-2 hidden-xs"> <span></span> </div>
+                  <div class="button-holder fadeInDown-3"> <a href="#" class="btn-lg btn btn-uppercase btn-primary shop-now-button">Payez maintenant</a> </div>
                 </div>
                 <!-- /.caption --> 
               </div>
@@ -710,13 +710,13 @@
             </div>
             <!-- /.item -->
             
-            <div class="item" style="background-image: url({% static 'images/sliders/02.jpg' %});">
+            <div class="item" style="background-image: url({% static 'images/sliders/slide4.jpg' %});">
               <div class="container-fluid">
                 <div class="caption bg-color vertical-center text-left">
-                  <div class="slider-header fadeInDown-1">Printemps 2019</div>
-                  <div class="big-text fadeInDown-1"> women <span class="highlight">Fashion</span> </div>
-                  <div class="excerpt fadeInDown-2 hidden-xs"> <span>Premier venu ! ... Premier servi... Et c'est comme cela</span> </div>
-                  <div class="button-holder fadeInDown-3"> <a href="index6c11.html?page=single-product" class="btn-lg btn btn-uppercase btn-primary shop-now-button">Shop Now</a> </div>
+                  <div class="slider-header fadeInDown-1"></div>
+                  <div class="big-text fadeInDown-1"><span class="highlight"></span> </div>
+                  <div class="excerpt fadeInDown-2 hidden-xs"> <span></span> </div>
+                  <div class="button-holder fadeInDown-3"> <a href="#" class="btn-lg btn btn-uppercase btn-primary shop-now-button">Shop Now</a> </div>
                 </div>
                 <!-- /.caption --> 
               </div>
@@ -825,7 +825,7 @@
                             </div>
                             <div class="description">
                             </div>
-                            <div class="product-price"> <span class="price">{{ product.price }} GNF </span> <span class="price-before-discount">{{ product.price }} GNF
+                            <div class="product-price"> <span class="price">{{ product.price }} GNF </span> <span class="price-before-discount">{{ product.promotion }} GNF
                             </span>
 
                             </div>
@@ -903,7 +903,7 @@
                                 {% include "carts/snippets/update_cart.html" with product=product %}
                               </div>
                               <div class="description"></div>
-                              <div class="product-price"> <span class="price">{{ product.price }} GNF </span> <span class="price-before-discount"> { product.price }} GNF</span> </div>
+                              <div class="product-price"> <span class="price">{{ product.price }} GNF </span> <span class="price-before-discount"> { product.promotion }} GNF</span> </div>
                               <!-- /.product-price --> 
                               
                             </div>
@@ -974,7 +974,7 @@
                                 {% include "carts/snippets/update_cart.html" with product=product %}
                               </div>
                               <div class="description"></div>
-                              <div class="product-price"> <span class="price"> {{ product.price }} GNF </span> <span class="price-before-discount"> {{ product.price }}</span> </div>
+                              <div class="product-price"> <span class="price"> {{ product.price }} GNF </span> <span class="price-before-discount"> {{ product.promotion }}</span> </div>
                               <!-- /.product-price --> 
                               
                             </div>
@@ -1047,7 +1047,7 @@
                                 {% include "carts/snippets/update_cart.html" with product=product %}
                               </div>
                               <div class="description"></div>
-                              <div class="product-price"> <span class="price"> {{ product.price }} GNF </span> <span class="price-before-discount"> {{ product.price }} GNF</span> </div>
+                              <div class="product-price"> <span class="price"> {{ product.price }} GNF </span> <span class="price-before-discount"> {{ product.promotion }} GNF</span> </div>
                               <!-- /.product-price --> 
                               
                             </div>
@@ -1137,7 +1137,7 @@
                       {% include "carts/snippets/update_cart.html" with product=product %}
                     </div>
                     <div class="description"></div>
-                    <div class="product-price"> <span class="price"> {{ phones_new.price }} GNF </span> <span class="price-before-discount"> {{ phones_new.price }} GNF</span> </div>
+                    <div class="product-price"> <span class="price"> {{ phones_new.price }} GNF </span> <span class="price-before-discount"> {{ phones_new.promotion }} GNF</span> </div>
                     <!-- /.product-price --> 
                     
                   </div>

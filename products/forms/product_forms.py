@@ -1,6 +1,8 @@
 from django import forms
 
 from utils.generator_utils import unique_slug_generator
+from django.utils.translation import gettext_lazy as _
+
 
 #import from models
 from products.models import (  Product,
@@ -30,6 +32,7 @@ def save_instance_model(instance, instance_type):
 				name=instance.name,
 				description = instance.description,
 				price = instance.price,
+				promotion = instance.promotion,
 				taux_taxe = instance.taux_taxe,
 				taxe 	  = instance.taxe,
 				subtotal = instance.subtotal,
@@ -57,6 +60,7 @@ def save_instance_model(instance, instance_type):
 		name=instance.name,
 		description = instance.description,
 		price = instance.price,
+		promotion = instance.promotion,
 		taux_taxe = instance.taux_taxe,
 		taxe      = instance.taxe,
 		subtotal = instance.subtotal,
@@ -326,6 +330,9 @@ class ComputerForm(forms.ModelForm):
 
 
 class AccessoireComputerForm(forms.ModelForm):
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
 	class Meta:
 		model = AccessoireComputer
 		fields = "__all__"
