@@ -14,4 +14,3 @@ ecommerce/production.py
 logs
 logs/
 
-*migrations

@@ -32,7 +32,7 @@ class PrototypeAbstract(models.Model):
 	name 				= models.CharField(max_length=250)
 	description 		= models.TextField()
 	price 				= models.DecimalField(max_digits=40, decimal_places=2)
-	promotion 			= models.DecimalField(max_digits=40, decimal_places=2)
+	promotion 			= models.DecimalField(max_digits=40, decimal_places=2, null=True, blank=True)
 	taux_taxe			= models.PositiveIntegerField(default=0)
 	taxe 				= models.DecimalField(default=0.00, max_digits=100, decimal_places =2 )
 	subtotal 			= models.DecimalField(default=0.00, max_digits=100, decimal_places =2 )
