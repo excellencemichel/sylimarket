@@ -3,6 +3,13 @@
 {% load static %}
 
 
+{% block title %}
+
+<title>SyliMarket</title>
+
+{% endblock title %}
+
+
     {% block content %}
     <div class="row"> 
       <!-- ============================================== SIDEBAR ============================================== -->
@@ -784,7 +791,7 @@
             <ul class="nav nav-tabs nav-tab-line pull-right" id="new-products-1">
               <li class="active"><a data-transition-type="backSlide" href="#all" data-toggle="tab">Tout</a></li>
               <li><a data-transition-type="backSlide" href="#smartphone" data-toggle="tab">Vêtements</a></li>
-              <li><a data-transition-type="backSlide" href="#laptop" data-toggle="tab">Electroniques</a></li>
+              <li><a data-transition-type="backSlide" href="#laptop" data-toggle="tab">Electro</a></li>
               <li><a data-transition-type="backSlide" href="#apple" data-toggle="tab">Chaussures</a></li>
             </ul>
             <!-- /.nav-tabs --> 
@@ -941,6 +948,10 @@
 
             <!-- Arrivage Vetement End -->
 
+
+
+
+
             <!-- Arrivage Electronique -->
             
             <div class="tab-pane" id="laptop">
@@ -948,6 +959,65 @@
                 <div class="owl-carousel home-owl-carousel custom-carousel owl-theme">
                   {% if news_electroniques %}
                     {% for product in news_electroniques %}
+                      <div class="item item-carousel">
+                        <div class="products">
+                          <div class="product">
+                            <div class="product-image">
+                              <div class="image"> <a href="{{ product.get_absolute_url }}"><img  src="{{ product.image.url }}" alt=""></a> </div>
+                              <!-- /.image -->
+                              
+                              {% if product.featured %}
+                              <div class="tag new"><span>new</span></div>
+
+                              {% elif  product.solde %}
+                              <div class="tag sale"><span>sale</span></div>
+
+                              {% elif  product.special %}
+                              <div class="tag hot"><span>hot</span></div>
+                              {% else %}
+                              {% endif %}
+                            </div>
+                            <!-- /.product-image -->
+                            
+                            <div class="product-info text-left">
+                              <h3 class="name"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
+                              <div class="rating rateit-small">
+                                {% include "carts/snippets/update_cart.html" with product=product %}
+                              </div>
+                              <div class="description"></div>
+                              <div class="product-price"> <span class="price"> {{ product.price }} GNF </span> <span class="price-before-discount"> {{ product.promotion }}</span> </div>
+                              <!-- /.product-price --> 
+                              
+                            </div>
+                            <!-- /.product-info -->
+                            <div class="cart clearfix animate-effect">
+                              <div class="action">
+                                <ul class="list-unstyled">
+                                  <li class="add-cart-button btn-group">
+                                    <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
+                                    <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
+                                  </li>
+                                  <li class="lnk wishlist"> <a class="add-to-cart" href="{{ product.get_absolute_url }}" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                                  <li class="lnk"> <a class="add-to-cart" href="{{ product.get_absolute_url }}" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
+                                </ul>
+                              </div>
+                              <!-- /.action --> 
+                            </div>
+                            <!-- /.cart --> 
+                          </div>
+                          <!-- /.product --> 
+                          
+                        </div>
+                        <!-- /.products --> 
+                      </div>
+                      <!-- /.item -->
+                    {% endfor %}
+                  {% endif %}
+
+
+
+                  {% if news_electromenagers %}
+                    {% for product in news_electromenagers %}
                       <div class="item item-carousel">
                         <div class="products">
                           <div class="product">
@@ -1011,6 +1081,9 @@
             <!-- /.tab-pane -->
 
             <!-- Eventail Electronique END -->
+
+
+
 
 
 
@@ -1085,6 +1158,8 @@
 
 
             <!-- Eventail Chaussure END -->
+
+
             
           </div>
           <!-- /.tab-content --> 
@@ -1118,13 +1193,13 @@
         <section class="section featured-product wow fadeInUp">
           <h3 class="section-title">Produits fares</h3>
           <div class="owl-carousel home-owl-carousel custom-carousel owl-theme outer-top-xs">
-            {% if phones_new %}
-            {% for phones_new in phones_new %}
+            {% if news_electroniques %}
+            {% for product in news_electroniques %}
             <div class="item item-carousel">
               <div class="products">
                 <div class="product">
                   <div class="product-image">
-                    <div class="image"> <a href="{{ phones_new.get_absolute_url }}"><img  src="{% static 'images/products/p5.jpg' %}" alt=""></a> </div>
+                    <div class="image"> <a href="{{ product.get_absolute_url }}"><img  src="{% static 'images/products/p5.jpg' %}" alt=""></a> </div>
                     <!-- /.image -->
                     
                     <div class="tag hot"><span>Chaud</span></div>
@@ -1132,12 +1207,12 @@
                   <!-- /.product-image -->
                   
                   <div class="product-info text-left">
-                    <h3 class="name"><a href="{{ phones_new.get_absolute_url }}">{{ phones_new.name }}</a></h3>
+                    <h3 class="name"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
                     <div class="rating rateit-small">
                       {% include "carts/snippets/update_cart.html" with product=product %}
                     </div>
                     <div class="description"></div>
-                    <div class="product-price"> <span class="price"> {{ phones_new.price }} GNF </span> <span class="price-before-discount"> {{ phones_new.promotion }} GNF</span> </div>
+                    <div class="product-price"> <span class="price"> {{ product.price }} GNF </span> <span class="price-before-discount"> {{ product.promotion }} GNF</span> </div>
                     <!-- /.product-price --> 
                     
                   </div>
@@ -1150,8 +1225,60 @@
                       {% include "carts/snippets/update_cart.html" with product=product %}
 
                         </li>
-                        <li class="lnk wishlist"> <a class="add-to-cart" href="{{ phones_new.get_absolute_url }}" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                        <li class="lnk"> <a class="add-to-cart" href="{{ phones_new.get_absolute_url }}" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
+                        <li class="lnk wishlist"> <a class="add-to-cart" href="{{ product.get_absolute_url }}" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                        <li class="lnk"> <a class="add-to-cart" href="{{ product.get_absolute_url }}" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
+                      </ul>
+                    </div>
+                    <!-- /.action --> 
+                  </div>
+                  <!-- /.cart --> 
+                </div>
+                <!-- /.product --> 
+                
+              </div>
+              <!-- /.products --> 
+            </div>
+            <!-- /.item -->
+
+            {% endfor %}
+            {% endif %}
+
+
+
+            {% if news_electromenagers %}
+            {% for product in news_electromenagers %}
+            <div class="item item-carousel">
+              <div class="products">
+                <div class="product">
+                  <div class="product-image">
+                    <div class="image"> <a href="{{ product.get_absolute_url }}"><img  src="{% static 'images/products/p5.jpg' %}" alt=""></a> </div>
+                    <!-- /.image -->
+                    
+                    <div class="tag hot"><span>Chaud</span></div>
+                  </div>
+                  <!-- /.product-image -->
+                  
+                  <div class="product-info text-left">
+                    <h3 class="name"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
+                    <div class="rating rateit-small">
+                      {% include "carts/snippets/update_cart.html" with product=product %}
+                    </div>
+                    <div class="description"></div>
+                    <div class="product-price"> <span class="price"> {{ product.price }} GNF </span> <span class="price-before-discount"> {{ product.promotion }} GNF</span> </div>
+                    <!-- /.product-price --> 
+                    
+                  </div>
+                  <!-- /.product-info -->
+                  <div class="cart clearfix animate-effect">
+                    <div class="action">
+                      <ul class="list-unstyled">
+                        <li class="add-cart-button btn-group">
+                          <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
+                      {% include "carts/snippets/update_cart.html" with product=product %}
+
+                        </li>
+                        <li class="lnk wishlist"> <a class="add-to-cart" href="{{ product.get_absolute_url }}" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                        <li class="lnk"> <a class="add-to-cart" href="{{ product.get_absolute_url }}" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
                       </ul>
                     </div>
                     <!-- /.action --> 
@@ -1531,9 +1658,71 @@
         <!-- RAYON ELECTRONIQUE END -->
 
 
-<!-- End RAYON -->
+<!-- End RAYON ELECTRONIQUE -->
         
 
+
+
+
+                <!-- RAYON ELECTRONIQUE -->
+  
+        <div class="best-deal wow fadeInUp outer-bottom-xs">
+          <h3 class="section-title">Rayon Électromenagers</h3>
+          <div class="sidebar-widget-body outer-top-xs">
+            <div class="owl-carousel best-seller custom-carousel owl-theme outer-top-xs">
+            {% if electromenagers %}
+              {% for product in electromenagers %}
+                <div class="item">
+                  <div class="products best-product">
+                    <div class="product">
+                      <div class="product-micro">
+                        <div class="row product-micro-row">
+                          <div class="col col-xs-5">
+                            <div class="product-image">
+                              <div class="image"> <a href="{{ product.get_absolute_url }}"> <img src="{{ product.image.url }}" alt=""> </a> </div>
+                              <!-- /.image --> 
+                              
+                            </div>
+                            <!-- /.product-image --> 
+                          </div>
+                          <!-- /.col -->
+                          <div class="col2 col-xs-7">
+                            <div class="product-info">
+                              <h3 class="name"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
+                              <div class="rating rateit-small">
+                                {% include "carts/snippets/update_cart.html" with product=product %}
+                              </div>
+                              <div class="product-price"> <span class="price"> {{ product.price }} GNF </span> </div>
+                              <!-- /.product-price --> 
+                              
+                            </div>
+                          </div>
+                          <!-- /.col --> 
+                        </div>
+                        <!-- /.product-micro-row --> 
+                      </div>
+                      <!-- /.product-micro --> 
+                      
+                    </div>
+                  </div>
+                </div>
+
+               {% endfor %}
+            {% endif %}
+            
+
+            </div>
+          </div>
+          <!-- /.sidebar-widget-body --> 
+        </div>
+        <!-- /.sidebar-widget --> 
+ 
+
+        <!-- RAYON ELECTRONIQUE END -->
+
+
+<!-- End RAYON ELECTROMENAGER -->
+    
         {% include 'base/marques.html' %}
         
       </div>

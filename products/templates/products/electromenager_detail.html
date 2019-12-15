@@ -3,7 +3,7 @@
 
 {% block title %}
 
-<title>SyliMarket:Téléphones</title>
+<title>SyliMarket:Électromenagers</title>
 
 {% endblock title %}
 
@@ -13,7 +13,7 @@
 	<div class="container">
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
-				<li><a href="{% url 'home' %}" >Home</a></li>
+				<li><a href="#">Home</a></li>
 				<li class='active'>{{ product.name }}</li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
@@ -36,100 +36,12 @@
                 </a>
             </div><!-- /.single-product-gallery-item -->
 
-            <div class="single-product-gallery-item" id="slide2">
-                <a data-lightbox="image-1" data-title="Gallery" href="{{ phone.image_face.url }}">
-                    <img class="img-responsive" alt="" src="{{ phone.image_face.url }}" data-echo="{{ phone.image_face.url }}" />
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-
-            <div class="single-product-gallery-item" id="slide3">
-                <a data-lightbox="image-1" data-title="Gallery" href="{{ phone.image_dos.url }}">
-                    <img class="img-responsive" alt="" src="{{ phone.image_dos.url }}" data-echo="{{ phone.image_dos.url }}" />
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-
-            <div class="single-product-gallery-item" id="slide4">
-                <a data-lightbox="image-1" data-title="Gallery" href="{{ phone.image_haut.url }}">
-                    <img class="img-responsive" alt="" src="{{ phone.image_haut.url }}" data-echo="{{ phone.image_haut.url }}" />
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-
-            <div class="single-product-gallery-item" id="slide5">
-                <a data-lightbox="image-1" data-title="Gallery" href="{{ phone.image_bas.url }}">
-                    <img class="img-responsive" alt="" src="{{ phone.image_bas.url }}" data-echo="{{ phone.image_bas.url }}" />
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-
-            <div class="single-product-gallery-item" id="slide6">
-                <a data-lightbox="image-1" data-title="Gallery" href="{{ phone.image_gauche.url }}">
-                    <img class="img-responsive" alt="" src="{{ phone.image_gauche.url }}" data-echo="{{ phone.image_gauche.url }}" />
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-
-            <div class="single-product-gallery-item" id="slide7">
-                <a data-lightbox="image-1" data-title="Gallery" href="{{ phone.image_droite.url }}">
-                    <img class="img-responsive" alt="" src="{{ phone.image_droite.url }}" data-echo="{{ phone.image_droite.url }}" />
-                </a>
-            </div><!-- /.single-product-gallery-item -->
-
         </div><!-- /.single-product-slider -->
 
 
-        <div class="single-product-gallery-thumbs gallery-thumbs">
-
-            <div id="owl-single-product-thumbnails">
-                <div class="item">
-                    <a class="horizontal-thumb active" data-target="#owl-single-product" data-slide="1" href="#slide1">
-
-
-                        <img class="img-responsive" width="85" alt="" src="{{ product.image.url }}" data-echo="{{ product.image.url }}" />
-                    </a>
-                </div>
-
-                <div class="item">
-                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="2" href="#slide2">
-                        <img class="img-responsive" width="85" alt="" src="{{ phone.image_face.url }}" data-echo="{{ phone.image_face.url }}"/>
-                    </a>
-                </div>
-                <div class="item">
-
-                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="3" href="#slide3">
-                        <img class="img-responsive" width="85" alt="" src="{{ phone.image_dos.url }}" data-echo="{{ phone.image_dos.url }}" />
-                    </a>
-                </div>
-                <div class="item">
-
-                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="4" href="#slide4">
-                        <img class="img-responsive" width="85" alt="" src="{{ phone.image_haut.url }}" data-echo="{{ phone.image_haut.url }}" />
-                    </a>
-                </div>
-                <div class="item">
-
-                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="5" href="#slide5">
-                        <img class="img-responsive" width="85" alt="" src="{{ phone.image_bas.url }}" data-echo="{{ phone.image_bas.url }}" />
-                    </a>
-                </div>
-                <div class="item">
-
-                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="6" href="#slide6">
-                        <img class="img-responsive" width="85" alt="" src="{{ phone.image_gauche.url }}" data-echo="{{ phone.image_gauche.url }}" />
-                    </a>
-                </div>
-                <div class="item">
-
-                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="7" href="#slide7">
-                        <img class="img-responsive" width="85" alt="" src="{{ phone.image_droite.url }}" data-echo="{{ phone.image_droite.url }}" />
-                    </a>
-                </div>
-            </div><!-- /#owl-single-product-thumbnails -->
-
-            
-
-        </div><!-- /.gallery-thumbs -->
-
     </div><!-- /.single-product-gallery -->
 </div><!-- /.gallery-holder -->        			
-			{% include "products/snippets/details/description.html" with product=product %}
+		{% include "products/snippets/details/description.html" with product=product %}
 				</div><!-- /.row -->
                 </div>
 				
@@ -148,20 +60,18 @@
 								
 								<div id="description" class="tab-pane in active">
 									<div class="product-tab">
-										<p class="text">											
+										<p class="text">
 											<h3>Detail du produit</h3>
 											<ul>
-												<li>Marque : {{ phone.marque }}</li>
-												<li>Model du téléphone : {{ phone.product_marque }}</li>
-												<li>Couleur: {{ phone.couleur }} </li>
-												<li>Taille de l'écran: {{ phone.taile_ecran }} </li>
-												<li>Memoire : {{ phone.memoire }} </li>
-												<li>Caméra: {{ phone.appareil_photo }} </li>
-												<li>Système d'exploitation: {{ phone.systeme_exploitation }} </li>
-												<li>Processeur: {{ phone.processeur }} </li>
-												<li>Batterie: {{ phone.batterie }} </li>
+												<li>Marque : {{ electromenager.marque }}</li>
+												<li>Model : {{ electromenager.product_marque }}</li>
+												<li>Type: {{ electromenager.accessoire_type }} </li>
 											</ul>
-	
+											<h3>Caractéristique du produit</h3>
+											{{ electromenager.caracteristique }}
+
+
+										</p>
 									</div>	
 								</div><!-- /.tab-pane -->
 
@@ -268,19 +178,7 @@
 									<div class="product-tag">
 										
 										<h4 class="title">Product Tags</h4>
-										<form role="form" class="form-inline form-cnt">
-											<div class="form-container">
-									
-												<div class="form-group">
-													<label for="exampleInputTag">Add Your Tags: </label>
-													<input type="email" id="exampleInputTag" class="form-control txt">
-													
-
-												</div>
-
-												<button class="btn btn-upper btn-primary" type="submit">ADD TAGS</button>
-											</div><!-- /.form-container -->
-										</form><!-- /.form-cnt -->
+										{% include "tags/snippets/update_tag_form.html" with product=product %}
 
 										<form role="form" class="form-inline form-cnt">
 											<div class="form-group">

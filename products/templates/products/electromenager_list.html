@@ -1,14 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 
-
 {% block title %}
 
-<title>SyliMarket:Vêtements</title>
+<title>SyliMarket:Électromenagers</title>
 
 {% endblock title %}
-
-
 
 {% block content %}
 
@@ -18,7 +15,7 @@
     <div class="breadcrumb-inner">
       <ul class="list-inline list-unstyled">
         <li><a href="{% url 'home' %}">Home</a></li>
-        <li class='active'>Vêtements</li>
+        <li class='active'>Électromenagers</li>
       </ul>
 
     </div>
@@ -147,7 +144,7 @@
                             <h3 class="name"><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></h3>
                             <div class="rating rateit-small"></div>
                             <div class="description"></div>
-                            <div class="product-price"> <span class="price"> ${{ object.price }} </span> <span class="price-before-discount">$ {{ object.price }}</span> </div>
+                            <div class="product-price"> <span class="price"> ${{ object.price }} </span> <span class="price-before-discount">$ {{ object.promotion }}</span> </div>
                             <!-- /.product-price --> 
                             
                           </div>
@@ -201,7 +198,7 @@
                             <div class="product-info">
                               <h3 class="name"><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></h3>
                               <div class="rating rateit-small"></div>
-                              <div class="product-price"> <span class="price"> ${{ object.price}} </span> <span class="price-before-discount">$ {{ object.price}}</span> </div>
+                              <div class="product-price"> <span class="price"> ${{ object.price}} </span> <span class="price-before-discount">$ {{ object.promotion}}</span> </div>
                               <!-- /.product-price -->
                               <div class="description m-t-10">{{ object.description }}</div>
                               <div class="cart clearfix animate-effect">

@@ -109,7 +109,7 @@
                 </div>
                 <div class="clearfix"></div>
                   
-                <a href="{% url 'carts:home' %}" class="btn btn-upper btn-primary btn-block m-t-20">Passer à la caisse</a>  
+                <a href="{% url 'carts:home' %}" class="btn btn-upper btn-primary btn-block m-t-20">La caisse</a>  
               </div><!-- /.cart-total-->
                   
                 
@@ -291,7 +291,69 @@
                   </ul>
                 </li>
                 <li class="dropdown hidden-sm"> <a href="#">Santé & Beauté <span class="menu-label new-menu hidden-xs">new</span> </a> </li>
-                <li class="dropdown hidden-sm"> <a href="#">Watches</a> </li>
+
+
+                <li class="dropdown mega-menu"> 
+                <a href="#"  data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Electroménagers <span class="menu-label hot-menu hidden-xs">hot</span> </a>
+                  <ul class="dropdown-menu container">
+                    <li>
+                      <div class="yamm-content">
+                        <div class="row">
+                          <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
+                            <h2 class="title">Cuisine</h2>
+                            <ul class="links">
+                              <li><a href="{% url 'products:electromenager_list' %}">Mixeurs</a></li>
+                              <li><a href="{% url 'products:electromenager_list' %}">Bateurs</a></li>
+                              <li><a href="{% url 'products:electromenager_list' %}">Réchauds</a></li>
+                              <li><a href="{% url 'products:electromenager_list' %}">...</a></li>
+
+
+                            </ul>
+                          </div>
+                          <!-- /.col -->
+                          
+                          <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
+                            <h2 class="title">Toilettes</h2>
+                            <ul class="links">
+                              <li><a href="{% url 'products:electromenager_list' %}">Machines à laver</a></li>
+                              <li><a href="{% url 'products:electromenager_list' %}">Savons</a></li>
+                              <li><a href="{% url 'products:electromenager_list' %}">Crèmes</a></li>
+                              <li><a href="{% url 'products:electromenager_list' %}">...</a></li>
+
+                            </ul>
+                          </div>
+                          <!-- /.col -->
+                          
+                          <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
+                            <h2 class="title">Maison</h2>
+                            <ul class="links">
+                              <li><a href="{% url 'products:electromenager_list' %}">Chauffage</a></li>
+                              <li><a href="{% url 'products:electromenager_list' %}">Meubles</a></li>
+                              <li><a href="{% url 'products:electromenager_list' %}">Lits</a></li>
+                              <li><a href="{% url 'products:electromenager_list' %}">Valises</a></li>
+                              <li><a href="{% url 'products:electromenager_list' %}">...</a></li>
+                            </ul>
+                          </div>
+                          <!-- /.col -->
+                          <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
+                            <h2 class="title">Cour</h2>
+                            <ul class="links">
+                              <li><a href="{% url 'products:electromenager_list' %}">Outils</a></li>
+                              <li><a href="{% url 'products:electromenager_list' %}">Sécurités</a></li>
+                              <li><a href="{% url 'products:electromenager_list' %}">...</a></li>
+
+                            </ul>
+                          </div>
+                          <div class="col-xs-12 col-sm-12 col-md-4 col-menu custom-banner"> <a href="{% url 'products:electromenager_list' %}"><img alt="" src="{% static 'images/sliders/slide3_.jpg' %}"></a> </div>
+                        </div>
+                        <!-- /.row --> 
+                      </div>
+                      <!-- /.yamm-content --> </li>
+                  </ul>
+                </li>
+
+<!--                 <li class="dropdown hidden-sm"> <a href="#">Watches</a> </li>
+ -->
                 <li class="dropdown"> <a href="#">Bijouteries</a> </li>
                 <li class="dropdown"> <a href="#">Chaussures</a> </li>
                 <li class="dropdown"> <a href="#">Mecs & Moeufs</a> </li>

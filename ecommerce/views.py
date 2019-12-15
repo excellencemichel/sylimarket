@@ -21,7 +21,9 @@ from products.models import (  Product,
 					Computer, AccessoireComputer,
 
 					#phones
-					Phone, Tablette, AccessoirePhone
+					Phone, Tablette, AccessoirePhone,
+
+					Electromenager,
 
 					)
 
@@ -67,6 +69,12 @@ def home(request):
 		Q(product_type=Product.COMPUTER_ACCESSOIRE)
 		)
 
+
+	news_electromenagers = news_products.filter(product_type=Product.ELECTROMENAGER)
+
+
+
+
 	news_chaussures = news_products.filter(
 		Q(product_type=Product.MEN_SHOE)|
 		Q(product_type=Product.WOMEN_SHOE)|
@@ -102,6 +110,8 @@ def home(request):
 		Q(product_type=Product.COMPUTER_ACCESSOIRE)
 		)
 
+
+
 	good_deal = products.good_deal()
 	special_products = products.special_products()
 	today_deal = products.today_deal()
@@ -125,6 +135,10 @@ def home(request):
 	culottes = Product.objects.get_culottes()
 
 
+	electromenagers = Product.objects.get_electromenagers()
+
+
+
 
 
 
@@ -138,6 +152,9 @@ def home(request):
 		"news_clothings": news_clothings,
 		"news_electroniques" : news_electroniques,
 		"news_chaussures": news_chaussures,
+
+		"news_electromenagers": news_electromenagers,
+
 
 
 
@@ -164,31 +181,19 @@ def home(request):
 		"tablettes": tablettes,
 		"accessoire_phones": accessoire_phones,
 
+
 		"computers": computers,
 		"accessoire_computers": accessoire_computers,
+
 
 		"men_shoes": men_shoes,
 		"women_shoes": women_shoes,
 
-		# New
-		# "men_clothings_new": men_clothings_new,
-		# "women_clothings_new": women_clothings_new,
-		# "accessoire_clothings_new": accessoire_clothings_new,
-
-		# "pantalons_new": pantalons_new,
-		# "jupes_new": jupes_new,
-		# "culottes_new": culottes_new,
+		"electromenagers": electromenagers,
 
 
-		# "phones_new": phones_new,
-		# "tablettes_new": tablettes_new,
-		# "accessoire_phones_new": accessoire_phones_new,
 
-		# "computers_new": computers_new,
-		# "accessoire_computers_new": accessoire_computers_new,
 
-		# "men_shoes_new": men_shoes_new,
-		# "women_shoes_new": women_shoes_new,
 
 
 

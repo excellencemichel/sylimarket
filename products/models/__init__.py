@@ -27,6 +27,10 @@ from .phones import (Phone, Tablette, AccessoirePhone
 		)
 
 
+from .electromenagers import (Electromenager
+		)
+
+
 
 def pre_save_taxe(sender, instance, *args, **kwargs):
 	if instance:
@@ -57,6 +61,9 @@ pre_save.connect(pre_save_taxe, sender=AccessoireComputer)
 pre_save.connect(pre_save_taxe, sender=Phone)
 pre_save.connect(pre_save_taxe, sender=Tablette)
 pre_save.connect(pre_save_taxe, sender=AccessoirePhone)
+
+pre_save.connect(pre_save_taxe, sender=Electromenager)
+
 
 
 
@@ -102,3 +109,7 @@ post_delete.connect(instance_post_delete_receiver, sender=AccessoireComputer)
 post_delete.connect(instance_post_delete_receiver, sender=Phone)
 post_delete.connect(instance_post_delete_receiver, sender=Tablette)
 post_delete.connect(instance_post_delete_receiver, sender=AccessoirePhone)
+
+
+post_delete.connect(instance_post_delete_receiver, sender=Electromenager)
+

@@ -16,7 +16,9 @@ from products.models import (  Product,
 					Computer, AccessoireComputer,
 
 					#phones
-					Phone, Tablette, AccessoirePhone
+					Phone, Tablette, AccessoirePhone,
+
+					Electromenager,
 
 					)
 
@@ -89,22 +91,24 @@ def save_instance_model(instance, instance_type):
 
 
 class ProductForm(forms.ModelForm):
-  
-    class Meta:
-        model = Product
-        exclude = ["slug"]
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
+	class Meta:
+		model = Product
+		exclude = ["slug"]
 
 
-    def save(self, commit=True):
-    	instance = super(ProductForm, self).save(commit=False)
-    	print("Voici instance", instance)
+	def save(self, commit=True):
+		instance = super(ProductForm, self).save(commit=False)
+		print("Voici instance", instance)
 
-    	if not instance.slug:
-    		instance.slug = unique_slug_generator(instance)
-    	if commit:
-    		instance.save()
-    	
-    	return instance
+		if not instance.slug:
+			instance.slug = unique_slug_generator(instance)
+		if commit:
+			instance.save()
+		
+		return instance
 
 
 
@@ -113,6 +117,10 @@ class ProductForm(forms.ModelForm):
 
 
 class MenClothingForm(forms.ModelForm):
+
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
 	class Meta:
 		model = MenClothing
 		fields = "__all__"
@@ -136,6 +144,10 @@ class MenClothingForm(forms.ModelForm):
 
 
 class WomenClothingForm(forms.ModelForm):
+
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
 	class Meta:
 		model = WomenClothing
 		fields = "__all__"
@@ -156,6 +168,9 @@ class WomenClothingForm(forms.ModelForm):
 
 
 class PantalonForm(forms.ModelForm):
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
 	class Meta:
 		model = Pantalon
 		fields = "__all__"
@@ -179,6 +194,9 @@ class PantalonForm(forms.ModelForm):
 
 
 class CulotteForm(forms.ModelForm):
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
 	class Meta:
 		model = Culotte
 		fields = "__all__"
@@ -202,6 +220,10 @@ class CulotteForm(forms.ModelForm):
 
 
 class JupeForm(forms.ModelForm):
+
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
 	class Meta:
 		model = Jupe
 		fields = "__all__"
@@ -223,6 +245,9 @@ class JupeForm(forms.ModelForm):
 
 
 class MenShoesForm(forms.ModelForm):
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
 	class Meta:
 		model = MenShoes
 		fields = "__all__"
@@ -245,6 +270,10 @@ class MenShoesForm(forms.ModelForm):
 
 
 class WomenShoesForm(forms.ModelForm):
+
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
 	class Meta:
 		model = WomenShoes
 		fields = "__all__"
@@ -267,6 +296,10 @@ class WomenShoesForm(forms.ModelForm):
 
 
 class AccessoireClothngForm(forms.ModelForm):
+
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
 	class Meta:
 		model = AccessoireClothng
 		fields = "__all__"
@@ -302,6 +335,10 @@ class AccessoireClothngForm(forms.ModelForm):
 
 
 class ComputerForm(forms.ModelForm):
+
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
 	class Meta:
 		model = Computer
 		fields = "__all__"
@@ -369,6 +406,10 @@ class AccessoireComputerForm(forms.ModelForm):
 
 
 class PhoneForm(forms.ModelForm):
+
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
 	class Meta:
 		model = Phone
 		fields = "__all__"
@@ -394,6 +435,10 @@ class PhoneForm(forms.ModelForm):
 
 
 class TabletteForm(forms.ModelForm):
+
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
 	class Meta:
 		model = Tablette
 		fields = "__all__"
@@ -421,6 +466,10 @@ class TabletteForm(forms.ModelForm):
 
 
 class AccessoirePhoneForm(forms.ModelForm):
+
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
 	class Meta:
 		model = AccessoirePhone
 		fields = "__all__"
@@ -448,9 +497,35 @@ class AccessoirePhoneForm(forms.ModelForm):
 
 
 
+##############---------------Start Electromenager-------------###############
 
 
 
 
 
 
+
+class ElectromenagerForm(forms.ModelForm):
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
+	class Meta:
+		model = Electromenager
+		fields = "__all__"
+		exclude = ["slug", "product", "product_type"]
+
+
+
+	def save(self, commit=True):
+
+		instance = super(ElectromenagerForm, self).save(commit=False)
+		save_instance_model(instance=instance, instance_type=Product.ELECTROMENAGER)
+
+		if commit:
+			instance.save()
+		return instance
+
+
+
+
+##############---------------End Electromenager-------------###############

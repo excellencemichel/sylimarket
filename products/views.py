@@ -43,7 +43,9 @@ from .models import (  Product,
 					Computer, AccessoireComputer,
 
 					#phones
-					Phone, Tablette, AccessoirePhone
+					Phone, Tablette, AccessoirePhone,
+
+					Electromenager,
 
 					)
 
@@ -448,6 +450,26 @@ class AccessoirePhoneListView(ListView):
 		request = self.request
 		return Product.objects.get_phone_accessoires()
 
+
+
+
+
+
+
+class ElectromenagerListView(ListView):
+	template_name = "products/electromenager_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(ElectromenagerListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.get_electromenagers()
 
 
 		
@@ -1139,6 +1161,59 @@ def accessoire_computer_detail(request, pk=None, slug=None, *args, **kwargs):
 
 
 	return render(request, "products/accessoire_cumputer_detail.html", context)
+
+
+
+
+
+def electromenager_detail(request, pk=None, slug=None, *args, **kwargs):
+	product = get_object_or_404(Electromenager, pk=pk, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	try:
+		electromenager = Electromenager.objects.get(product_id = product.id)
+
+	except Electromenager.MultipleObjectsReturned:
+		electromenager = Electromenager.objects.filter(product_id=product.id).first()
+
+	except Electromenager.DoesNotExist:
+		pass
+
+	except:
+		print("Autre erreur non liée à la laison")
+
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
+
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+	stock_list = range(product.stock)
+
+
+
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
+
+
+	context = {
+		"cart": cart_obj,
+		"product": product,
+		"electromenager" :electromenager,
+		"quantite": quantite,
+		"stock_list": stock_list,
+		"views": views,
+
+	}
+
+
+	return render(request, "products/electromenager_detail.html", context)
 
 
 

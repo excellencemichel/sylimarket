@@ -20,7 +20,8 @@ from .views import (
 			accessoire_phone_detail, computer_detail, 
 
 			accessoire_computer_detail,
-			# product_detail,
+
+			electromenager_detail,
 			
 
 
@@ -29,8 +30,10 @@ from .views import (
 			WomenClothingListView, PantalonListView, CulotteListView,
  			JupeListView, MenShoesListView,
 			WomenShoesListView, AccessoireClothngListView,
-			 ComputerListView, AccessoireComputerListView, PhoneListView, 
-			 TabletteListView, AccessoirePhoneListView,
+			ComputerListView, AccessoireComputerListView, PhoneListView, 
+			TabletteListView, AccessoirePhoneListView,
+
+			ElectromenagerListView,
 
 
 			)
@@ -68,6 +71,9 @@ urlpatterns = [
 			path("tablette-list", TabletteListView.as_view(), name="tablette_list"),
 			path("accessoire-phone-list", AccessoirePhoneListView.as_view(), name="accessoire_phone_list"),
 
+			path("electromenager-list", ElectromenagerListView.as_view(), name="electromenager_list"),
+
+
 			# re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/detail/$', product_detail, name="detail"),	
 
 
@@ -86,6 +92,8 @@ urlpatterns = [
 			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/accessoire-phone-detail/$', accessoire_phone_detail, name="accessoire_phone_detail"),			
 			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/computer-detail/$', computer_detail, name="computer_detail"),			
 			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/accessoire-computer-detail/$', accessoire_computer_detail, name="accessoire_computer_detail"),			
+			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/electromenager-detail/$', electromenager_detail, name="electromenager_detail"),			
+
 		
 
 
@@ -94,8 +102,6 @@ urlpatterns = [
 
 
 			path('history/products', UserProductHistoryView.as_view(), name="user_history"),
-
-
 
 
 

@@ -29,7 +29,9 @@ from .models import (  Product,
 					Computer, AccessoireComputer,
 
 					#phones
-					Phone, Tablette, AccessoirePhone
+					Phone, Tablette, AccessoirePhone,
+
+					Electromenager,
 
 					)
 
@@ -47,7 +49,9 @@ from .forms.product_forms import ( ProductForm,
 					ComputerForm, AccessoireComputerForm,
 
 					#phones
-					PhoneForm, TabletteForm, AccessoirePhoneForm
+					PhoneForm, TabletteForm, AccessoirePhoneForm,
+
+					ElectromenagerForm,
 
 					)
 
@@ -987,6 +991,66 @@ class AccessoirePhoneAdmin(admin.ModelAdmin,ExportCsvMixin):
 
 
 
+# @admin.register(AccessoirePhone)
+class ElectromenagerAdmin(admin.ModelAdmin,ExportCsvMixin):
+	form = ElectromenagerForm
+
+	readonly_fields = ["show_image", "taxe", "subtotal"]
+
+	def show_image(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url = obj.image.url,
+			width = 250,
+			height = 250,
+
+			))
+
+
+
+	def en_flash(self, obj):
+		return obj.pourcentage > 50
+
+	en_flash.boolean =True
+
+
+	def get_actions(self, request):
+		actions = super().get_actions(request)
+		if "delete_selected" in actions:
+			del actions["delete_selected"]
+		return actions
+
+
+
+	def get_urls(self):
+		urls = super().get_urls()
+		mon_urls = [
+
+			path("import-csv/", self.import_csv),
+
+		]
+		return mon_urls + urls
+
+
+
+	def import_csv(self, request):
+		if request.method =="POST":
+			csv_file = request.FILES["csv_file"]
+			reader = csv.reader(csv_file)
+			#Création d'un objet issu du fichier csv
+			self.message_user(request, "Votre csv a été importé")
+			return redirect("..")
+
+		form = CsvImportForm()
+		payload = {"form": form}
+		return render(
+				request, "products/admin/csv_form.html", payload
+			)
+
+
+
+
+
+
 
 
 
@@ -1039,3 +1103,6 @@ product_admin_site.register(Phone, PhoneAdmin)
 product_admin_site.register(Tablette, TabletteAdmin)
 
 product_admin_site.register(AccessoirePhone, AccessoirePhoneAdmin)
+
+
+product_admin_site.register(Electromenager, ElectromenagerAdmin)

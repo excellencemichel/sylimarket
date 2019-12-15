@@ -171,6 +171,14 @@ class ProductQuerySet(models.query.QuerySet):
 
 
 
+	def get_electromenagers(self):
+		return self.filter(product_type=Product.ELECTROMENAGER)
+
+
+
+
+
+
 	def search(self, query):
 		lookups =( 
 				 Q(name__icontains=query)|
@@ -295,6 +303,10 @@ class ProductManager(models.Manager):
 		
 		
 
+	def get_electromenagers(self):
+		return self.get_queryset().get_electromenagers()
+
+	
 
 	def get_by_id(self, id):
 
@@ -345,6 +357,9 @@ class Product(PrototypeAbstract):
 	WATCH 					= "watch"
 	VISUAL_AUDIO 			= "audio_viduel"
 
+	ELECTROMENAGER 			= "electromenager"
+
+
 
 
 
@@ -372,6 +387,9 @@ class Product(PrototypeAbstract):
 
 		(WATCH,"Montre"),
 		(VISUAL_AUDIO,"Audio Visuel"),
+
+		(ELECTROMENAGER,"Électromenager"),
+
 
 		)
 	slug 				= models.SlugField(max_length=1000, blank=True )
@@ -438,6 +456,11 @@ class Product(PrototypeAbstract):
 
 		elif self.product_type == self.COMPUTER_ACCESSOIRE:
 			return reverse("products:accessoire_computer_detail", kwargs={ "pk": self.pk, "slug": self.slug})
+
+
+
+		elif self.product_type == self.ELECTROMENAGER:
+			return reverse("products:electromenager_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 
