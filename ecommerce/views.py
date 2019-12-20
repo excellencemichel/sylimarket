@@ -30,6 +30,7 @@ from products.models import (  Product,
 from carts.models import Cart
 from wishs.models import Wish
 
+from communications.models import Slide
 
 
 
@@ -47,6 +48,8 @@ from .forms import (
 def home(request):
 	cart_obj, new_obj = Cart.objects.new_or_get(request)
 	wish_obj, new_obj = Wish.objects.new_or_get(request)
+
+	slides = Slide.objects.active()
 
 	products =  Product.objects.all()
 	news_products = Product.objects.featured()
@@ -145,6 +148,7 @@ def home(request):
 	context = {
 		"cart": cart_obj,
 		"wish": wish_obj,
+		"slides": slides,
 
 		"products": products,
 		"best_sellers" : best_sellers,

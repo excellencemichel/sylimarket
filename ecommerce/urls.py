@@ -63,6 +63,10 @@ urlpatterns = [
     path('search/', include("search.urls", namespace="search")),
     path('cart/', include("carts.urls", namespace="carts")),
 
+
+    path('blogs/', include("blogs.urls", namespace="blogs")),
+
+
     path('account/', include("accounts.urls", namespace="accounts")),
     path('accounts/', include("accounts.passwords.urls", namespace="passwords")),
 

@@ -116,7 +116,16 @@ class CsvImportForm(forms.Form):
 class ProductAdmin(admin.ModelAdmin, ExportCsvMixin):
 	form = ProductForm
 	readonly_fields = ["show_image", "taxe", "subtotal"]
+	list_display = ("name", "price", "en_flash")
+	list_filter = ("price", Promotion) #Pour les champs qui vont s'afficher dans l'admin
+	date_hierarchy = "updated" #Classification par date
 
+	change_list_template ="products/admin/product_changelist.html"
+
+
+	actions = ["exporter_en_csv"]
+
+	
 
 
 	def show_image(self, obj):
@@ -146,21 +155,6 @@ class ProductAdmin(admin.ModelAdmin, ExportCsvMixin):
 
 	def has_update_permission(self, request, obj=None):
 		return False
-
-
-
-
-
-
-
-
-
-
-# @admin.register(MenClothing)
-class MenClothingAdmin(admin.ModelAdmin, ExportCsvMixin):
-	form = MenClothingForm
-
-	readonly_fields = ["show_image", "taxe", "subtotal"]
 
 	def show_image(self, obj):
 		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
@@ -195,6 +189,76 @@ class MenClothingAdmin(admin.ModelAdmin, ExportCsvMixin):
 		return mon_urls + urls
 
 
+	def import_csv(self, request):
+		if request.method =="POST":
+			csv_file = request.FILES["csv_file"]
+			reader = csv.reader(csv_file)
+			#Création d'un objet issu du fichier csv
+			self.message_user(request, "Votre csv a été importé")
+			return redirect("..")
+
+		form = CsvImportForm()
+		payload = {"form": form}
+		return render(
+				request, "products/admin/csv_form.html", payload
+			)
+
+
+
+
+
+
+
+
+
+
+# @admin.register(MenClothing)
+class MenClothingAdmin(admin.ModelAdmin, ExportCsvMixin):
+	form = MenClothingForm
+
+	readonly_fields = ["show_image", "taxe", "subtotal"]
+	list_display = ("name", "price", "en_flash")
+	list_filter = ("price", Promotion) #Pour les champs qui vont s'afficher dans l'admin
+	date_hierarchy = "updated" #Classification par date
+
+	change_list_template ="products/admin/product_changelist.html"
+
+
+	actions = ["exporter_en_csv"]
+
+	
+	def show_image(self, obj):
+		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
+			url = obj.image.url,
+			width = 250,
+			height = 250,
+
+			))
+
+
+	def en_flash(self, obj):
+		return obj.pourcentage > 50
+
+	en_flash.boolean =True
+
+
+	def get_actions(self, request):
+		actions = super().get_actions(request)
+		if "delete_selected" in actions:
+			del actions["delete_selected"]
+		return actions
+
+
+
+	def get_urls(self):
+		urls = super().get_urls()
+		mon_urls = [
+
+			path("import-csv/", self.import_csv),
+
+		]
+		return mon_urls + urls
+
 
 	def import_csv(self, request):
 		if request.method =="POST":
@@ -225,7 +289,16 @@ class WomenClothingAdmin(admin.ModelAdmin, ExportCsvMixin):
 	form = WomenClothingForm
 
 	readonly_fields = ["show_image", "taxe", "subtotal"]
+	list_display = ("name", "price", "en_flash")
+	list_filter = ("price", Promotion) #Pour les champs qui vont s'afficher dans l'admin
+	date_hierarchy = "updated" #Classification par date
 
+	change_list_template ="products/admin/product_changelist.html"
+
+
+	actions = ["exporter_en_csv"]
+
+	
 	def show_image(self, obj):
 		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
 			url = obj.image.url,
@@ -288,6 +361,17 @@ class WomenClothingAdmin(admin.ModelAdmin, ExportCsvMixin):
 class PantalonAdmin(admin.ModelAdmin, ExportCsvMixin):
 	form = PantalonForm
 	readonly_fields = ["show_image", "taxe", "subtotal"]
+	list_display = ("name", "price", "en_flash")
+	list_filter = ("price", Promotion) #Pour les champs qui vont s'afficher dans l'admin
+	date_hierarchy = "updated" #Classification par date
+
+	change_list_template ="products/admin/product_changelist.html"
+
+
+	actions = ["exporter_en_csv"]
+
+	
+	
 	def show_image(self, obj):
 		return mark_safe('<im src={url}" width="{width}" height="{height}" />'.format(
 			url = obj.image.url,
@@ -351,7 +435,16 @@ class PantalonAdmin(admin.ModelAdmin, ExportCsvMixin):
 class CulotteAdmin(admin.ModelAdmin, ExportCsvMixin):
 	form = CulotteForm
 	readonly_fields = ["show_image", "taxe", "subtotal"]
+	list_display = ("name", "price", "en_flash")
+	list_filter = ("price", Promotion) #Pour les champs qui vont s'afficher dans l'admin
+	date_hierarchy = "updated" #Classification par date
 
+	change_list_template ="products/admin/product_changelist.html"
+
+
+	actions = ["exporter_en_csv"]
+
+	
 	def show_image(self, obj):
 		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
 			url = obj.image.url,
@@ -415,7 +508,16 @@ class CulotteAdmin(admin.ModelAdmin, ExportCsvMixin):
 class JupeAdmin(admin.ModelAdmin, ExportCsvMixin):
 	form = JupeForm
 	readonly_fields = ["show_image", "taxe", "subtotal"]
+	list_display = ("name", "price", "en_flash")
+	list_filter = ("price", Promotion) #Pour les champs qui vont s'afficher dans l'admin
+	date_hierarchy = "updated" #Classification par date
 
+	change_list_template ="products/admin/product_changelist.html"
+
+
+	actions = ["exporter_en_csv"]
+
+	
 	def show_image(self, obj):
 		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
 			url = obj.image.url,
@@ -480,7 +582,16 @@ class JupeAdmin(admin.ModelAdmin, ExportCsvMixin):
 class MenShoesAdmin(admin.ModelAdmin, ExportCsvMixin):
 	form = MenShoesForm
 	readonly_fields = ["show_image", "taxe", "subtotal"]
+	list_display = ("name", "price", "en_flash")
+	list_filter = ("price", Promotion) #Pour les champs qui vont s'afficher dans l'admin
+	date_hierarchy = "updated" #Classification par date
 
+	change_list_template ="products/admin/product_changelist.html"
+
+
+	actions = ["exporter_en_csv"]
+
+	
 	def show_image(self, obj):
 		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
 			url = obj.image.url,
@@ -541,7 +652,16 @@ class MenShoesAdmin(admin.ModelAdmin, ExportCsvMixin):
 class WomenShoesAdmin(admin.ModelAdmin, ExportCsvMixin):
 	form = WomenShoesForm
 	readonly_fields = ["show_image", "taxe", "subtotal"]
+	list_display = ("name", "price", "en_flash")
+	list_filter = ("price", Promotion) #Pour les champs qui vont s'afficher dans l'admin
+	date_hierarchy = "updated" #Classification par date
 
+	change_list_template ="products/admin/product_changelist.html"
+
+
+	actions = ["exporter_en_csv"]
+
+	
 	def show_image(self, obj):
 		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
 			url = obj.image.url,
@@ -604,7 +724,16 @@ class WomenShoesAdmin(admin.ModelAdmin, ExportCsvMixin):
 class AccessoireClothngAdmin(admin.ModelAdmin, ExportCsvMixin):
 	form = AccessoireClothngForm
 	readonly_fields = ["show_image", "taxe", "subtotal"]
+	list_display = ("name", "price", "en_flash")
+	list_filter = ("price", Promotion) #Pour les champs qui vont s'afficher dans l'admin
+	date_hierarchy = "updated" #Classification par date
 
+	change_list_template ="products/admin/product_changelist.html"
+
+
+	actions = ["exporter_en_csv"]
+
+	
 	def show_image(self, obj):
 		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
 			url = obj.image.url,
@@ -667,7 +796,16 @@ class AccessoireClothngAdmin(admin.ModelAdmin, ExportCsvMixin):
 class ComputerAdmin(admin.ModelAdmin, ExportCsvMixin):
 	form = ComputerForm
 	readonly_fields = ["show_image", "taxe", "subtotal"]
+	list_display = ("name", "price", "en_flash")
+	list_filter = ("price", Promotion) #Pour les champs qui vont s'afficher dans l'admin
+	date_hierarchy = "updated" #Classification par date
 
+	change_list_template ="products/admin/product_changelist.html"
+
+
+	actions = ["exporter_en_csv"]
+
+	
 	def show_image(self, obj):
 		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
 			url = obj.image.url,
@@ -739,6 +877,8 @@ class AccessoireComputerAdmin(admin.ModelAdmin, ExportCsvMixin):
 
 
 	actions = ["exporter_en_csv"]
+
+
 	def show_image(self, obj):
 		return mark_safe('<img src="{url}" width="{width}" height={height} />'.format(
 			url = obj.image.url,
