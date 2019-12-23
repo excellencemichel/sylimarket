@@ -34,6 +34,8 @@ class SlideAdmin(admin.ModelAdmin):
 	def has_add_permission(self, request):
 		if self.model.objects.count() >= MAX_SLIDE:
 			return False
+		return super().has_add_permission(request)
+		
 
 
 
@@ -70,6 +72,8 @@ class BaniereAdmin(admin.ModelAdmin):
 	def has_add_permission(self, request):
 		if self.model.objects.count() >= MAX_BANIERE:
 			return False
+		return super().has_add_permission(request)
+
 
 
 

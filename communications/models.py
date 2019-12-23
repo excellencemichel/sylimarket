@@ -72,8 +72,8 @@ class Baniere(models.Model):
 	objects = BaniereManager()
 
 	class Meta:
-		verbose_name ="Banière"
-		verbose_name_plural = "Banières"
+		verbose_name ="Bannière"
+		verbose_name_plural = "Bannières"
 
 
 
