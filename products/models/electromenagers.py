@@ -32,8 +32,6 @@ class Electromenager(PrototypeAbstract):
 		)
 
 	type_machine = models.CharField(max_length=250, choices=TYPE_MACHINE)
-
-	caracteristique = models.TextField()
 	product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="electromenager")
 
 

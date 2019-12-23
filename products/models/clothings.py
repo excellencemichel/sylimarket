@@ -321,12 +321,12 @@ class ShoesAbstractModel(ClothingAbstractModel):
 		abstract = True
 
 	
-	image_haut 		= models.FileField(upload_to=upload_file_location)
-	image_dos 		= models.FileField(upload_to=upload_file_location)
-	image_gauche 	= models.FileField(upload_to=upload_file_location)
-	image_droite 	= models.FileField(upload_to=upload_file_location)
-	image_derriere 	= models.FileField(upload_to=upload_file_location)
-	image_devant 	= models.FileField(upload_to=upload_file_location)
+	image_haut 		= models.FileField(upload_to=upload_file_location, null=True, blank=True)
+	image_dos 		= models.FileField(upload_to=upload_file_location, null=True, blank=True)
+	image_gauche 	= models.FileField(upload_to=upload_file_location, null=True, blank=True)
+	image_droite 	= models.FileField(upload_to=upload_file_location, null=True, blank=True)
+	image_derriere 	= models.FileField(upload_to=upload_file_location, null=True, blank=True)
+	image_devant 	= models.FileField(upload_to=upload_file_location, null=True, blank=True)
 
 	taille 			= None
 	numero 			= models.CharField(max_length=250)

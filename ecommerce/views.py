@@ -30,7 +30,7 @@ from products.models import (  Product,
 from carts.models import Cart
 from wishs.models import Wish
 
-from communications.models import Slide
+from communications.models import Slide, Baniere
 
 
 
@@ -50,6 +50,13 @@ def home(request):
 	wish_obj, new_obj = Wish.objects.new_or_get(request)
 
 	slides = Slide.objects.active()
+	banieres = Baniere.objects.active()
+	baniere_un = banieres.filter(niveau_baniere=Baniere.NIVEAU_UN)
+	baniere_deux = banieres.filter(niveau_baniere=Baniere.NIVEAU_DEUX)
+	baniere_trois = banieres.filter(niveau_baniere=Baniere.NIVEAU_TROIS)
+	baniere_quatre = banieres.filter(niveau_baniere=Baniere.NIVEAU_QUATRE)
+
+
 
 	products =  Product.objects.all()
 	news_products = Product.objects.featured()
@@ -149,6 +156,11 @@ def home(request):
 		"cart": cart_obj,
 		"wish": wish_obj,
 		"slides": slides,
+
+		"baniere_un": baniere_un,
+		"baniere_deux": baniere_deux,
+		"baniere_trois": baniere_trois,
+		"baniere_quatre": baniere_quatre,
 
 		"products": products,
 		"best_sellers" : best_sellers,

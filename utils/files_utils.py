@@ -66,3 +66,7 @@ def upload_file_location_slide(instance, filename):
 
 def upload_file_blog(instance, filename):
 	return upload_file(instance=instance, filename=filename,  location="blogs")
+
+
+def upload_file_banniere(instance, filename):
+	return upload_file(instance=instance, filename=filename,  location="baniere")
