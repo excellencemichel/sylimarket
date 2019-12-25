@@ -1,4 +1,4 @@
-{% load static %}
+{% load static l10n humanize %}
   
 
 {% url 'home' as home_url %}
@@ -95,7 +95,7 @@
               <div class="basket-item-count"><span class="count navbar-cart-count ">{% if request.session.cart_items %}{{ request.session.cart_items }} {% else %} 0 {% endif %}</span></div>
               <div class="total-price-basket">
                <!-- <span class="lbl">cart</span>  -->
-               <span class="total-price"><span class="value cart-somme-total">{{ request.session.cart_total }}</span><span class="sign"> GNF</span></span> </div>
+               <span class="total-price"><span class="value cart-somme-total">{{ request.session.cart_total|intcomma }}</span><span class="sign"> GNF</span></span> </div>
             </div>
             </a>
             <ul class="dropdown-menu">
@@ -106,7 +106,7 @@
               <div class="clearfix cart-total">
                 <div class="pull-right">
                   
-                    <span class="text">Sous Total :</span><span class='price cart-somme-total'>{{ request.session.cart_total }} GNF</span>
+                    <span class="text">Sous Total :</span><span class='price cart-somme-total'>{{ request.session.cart_total|intcomma }} GNF</span>
                     
                 </div>
                 <div class="clearfix"></div>
