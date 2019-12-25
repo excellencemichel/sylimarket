@@ -8,7 +8,6 @@ from utils.files_utils import upload_file_location_slide, upload_file_banniere
 
 class SlideManager(models.Manager):
 	def active(self):
-		print(self.filter(active=True).order_by("?"))
 		return self.filter(active=True).order_by("?")
 
 
@@ -40,7 +39,6 @@ class Slide(models.Model):
 
 class BaniereManager(models.Manager):
 	def active(self):
-		print(self.filter(active=True).order_by("?"))
 		return self.filter(active=True).order_by("?")
 
 

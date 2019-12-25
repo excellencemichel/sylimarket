@@ -50,11 +50,17 @@ def home(request):
 	wish_obj, new_obj = Wish.objects.new_or_get(request)
 
 	slides = Slide.objects.active()
+
 	banieres = Baniere.objects.active()
-	baniere_un = banieres.filter(niveau_baniere=Baniere.NIVEAU_UN)
-	baniere_deux = banieres.filter(niveau_baniere=Baniere.NIVEAU_DEUX)
-	baniere_trois = banieres.filter(niveau_baniere=Baniere.NIVEAU_TROIS)
-	baniere_quatre = banieres.filter(niveau_baniere=Baniere.NIVEAU_QUATRE)
+	print(banieres.first())
+	baniere_un = banieres.filter(niveau_baniere=Baniere.NIVEAU_UN).first()
+	baniere_deux = banieres.filter(niveau_baniere=Baniere.NIVEAU_DEUX).first()
+	baniere_trois = banieres.filter(niveau_baniere=Baniere.NIVEAU_TROIS).first()
+	baniere_quatre = banieres.filter(niveau_baniere=Baniere.NIVEAU_QUATRE).first()
+	if baniere_un:
+		print("Baniere niveau un existe")
+	else:
+		print("Baniere niveau un n'existe pas")
 
 
 

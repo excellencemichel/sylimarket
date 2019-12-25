@@ -174,9 +174,9 @@
                 success: function(data){
                 var submitSpan = thisForm.find(".submit-span")
                 if (data.added){
-                  submitSpan.html('<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;"><i class="fa fa-times"></i></span> Enlever du panier</button>')
+                  submitSpan.html('<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;"><i class="fa fa-times"></i></span>Enlever</button>')
                 } else {
-                  submitSpan.html('<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;"><span><i class="fa fa-plus-circle"></i></span> Ajouter au panier</button>')
+                  submitSpan.html('<button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;"><span><i class="fa fa-plus-circle"></i></span>Ajouter</button>')
                 }
 
                 var navbarCount = $(".navbar-cart-count")
@@ -316,7 +316,7 @@
               newCartItemRemove.css("display", "block")
               newCartItemRemove.find(".cart-item-product-id").val(value.id)
               newCartItemRemove.find(".product-qty-input").val(value.quantite)
-              cartBodyHome.prepend("<tr><td class='romove-item'>" + newCartItemRemove.html() + " <td class='cart-image'><a class='entry-thumbnail' href='" + value.url +"'><img src='" + value.image + "' alt=''></a></td><td class='cart-product-name-info'><h4 class='cart-product-description'><a href='" + value.url + "'>" + value.name + "</a></h4></td><td class='cart-product-edit'><a href='" + value.url + "'class='product-edit'>Edit</a></td><td class='cart-product-quantity'><div class='cart-quantity'><div class='quant-input'><strong> X " + data.quantite[value.id]  + "</strong></div></div></td><td class='cart-product-sub-total'><span class='cart-sub-total-price'>$" + value.price + "</span></td><td class='cart-product-sub-total'><span class='cart-sub-total-price'>$" + value.taxe + "</span></td><td class=cart-product-grand-total><span class=cart-grand-total-price>$" + parseFloat(value.subtotal) * parseFloat(data.quantite[value.id])  + "</span></td></tr> " )
+              cartBodyHome.prepend("<tr><td class='romove-item'>" + newCartItemRemove.html() + " <td class='cart-image'><a class='entry-thumbnail' href='" + value.url +"'><img src='" + value.image + "' alt=''></a></td><td class='cart-product-name-info'><h4 class='cart-product-description'><a href='" + value.url + "'>" + value.name + "</a></h4></td><td class='cart-product-edit'><a href='" + value.url + "'class='product-edit'>Modifier</a></td><td class='cart-product-quantity'><div class='cart-quantity'><div class='quant-input'><strong> X " + data.quantite[value.id]  + "</strong></div></div></td><td class='cart-product-sub-total'><span class='cart-sub-total-price'>$" + value.price + "</span></td><td class='cart-product-sub-total'><span class='cart-sub-total-price'>$" + value.taxe + "</span></td><td class=cart-product-grand-total><span class=cart-grand-total-price>$" + parseFloat(value.subtotal) * parseFloat(data.quantite[value.id])  + "</span></td></tr> " )
 
             })
 
