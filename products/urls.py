@@ -22,6 +22,8 @@ from .views import (
 			accessoire_computer_detail,
 
 			electromenager_detail,
+			beauty_detail,
+			health_detail,
 			
 
 
@@ -34,6 +36,9 @@ from .views import (
 			TabletteListView, AccessoirePhoneListView,
 
 			ElectromenagerListView,
+
+			BeautyListView,
+			HealthListView
 
 
 			)
@@ -73,6 +78,11 @@ urlpatterns = [
 
 			path("electromenager-list", ElectromenagerListView.as_view(), name="electromenager_list"),
 
+			path("beauty-list", BeautyListView.as_view(), name="beauty_list"),
+			path("health-list", HealthListView.as_view(), name="health_list"),
+
+
+
 
 			# re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/detail/$', product_detail, name="detail"),	
 
@@ -93,6 +103,9 @@ urlpatterns = [
 			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/computer-detail/$', computer_detail, name="computer_detail"),			
 			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/accessoire-computer-detail/$', accessoire_computer_detail, name="accessoire_computer_detail"),			
 			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/electromenager-detail/$', electromenager_detail, name="electromenager_detail"),			
+			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/beauty-detail/$', beauty_detail, name="beauty_detail"),			
+			re_path(r'^(?P<pk>\d+)-(?P<slug>[\w-]+)/health-detail/$', health_detail, name="health_detail"),			
+
 
 		
 

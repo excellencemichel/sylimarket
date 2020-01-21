@@ -214,6 +214,8 @@
                     </li>
                   </ul>
                 </li>
+
+
                 <li class="dropdown mega-menu"> 
                 <a href="#"  data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Electroniques<span class="menu-label hot-menu hidden-xs">hot</span> </a>
                   <ul class="dropdown-menu container">
@@ -292,7 +294,52 @@
                       <!-- /.yamm-content --> </li>
                   </ul>
                 </li>
-                <li class="dropdown hidden-sm"> <a href="#">Santé & Beauté <span class="menu-label new-menu hidden-xs">new</span> </a> </li>
+
+                <!-- Beauté et santé -->
+
+                <li class="dropdown mega-menu">
+                  <a href="#" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Santé & Beauté <span class="menu-label new-menu hidden-xs">new</span> </a>
+                  <ul class="dropdown-menu container">
+                    <li>
+                      <div class="yamm-content">
+                        <div class="row">
+                          <div class="col-xs-12 col-sm-12 col-md-4 col-menu">
+                            <h2 class="title">Beauté</h2>
+                            <ul class="links">
+                              <li><a href="{% url 'products:beauty_list' %}">Parfums</a></li>
+                              <li><a href="{% url 'products:beauty_list' %}">Savons</a></li>
+                              <li><a href="{% url 'products:beauty_list' %}">Shampoings</a></li>
+                              <li><a href="{% url 'products:beauty_list' %}">Gel</a></li>
+                              <li><a href="{% url 'products:beauty_list' %}">Huiles crèmes</a></li>
+                              <li><a href="{% url 'products:beauty_list' %}">Vitamines</a></li>
+                              <li><a href="{% url 'products:beauty_list' %}">Soins en général</a></li>
+                              <li><a href="{% url 'products:beauty_list' %}">Autres...</a></li>
+                            </ul>
+                          </div>
+                          <!-- /.col -->
+
+                          <div class="col-xs-12 col-sm-12 col-md-4 col-menu">
+                            <h2 class="title">Santé</h2>
+                            <ul class="links">
+                              <li><a href="{% url 'products:health_list' %}">Aliments</a></li>
+                              <li><a href="{% url 'products:health_list' %}">Vitamines</a></li>
+                              <li><a href="{% url 'products:health_list' %}">Produits de soins</a></li>
+                              <li><a href="{% url 'products:health_list' %}">Pharmaceutiques</a></li>
+                              <li><a href="{% url 'products:health_list' %}">Parapharmaceutiques</a></li>
+                              <li><a href="{% url 'products:health_list' %}">Autres...</a></li>
+                            </ul>
+                          </div>
+                          <!-- /.col -->
+
+                          <div class="col-xs-12 col-sm-12 col-md-4 col-menu custom-banner"> <a href="{% url 'products:phone_list' %}"><img
+                                alt="" src="{% static 'images/banners/banner-side.png' %}"></a> </div>
+                        </div>
+                        <!-- /.row -->
+                      </div>
+                      <!-- /.yamm-content -->
+                    </li>
+                  </ul>
+                </li>
 
 
                 <li class="dropdown mega-menu"> 

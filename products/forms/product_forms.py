@@ -20,6 +20,8 @@ from products.models import (  Product,
 
 					Electromenager,
 
+					Beauty, Health,
+
 					)
 
 
@@ -529,3 +531,66 @@ class ElectromenagerForm(forms.ModelForm):
 
 
 ##############---------------End Electromenager-------------###############
+
+
+
+
+##############---------------Start Beauty-------------###############
+
+
+
+class BeautyForm(forms.ModelForm):
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
+	class Meta:
+		model = Beauty
+		fields = "__all__"
+		exclude = ["slug", "product", "product_type"]
+
+
+
+	def save(self, commit=True):
+
+		instance = super(BeautyForm, self).save(commit=False)
+		save_instance_model(instance=instance, instance_type=Product.BEAUTY)
+
+		if commit:
+			instance.save()
+		return instance
+
+
+##############---------------End Beauy-------------###############
+
+
+
+
+##############---------------Start Health-------------###############
+
+
+class HealthForm(forms.ModelForm):
+	promotion 	= forms.CharField(label=_("Prix"))
+	price 		= forms.CharField(label=_("Prix en promotion"))
+
+	class Meta:
+		model = Health
+		fields = "__all__"
+		exclude = ["slug", "product", "product_type"]
+
+
+
+	def save(self, commit=True):
+
+		instance = super(HealthForm, self).save(commit=False)
+		save_instance_model(instance=instance, instance_type=Product.HEALTH)
+
+		if commit:
+			instance.save()
+		return instance
+
+
+##############---------------End Electromenager-------------###############
+
+
+
+

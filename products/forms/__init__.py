@@ -11,7 +11,10 @@ from .product_forms import (  Product,
 					Computer, AccessoireComputer,
 
 					#phones
-					Phone, Tablette, AccessoirePhone
+					Phone, Tablette, AccessoirePhone,
+
+					#Electromenager
+					
 
 					)
 

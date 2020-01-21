@@ -48,6 +48,9 @@ from .models import (  Product,
 
 					Electromenager,
 
+					Beauty,
+					Health,
+
 					)
 
 
@@ -474,6 +477,51 @@ class ElectromenagerListView(ListView):
 
 
 		
+
+
+
+
+class BeautyListView(ListView):
+	template_name = "products/beauty_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(BeautyListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.get_beauty()
+
+
+		
+
+
+
+class HealthListView(ListView):
+	template_name = "products/health_list.html"
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(HealthListView,self).get_context_data(*args, **kwargs)
+		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+		context["cart"] = cart_obj
+		return context
+
+
+
+	def get_queryset(self, *args, **kwargs):
+		request = self.request
+		return Product.objects.get_health()
+
+
+		
+
+
+
+
 
 
 def men_clothing_detail(request, pk=None, slug=None, *args, **kwargs):
@@ -1215,6 +1263,122 @@ def electromenager_detail(request, pk=None, slug=None, *args, **kwargs):
 
 
 	return render(request, "products/electromenager_detail.html", context)
+
+
+
+def beauty_detail(request, pk=None, slug=None, *args, **kwargs):
+	product = get_object_or_404(Electromenager, pk=pk, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	try:
+		beauty = Beauty.objects.get(product_id = product.id)
+
+	except Beauty.MultipleObjectsReturned:
+		beauty = Beauty.objects.filter(product_id=product.id).first()
+
+	except Beauty.DoesNotExist:
+		pass
+
+	except:
+		print("Autre erreur non liée à la laison")
+
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
+
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+	stock_list = range(product.stock)
+
+
+
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
+
+
+	context = {
+		"cart": cart_obj,
+		"product": product,
+		"beauty" :beauty,
+		"quantite": quantite,
+		"stock_list": stock_list,
+		"views": views,
+
+	}
+
+
+	return render(request, "products/beauty_detail.html", context)
+
+
+
+def health_detail(request, pk=None, slug=None, *args, **kwargs):
+	product = get_object_or_404(Health, pk=pk, slug=slug)
+	cart_obj, new_obj = Cart.objects.new_or_get(request)
+	try:
+		health = Health.objects.get(product_id = product.id)
+
+	except Health.MultipleObjectsReturned:
+		health = Health.objects.filter(product_id=product.id).first()
+
+	except Health.DoesNotExist:
+		pass
+
+	except:
+		print("Autre erreur non liée à la laison")
+
+	if product:
+		object_viewed_signal.send(product.__class__, instance=product, request=request)
+
+
+	if product in cart_obj.products.all():
+		quantite = cart_obj.quantite[str(product.id)]
+
+	else:
+		quantite = "1"
+
+	stock_list = range(product.stock)
+
+
+
+	if request.user.is_authenticated:
+		views 	= request.user.objectviewed_set.by_model(Product, model_queryset=True).exclude(id=product.id) #all().filter(content_type__name="product"), l'exclude permet d'enlever les produit encours puisque de toutes les façons il est déjà afficher
+	else:
+		views = None
+
+
+
+	context = {
+		"cart": cart_obj,
+		"product": product,
+		"health" :health,
+		"quantite": quantite,
+		"stock_list": stock_list,
+		"views": views,
+
+	}
+
+
+	return render(request, "products/health_detail.html", context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -31,6 +31,12 @@ from .electromenagers import (Electromenager
 		)
 
 
+from .beauty import (Beauty)
+
+from .health import (Health)
+
+
+
 
 def pre_save_taxe(sender, instance, *args, **kwargs):
 	if instance:
@@ -63,6 +69,12 @@ pre_save.connect(pre_save_taxe, sender=Tablette)
 pre_save.connect(pre_save_taxe, sender=AccessoirePhone)
 
 pre_save.connect(pre_save_taxe, sender=Electromenager)
+
+
+
+pre_save.connect(pre_save_taxe, sender=Beauty)
+pre_save.connect(pre_save_taxe, sender=Health)
+
 
 
 
@@ -112,4 +124,9 @@ post_delete.connect(instance_post_delete_receiver, sender=AccessoirePhone)
 
 
 post_delete.connect(instance_post_delete_receiver, sender=Electromenager)
+
+
+post_delete.connect(instance_post_delete_receiver, sender=Beauty)
+post_delete.connect(instance_post_delete_receiver, sender=Health)
+
 

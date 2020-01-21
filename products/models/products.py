@@ -177,6 +177,14 @@ class ProductQuerySet(models.query.QuerySet):
 
 
 
+	def get_beauty(self):
+		return self.filter(product_type=Product.BEAUTY)
+
+	def get_health(self):
+		return self.filter(product_type=Product.HEALTH)
+
+
+
 
 
 	def search(self, query):
@@ -306,7 +314,14 @@ class ProductManager(models.Manager):
 	def get_electromenagers(self):
 		return self.get_queryset().get_electromenagers()
 
-	
+
+
+	def get_beauty(self):
+		return self.get_queryset().get_beauty()
+
+	def get_health(self):
+		return self.get_queryset().get_health()
+
 
 	def get_by_id(self, id):
 
@@ -358,6 +373,9 @@ class Product(PrototypeAbstract):
 	VISUAL_AUDIO 			= "audio_viduel"
 
 	ELECTROMENAGER 			= "electromenager"
+	BEAUTY 					= "beauty"
+	HEALTH 					= "health"
+
 
 
 
@@ -389,6 +407,9 @@ class Product(PrototypeAbstract):
 		(VISUAL_AUDIO,"Audio Visuel"),
 
 		(ELECTROMENAGER,"Électromenager"),
+		(BEAUTY,"Beauté"),
+		(HEALTH,"Health"),
+
 
 
 		)
@@ -461,6 +482,15 @@ class Product(PrototypeAbstract):
 
 		elif self.product_type == self.ELECTROMENAGER:
 			return reverse("products:electromenager_detail", kwargs={ "pk": self.pk, "slug": self.slug})
+
+
+
+
+		elif self.product_type == self.BEAUTY:
+			return reverse("products:beauty_detail", kwargs={ "pk": self.pk, "slug": self.slug})
+
+		elif self.product_type == self.HEALTH:
+			return reverse("products:health_detail", kwargs={ "pk": self.pk, "slug": self.slug})
 
 
 
