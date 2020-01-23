@@ -31,9 +31,9 @@ from .electromenagers import (Electromenager
 		)
 
 
-from .beauty import (Beauty)
+from .beauty import Beauty
 
-from .health import (Health)
+from .health import Health
 
 
 

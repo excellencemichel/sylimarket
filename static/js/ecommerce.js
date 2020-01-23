@@ -3,13 +3,48 @@
     
   // Auto Search
 
-  var searForm = $(".query-search-form")
+  var searchForm = $(".query-search-form")
 
-  var searchInput = searForm.find("[name='q']") // input name='q'
+  var searchInput = searchForm.find("[name='q']") // input name='q'
+
+
+  // debut de ma merde
+  var categorieSearchText = searchForm.find(".categorie-search-text")
+  var categorieMenuItem = searchForm.find(".category-menuitem")
+  var categoryProduct = searchForm.find("[name='category-product']")
+
+
+  console.log(categorieSearchText.text());
+
+
+   $(".query-search-form .category-menuitem").click(function (event) {
+     categoryProduct.val(this.text)
+     console.log("La catégory est :", categoryProduct.val());
+     perforSearchMerde()
+     categorieSearchText.html(this.text + '<b class="caret">')
+
+   })
+
+   function perforSearchMerde() {
+     displaySearching()
+     var query = categoryProduct.val()
+     console.log("Le query est", query);
+     
+
+
+     setTimeout(function () {
+
+       window.location.href = "/search/?q=" + query
+     }, 1000)
+   }
+/*
+Ma merde
+   */
 
   var typingTimer;
   var typingInterval = 500 // 
-  var searchBtn = searForm.find("[type='submit']")
+  var searchBtn = searchForm.find("[type='submit']")
+
 
   searchInput.keyup(function(event){
     //key released
@@ -34,11 +69,15 @@
     displaySearching()
     var query = searchInput.val()
 
+
     setTimeout(function(){
 
     window.location.href="/search/?q=" + query
     }, 1000)
   }
+
+
+
 
   //Test demo ajax
 
@@ -205,84 +244,6 @@
                 }
               })
 
-          // $.ajax({
-          //   url: actionEndpoint,
-          //   method: httpMethod,
-          //   data: formData,
-          //   success: function(data){
-          //     var submitSpan = thisForm.find(".submit-span")
-          //       var spnQty = forQty.find(".submit-for-qty")
-          //         if(!data.stock_finish){
-          //           if (data.added){
-          //             submitSpan.html('<input type="hidden" name="for_remove_product" value="removed"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Enlever</button>')
-          //           } 
-          //         else {
-          //           submitSpan.html('<input type="hidden" name="for_add_product" value="added"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Add to cart</button>')
-          //           if (data.removed){
-                      
-          //           var quantiteCount = $(".product-qty-input")
-          //           quantiteCount.val("1")
-          //           }
-
-          //             }
-
-          //         if(data.quantited){
-          //             spnQty.html('<input type="hidden" name="for_remove_product" value="removed"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Enlever</button>')
-          //         }
-
-          //         if(data.minimum){
-          //             $.alert({
-          //               title: "Erreur d'entrée de quantité",
-          //               content: "La quantité du produit entrée ne doit pas être inferieur à 1",
-          //               theme: "modern",
-          //               })
-
-          //           } 
-
-          //         if(data.no_number_quantite){
-          //             spnQty.html('<input type="hidden" name="for_add_product" value="added"><button type="submit" class="btn btn-primary cart-btn" style="display: inline-block;">Add to cart</button>')
-          //             $.alert({
-          //               title: "Erreur d'entrée de quantité",
-          //               content: "La quantité du produit entrée doit être un nombre et superieur ou égale à 1",
-          //               theme: "modern",
-          //               })
-
-          //           } 
-
-
-          //       }
-          //       else{
-          //          $.alert({
-          //       title: "oops !",
-          //       content: "Votre commande dépasse notre stock nous vous conseillons de la completer avec soit le même produit mais de couleur/marque différentes. Au plaisir nous allons faire un réapprovisionnement dans sous peu. Merci",
-          //       theme: "modern",
-          //     })
-          //       }
-
-
-
-          //      currentPath = window.location.href
-
-          //     if (currentPath.indexOf("cart") != -1){
-          //       refreshCart()
-          //      }
-
-
-
-          //     var navBarCount = $(".navbar-cart-count")
-          //     var navBarCartSommeTotal = $(".cart-somme-total")
-          //     navBarCount.text(data.cartItemCount)
-          //     navBarCartSommeTotal.text(data.cartTotal)
-          //   },
-
-          //   error: function(errorData){
-          //     $.alert({
-          //       title: "oops !",
-          //       content: "Une erreur s'est occasionée",
-          //       theme: "modern",
-          //     })
-          //   }
-          // })
       })
 
       // End add product to cart
@@ -435,21 +396,3 @@
 
 
   })
-
-
-
-
-  // var header = document.querySelector('.ui__header')
-
-  // window.addEventListener('scroll' , function () {
-  //   var headerHeight = header.getBoundingClientRect().height ;
-  //   var scrollY = window.scrollY ;
-  //   console.log(headerHeight , scrollY) ;
-  //   if (scrollY > headerHeight) {
-  //     if (header.classList.contains('ui__fix__header')) { return ; }
-  //     header.classList.add('ui__fix__header') ;
-  //   }else {
-  //     if (!header.classList.contains('ui__fix__header')) { return ; }
-  //     header.classList.remove('ui__fix__header') 
-  //   }
-  // })

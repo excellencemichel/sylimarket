@@ -1535,7 +1535,7 @@
               <div class="item">
                 <div class="blog-post">
                   <div class="blog-post-image">
-                    <div class="image"> <a href="blog.html"><img src="{% static 'images/blog-post/post1.jpg' %}" alt=""></a> </div>
+                    <div class="image"> <a href="#"><img src="{% static 'images/blog-post/post1.jpg' %}" alt=""></a> </div>
                   </div>
                   <!-- /.blog-post-image -->
                   
@@ -1554,7 +1554,7 @@
               <div class="item">
                 <div class="blog-post">
                   <div class="blog-post-image">
-                    <div class="image"> <a href="blog.html"><img src="{% static 'images/blog-post/post2.jpg' %}" alt=""></a> </div>
+                    <div class="image"> <a href="#"><img src="{% static 'images/blog-post/post2.jpg' %}" alt=""></a> </div>
                   </div>
                   <!-- /.blog-post-image -->
                   
@@ -1575,7 +1575,7 @@
               <div class="item">
                 <div class="blog-post">
                   <div class="blog-post-image">
-                    <div class="image"> <a href="blog.html"><img src="{% static 'images/blog-post/post1.jpg' %}" alt=""></a> </div>
+                    <div class="image"> <a href="#"><img src="{% static 'images/blog-post/post1.jpg' %}" alt=""></a> </div>
                   </div>
                   <!-- /.blog-post-image -->
                   
@@ -1594,7 +1594,7 @@
               <div class="item">
                 <div class="blog-post">
                   <div class="blog-post-image">
-                    <div class="image"> <a href="blog.html"><img src="{% static 'images/blog-post/post2.jpg' %}" alt=""></a> </div>
+                    <div class="image"> <a href="#"><img src="{% static 'images/blog-post/post2.jpg' %}" alt=""></a> </div>
                   </div>
                   <!-- /.blog-post-image -->
                   
@@ -1613,7 +1613,7 @@
               <div class="item">
                 <div class="blog-post">
                   <div class="blog-post-image">
-                    <div class="image"> <a href="blog.html"><img src="{% static 'images/blog-post/post1.jpg' %}" alt=""></a> </div>
+                    <div class="image"> <a href="#"><img src="{% static 'images/blog-post/post1.jpg' %}" alt=""></a> </div>
                   </div>
                   <!-- /.blog-post-image -->
                   
@@ -1886,7 +1886,7 @@
 
 
 
-<!-- ================================== RAYON ELECTRONIQUE ===================================-->
+<!-- ================================== RAYON ELECTROMENAGERS ===================================-->
   
         <div class="best-deal wow fadeInUp outer-bottom-xs">
           <h3 class="section-title">Rayon Électromenagers</h3>
@@ -1941,6 +1941,7 @@
  
 
 <!-- ================================== RAYON ELECTROMENAGER END =================================-->
+
 
 
 
@@ -2002,13 +2003,143 @@
         <!-- /.wide-banners --> 
 
 {% endif %}
-<!-- ========================================== WIDE 4 PRODUCTS ============================================== -->
+<!-- ========================================== END WIDE 4 PRODUCTS ============================================ -->
 
-    
+
+<!-- ================================== RAYON BEAUTY ===================================-->
+
+<div class="best-deal wow fadeInUp outer-bottom-xs">
+  <h3 class="section-title">Rayon beauté</h3>
+  <div class="sidebar-widget-body outer-top-xs">
+    <div class="owl-carousel best-seller custom-carousel owl-theme outer-top-xs">
+      {% if beauty %}
+      {% for product in beauty %}
+      <div class="item">
+        <div class="products best-product">
+          <div class="product">
+            <div class="product-micro">
+              <div class="row product-micro-row">
+                <div class="col col-xs-5">
+                  <div class="product-image">
+                    <div class="image"> <a href="{{ product.get_absolute_url }}"> <img src="{{ product.image.url }}"
+                          alt=""> </a> </div>
+                    <!-- /.image -->
+
+                  </div>
+                  <!-- /.product-image -->
+                </div>
+                <!-- /.col -->
+                <div class="col2 col-xs-7">
+                  <div class="product-info">
+                    <h3 class="name"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
+                    <div class="rating rateit-small">
+                      {% include "carts/snippets/update_cart.html" with product=product %}
+                    </div>
+                    <div class="product-price"> <span class="price"> {{ product.price }} GNF </span> </div>
+                    <!-- /.product-price -->
+
+                  </div>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.product-micro-row -->
+            </div>
+            <!-- /.product-micro -->
+
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+      {% endif %}
+
+
+    </div>
+  </div>
+  <!-- /.sidebar-widget-body -->
+</div>
+<!-- /.sidebar-widget -->
+
+
+<!-- ================================== RAYON BEAUTY END =================================-->
+
+
+
+
+
+<!-- ================================== RAYON HEALTH ===================================-->
+
+<div class="best-deal wow fadeInUp outer-bottom-xs">
+  <h3 class="section-title">Rayon Santé</h3>
+  <div class="sidebar-widget-body outer-top-xs">
+    <div class="owl-carousel best-seller custom-carousel owl-theme outer-top-xs">
+      {% if health %}
+      {% for product in health %}
+      <div class="item">
+        <div class="products best-product">
+          <div class="product">
+            <div class="product-micro">
+              <div class="row product-micro-row">
+                <div class="col col-xs-5">
+                  <div class="product-image">
+                    <div class="image"> <a href="{{ product.get_absolute_url }}"> <img src="{{ product.image.url }}"
+                          alt=""> </a> </div>
+                    <!-- /.image -->
+
+                  </div>
+                  <!-- /.product-image -->
+                </div>
+                <!-- /.col -->
+                <div class="col2 col-xs-7">
+                  <div class="product-info">
+                    <h3 class="name"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
+                    <div class="rating rateit-small">
+                      {% include "carts/snippets/update_cart.html" with product=product %}
+                    </div>
+                    <div class="product-price"> <span class="price"> {{ product.price }} GNF </span> </div>
+                    <!-- /.product-price -->
+
+                  </div>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.product-micro-row -->
+            </div>
+            <!-- /.product-micro -->
+
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+      {% endif %}
+
+
+    </div>
+  </div>
+  <!-- /.sidebar-widget-body -->
+</div>
+<!-- /.sidebar-widget -->
+
+
+<!-- ================================== RAYON HEALTH END =================================-->
+
+
+
+
+
+<!-- ================================== RAYON MARQUE  =================================-->
+
+
         {% include 'base/marques.html' %}
         
       </div>
       <!-- /.homebanner-holder --> 
+<!-- ================================== RAYON MARQUE END =================================-->
+
+
+
+
 
 
 

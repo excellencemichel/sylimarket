@@ -25,6 +25,10 @@ from products.models import (  Product,
 
 					Electromenager,
 
+					
+					Beauty,
+					Health,
+
 					)
 
 from carts.models import Cart
@@ -57,15 +61,9 @@ def home(request):
 	baniere_deux = banieres.filter(niveau_baniere=Baniere.NIVEAU_DEUX).first()
 	baniere_trois = banieres.filter(niveau_baniere=Baniere.NIVEAU_TROIS).first()
 	baniere_quatre = banieres.filter(niveau_baniere=Baniere.NIVEAU_QUATRE).first()
-	if baniere_un:
-		print("Baniere niveau un existe")
-	else:
-		print("Baniere niveau un n'existe pas")
-
-
 
 	products =  Product.objects.all()
-	news_products = Product.objects.featured()
+	news_products = products.featured()
 
 	news_clothings = news_products.filter(
 		Q(product_type=Product.MEN_CLOTHING)|
@@ -152,6 +150,9 @@ def home(request):
 
 
 	electromenagers = Product.objects.get_electromenagers()
+	beauty = Product.objects.get_beauty()
+	health = Product.objects.get_health()
+
 
 
 
@@ -213,6 +214,10 @@ def home(request):
 
 		"electromenagers": electromenagers,
 
+		"beauty": beauty,
+		"health": health,
+
+
 
 
 
@@ -263,12 +268,6 @@ def contact_page(request):
 		errors = contact_form.errors.as_json()
 		if request.is_ajax():
 			return HttpResponse(errors, status=400, content_type="application/json")
-
-	# if request.method == "POST":
-	# 	print(request.POST)
-	# 	print(request.POST.get("fullname"))
-	# 	print(request.POST.get("email"))
-	# 	print(request.POST.get("content"))
 
 	return render(request, "contact/views.html", context)
 

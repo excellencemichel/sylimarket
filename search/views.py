@@ -38,6 +38,7 @@ class SearchProductView(ListView):
 	def get_context_data(self, *args, **kwargs):
 		context = super(SearchProductView, self).get_context_data(*args, **kwargs)
 		context["query"] = self.request.GET.get("q")
+		print("La catégory data endpoint est: ", self.request.GET.get("data-category-endpoint"))
 		cart_obj, new_obj = Cart.objects.new_or_get(self.request)
 		context["cart"] = cart_obj
 
@@ -54,6 +55,7 @@ class SearchProductView(ListView):
 		request = self.request
 		method_dict = request.GET
 		query = method_dict.get("q", None)
+
 		if query is not None:
 			return Product.objects.search(query)
 		return Product.objects.featured()

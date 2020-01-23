@@ -58,7 +58,6 @@ from .forms.product_forms import ( ProductForm,
 					ElectromenagerForm,
 
 					BeautyForm,
-
 					HealthForm
 
 					)
@@ -1139,7 +1138,6 @@ class AccessoirePhoneAdmin(admin.ModelAdmin,ExportCsvMixin):
 
 
 
-# @admin.register(AccessoirePhone)
 class ElectromenagerAdmin(admin.ModelAdmin,ExportCsvMixin):
 	form = ElectromenagerForm
 
@@ -1200,7 +1198,6 @@ class ElectromenagerAdmin(admin.ModelAdmin,ExportCsvMixin):
 
 
 
-# @admin.register(AccessoirePhone)
 class BeautyAdmin(admin.ModelAdmin,ExportCsvMixin):
 	form = BeautyForm
 
@@ -1256,7 +1253,6 @@ class BeautyAdmin(admin.ModelAdmin,ExportCsvMixin):
 			)
 
 
-# @admin.register(AccessoirePhone)
 class HealthAdmin(admin.ModelAdmin,ExportCsvMixin):
 	form = HealthForm
 

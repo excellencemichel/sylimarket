@@ -3,17 +3,22 @@
    {% csrf_token %}
 	<div class="control-group">
 	    <ul class="categories-filter animate-dropdown">
-	      <li class="dropdown"> <a class="dropdown-toggle"  data-toggle="dropdown" href="#">Categories <b class="caret"></b></a>
+	      <li class="dropdown"> <a class="dropdown-toggle categorie-search-text" data-category-endpoint="Tout" data-toggle="dropdown" href="#">Categories <b class="caret"></b></a>
 	        <ul class="dropdown-menu" role="menu" >
-	          <li class="menu-header">Tout</li>
-	          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Vêtements</a></li>
-	          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Electroniques</a></li>
-	          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Chausures</a></li>
-	          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">- Watches</a></li>
+	          <li class="menu-header"> <a role="menuitem" class="category-menuitem category-vetement" tabindex="-1" href="#"> Tout</a></li>
+	          <li role="presentation"><a role="menuitem" class="category-menuitem category-vetement" tabindex="-1" href="#">- Vêtements</a></li>
+	          <li role="presentation"><a role="menuitem" class="category-menuitem category-electronique" tabindex="-1" href="#">- Electroniques</a></li>
+	          <li role="presentation"><a role="menuitem" class="category-menuitem category-beauty-health" tabindex="-1" href="#">- Santé et Beauté</a></li>
+			  <li role="presentation"><a role="menuitem" class="category-menuitem category-electromenager" tabindex="-1" href="#">- Electroménagers</a></li>
+			  <li role="presentation"><a role="menuitem" class="category-menuitem category-electromenager" tabindex="-1" href="#">- Chaussures</a></li>
+
+
+	
 	        </ul>
 	      </li>
 	    </ul>
-	    <input class="search-field input-search-text" type="search" name="q" value="{{ request.GET.q }}" placeholder="Search here..." />
+		<input class="search-field input-search-text" type="search" name="q" value="{{ request.GET.q }}" placeholder="Search here..." />
+		<input type="hidden" name="category-product"/>
 	    <button class="search-button" type="submit"></button>
 	</div>
 

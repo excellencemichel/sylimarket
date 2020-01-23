@@ -79,6 +79,43 @@ class ProductQuerySet(models.query.QuerySet):
 
 	def best_seller(self):
 		return self.filter(seller_count__gte=3)
+	
+	def get_electronique(self):
+		return self.filter(
+                    Q(product_type=Product.PHONE) |
+                    Q(product_type=Product.TABLETE) |
+                    Q(product_type=Product.PHONE_ACCESSOIRE) |
+                    Q(product_type=Product.COMPUTER) |
+                    Q(product_type=Product.COMPUTER_ACCESSOIRE)
+
+		)
+	
+	def get_clothings(self):
+		return self.filter(
+                    Q(product_type=Product.MEN_CLOTHING) |
+                    Q(product_type=Product.WOMEN_CLOTHING) |
+                    Q(product_type=Product.PANTALON) |
+                    Q(product_type=Product.CULOTTE) |
+                    Q(product_type=Product.JUPE) |
+                    Q(product_type=Product.CLOTHING_ACCESSOIRE)
+		)
+	
+
+	def get_beaty_health(self):
+		return self.filter(
+                    Q(product_type=Product.BEAUTY) |
+                    Q(product_type=Product.HEALTH)
+			
+			)
+	
+	def get_shoes(self):
+		return self.filter(
+                    Q(product_type=Product.MEN_SHOE) |
+                    Q(product_type=Product.WOMEN_SHOE) 
+
+		)
+				
+
 
 
 	def get_men_clothings(self):
@@ -188,6 +225,7 @@ class ProductQuerySet(models.query.QuerySet):
 
 
 	def search(self, query):
+
 		lookups =( 
 				 Q(name__icontains=query)|
 				 Q(slug__icontains=query)|
@@ -239,8 +277,21 @@ class ProductManager(models.Manager):
 
 	def featured(self):
 		return self.get_queryset().featured()
+	
+
+	def get_electronique(self):
+		return self.get_queryset().get_electronique()
 
 
+	def get_clothings(self):
+		return self.get_queryset().get_clothings()
+	
+
+	def get_beaty_health(self):
+		return self.get_queryset().get_beaty_health()
+	
+	def get_shoes(self):
+		return self.get_queryset().get_shoes()
 
 
 	def get_men_clothings(self):
@@ -343,6 +394,26 @@ class ProductManager(models.Manager):
 
 
 	def search(self, query):
+		print("Le query passé dans le modèle est:", query)
+		print("Le query passé dans le modèle est:", query.strip())
+		print(query.strip()=="Tout")
+
+		if query.strip()=="Tout":
+			print("Il a marché")
+			return self.get_queryset().active()
+
+		elif "Vêtement" in query:
+			return self.get_clothings()
+		
+		elif "Electronique" in query:
+			return self.get_electronique()
+		elif "Electromenager" in query:
+			return self.get_electromenagers()
+		elif "Chausure" in query:
+			return self.get_shoes()
+
+		elif "Santé" or "Beauté" in query:
+			return self.get_beaty_health()
 		return self.get_queryset().active().search(query)
 
 
